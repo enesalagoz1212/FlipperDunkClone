@@ -278,7 +278,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 113115056}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.7492, y: -9.18, z: 0}
+  m_LocalPosition: {x: -1.66, y: -9.17, z: 0}
   m_LocalScale: {x: 1.5301507, y: 1.6908971, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -321,7 +321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d17aaa2f0bce72849825151421dff1f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 20
+  jumpForce: 15
   fallSpeed: 100
   lowJumpSpeed: 1
   maxFallSpeed: 5
@@ -420,7 +420,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 171787521}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.37, y: -1.56, z: 0}
+  m_LocalPosition: {x: 3.69, y: -0.19, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -439,11 +439,11 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 5
-  m_LinearDrag: 0
+  m_Mass: 9
+  m_LinearDrag: 0.1
   m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_GravityScale: 1.5
+  m_Material: {fileID: 6200000, guid: b1ef6f1c9f0f9e444a9a3bd97e776cc3, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -3456,8 +3456,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.09263577, y: 0.069955036}
-  m_Size: {x: 0.31473374, y: 0.6807066}
+  m_Offset: {x: -0.23688605, y: 0.020601256}
+  m_Size: {x: 0.026276138, y: 0.48167744}
   m_Direction: 0
 --- !u!1 &756173969
 GameObject:
@@ -5844,7 +5844,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.90159434, y: 0.11878218}
+  m_Offset: {x: 0.87099296, y: 0.12288147}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -5855,7 +5855,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.1119438, y: 0.43095168}
+  m_Size: {x: 1.0507411, y: 0.43915027}
   m_EdgeRadius: 0
 --- !u!1 &1735883565
 GameObject:
@@ -6282,7 +6282,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.3793943, y: 0.16470402}
+  m_Offset: {x: -0.38384128, y: 0.16470402}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -6293,7 +6293,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.276855, y: 0.43861425}
+  m_Size: {x: 1.267961, y: 0.43861425}
   m_EdgeRadius: 0
 --- !u!1 &1841747672
 GameObject:
@@ -7467,50 +7467,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 511950893}
     m_Modifications:
-    - target: {fileID: 6781396131145037328, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
-      propertyPath: m_Size.x
-      value: 1.7809271
-      objectReference: {fileID: 0}
-    - target: {fileID: 6781396131145037328, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
-      propertyPath: m_Size.y
-      value: 10.374485
-      objectReference: {fileID: 0}
-    - target: {fileID: 6781396131145037328, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
-      propertyPath: m_Offset.x
-      value: 0.09533471
-      objectReference: {fileID: 0}
-    - target: {fileID: 6781396131145037328, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
-      propertyPath: m_Offset.y
-      value: 0.23833656
-      objectReference: {fileID: 0}
-    - target: {fileID: 6781396131145037328, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 1.94
-      objectReference: {fileID: 0}
-    - target: {fileID: 6781396131145037328, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 10.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6781396131145037334, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 4.9557056
-      objectReference: {fileID: 0}
-    - target: {fileID: 6781396131145037334, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.09571375
-      objectReference: {fileID: 0}
-    - target: {fileID: 6781396131145037334, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.4554
-      objectReference: {fileID: 0}
-    - target: {fileID: 6781396131145037334, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 12.5776
-      objectReference: {fileID: 0}
-    - target: {fileID: 6781396131145037335, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
-      propertyPath: m_Sprite
+    - target: {fileID: 6781396131746432438, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
+      propertyPath: m_Material
       value: 
-      objectReference: {fileID: 21300000, guid: 468650ee37332074a914843bc76873b1, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 6781396132009360963, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -7560,33 +7520,45 @@ PrefabInstance:
       value: Body
       objectReference: {fileID: 0}
     - target: {fileID: 6781396132193390658, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
-      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[20].x
-      value: -2.1439357
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[24].x
+      value: -1.8183033
       objectReference: {fileID: 0}
     - target: {fileID: 6781396132193390658, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
-      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[20].y
-      value: -4.009576
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[24].y
+      value: -4.010674
       objectReference: {fileID: 0}
     - target: {fileID: 6781396132193390658, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
-      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[21].x
-      value: -2.3125093
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[25].x
+      value: -1.64798
       objectReference: {fileID: 0}
     - target: {fileID: 6781396132193390658, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
-      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[21].y
-      value: -4.0366488
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[25].y
+      value: -4.0968695
       objectReference: {fileID: 0}
     - target: {fileID: 6781396132193390658, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
-      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[22].x
-      value: -2.4951134
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[26].x
+      value: -1.4955368
       objectReference: {fileID: 0}
     - target: {fileID: 6781396132193390658, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
-      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[22].y
-      value: -4.071557
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[26].y
+      value: -4.0804005
+      objectReference: {fileID: 0}
+    - target: {fileID: 6781396132193390658, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[27].x
+      value: -1.331339
+      objectReference: {fileID: 0}
+    - target: {fileID: 6781396132193390658, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[27].y
+      value: -4.3919563
       objectReference: {fileID: 0}
     - target: {fileID: 6781396132193390660, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 113115060}
+    - target: {fileID: 6781396132193390661, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
 --- !u!1001 &8624520259109297320
