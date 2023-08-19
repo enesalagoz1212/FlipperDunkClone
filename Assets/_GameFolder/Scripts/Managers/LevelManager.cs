@@ -20,16 +20,33 @@ namespace FlipperDunkClone.Managers
 			}
 		}
 
-		void Start()
+		private void OnEnable()
+		{
+			GameManager.OnGameStarted += OnGameStarted;
+			GameManager.OnGameEnd += OnGameEnd;
+		}
+		private void OnDisable()
+		{
+			GameManager.OnGameStarted -= OnGameStarted;
+			GameManager.OnGameEnd -= OnGameEnd;
+		}
+
+		private void OnGameStarted()
 		{
 
 		}
-
-
-		void Update()
+		private void OnGameEnd()
 		{
-
+			RestartLevel();
 		}
+
+		private void RestartLevel()
+		{
+			GameManager.Instance.ChangeState(GameState.Start);
+			GameManager.OnGameStarted?.Invoke();
+		}
+
+
 	}
-
 }
+

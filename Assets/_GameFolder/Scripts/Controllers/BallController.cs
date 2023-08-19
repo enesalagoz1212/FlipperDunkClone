@@ -31,19 +31,23 @@ namespace FlipperDunkClone.Controllers
 		{
 			transform.position =new Vector2(3f, -4f);
 		}
-		private void OnTriggerEnter2D(Collider2D collision)
+		private void OnTriggerEnter2D(Collider2D other)
 		{
 
-			if (collision.gameObject.CompareTag("Hoop"))
+			if (other.gameObject.CompareTag("Hoop"))
 			{
-				Debug.Log("1");
-				if (transform.position.y > collision.transform.position.y)
+				if (transform.position.y > other.transform.position.y)
 				{
-					Debug.Log("2");
-					GameManager.Instance.IncreaseScore(1);
-					Debug.Log("3");
+					GameManager.Instance.IncreaseScore();
 				}
 			}
+			else if (other.gameObject.CompareTag("End"))
+			{
+				Debug.Log("End 1");
+				GameManager.Instance.EndGame();
+				Debug.Log("End 2");
+			}
+
 		}
 	
 	}

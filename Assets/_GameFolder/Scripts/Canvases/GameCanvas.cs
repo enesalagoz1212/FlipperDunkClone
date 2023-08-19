@@ -12,17 +12,24 @@ namespace FlipperDunkClone.Canvases
 		private void OnEnable()
 		{
 			GameManager.OnGameScoreIncreased += OnGameScoreIncreased;
+			GameManager.OnGameStarted += OnGameStart;
 		}
 		private void OnDisable()
 		{
 			GameManager.OnGameScoreIncreased -= OnGameScoreIncreased;
+			GameManager.OnGameStarted -= OnGameStart;
 		}
 		void Start()
         {
 
         }
 
-		private void OnGameScoreIncreased(int score)
+		private void OnGameStart()
+		{
+			UpdateScoreText();
+		}
+
+		private void OnGameScoreIncreased()
 		{
 			UpdateScoreText();
 		}

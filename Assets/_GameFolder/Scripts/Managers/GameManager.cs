@@ -21,7 +21,7 @@ namespace FlipperDunkClone.Managers
 		public static Action OnGamePlaying;
 		public static Action OnGamePaused;
 		public static Action OnGameEnd;
-		public static Action<int> OnGameScoreIncreased;
+		public static Action OnGameScoreIncreased;
 
 
 		public int score = 0;
@@ -58,17 +58,23 @@ namespace FlipperDunkClone.Managers
 			GameState = GameState.Start;
 			OnGameStarted?.Invoke();
 			GameState = GameState.Playing;
+			score = 0;
 		}
 
+		public void EndGame()
+		{
+			GameState = GameState.End;
+			OnGameEnd?.Invoke();
+		}
 		public void ChangeState(GameState gameState)
 		{
 			GameState = gameState;
 		}
 
-		public void IncreaseScore(int gameScore)
+		public void IncreaseScore()
 		{
-			score += gameScore;
-			OnGameScoreIncreased?.Invoke(score);
+			score++;
+			OnGameScoreIncreased?.Invoke();
 		}
 	}
 }
