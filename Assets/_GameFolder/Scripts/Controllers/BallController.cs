@@ -29,7 +29,7 @@ namespace FlipperDunkClone.Controllers
 
 		private void OnGameStart()
 		{
-			transform.position =new Vector2(3f, -4f);
+			transform.position =new Vector2(3.5f, 6.5f);
 		}
 		private void OnTriggerEnter2D(Collider2D other)
 		{
@@ -43,9 +43,7 @@ namespace FlipperDunkClone.Controllers
 			}
 			else if (other.gameObject.CompareTag("End"))
 			{
-				Debug.Log("End 1");
 				GameManager.Instance.EndGame();
-				Debug.Log("End 2");
 			}
 
 		}

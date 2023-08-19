@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 namespace FlipperDunkClone.Managers
 {
@@ -37,7 +38,7 @@ namespace FlipperDunkClone.Managers
 		}
 		private void OnGameEnd()
 		{
-			RestartLevel();
+				RestartLevel();		
 		}
 
 		private void RestartLevel()

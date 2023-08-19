@@ -63,6 +63,7 @@ namespace FlipperDunkClone.Managers
 
 		public void EndGame()
 		{
+			score = 0;
 			GameState = GameState.End;
 			OnGameEnd?.Invoke();
 		}
