@@ -21,6 +21,10 @@ namespace FlipperDunkClone.Managers
 		public static Action OnGamePlaying;
 		public static Action OnGamePaused;
 		public static Action OnGameEnd;
+		public static Action<int> OnGameScoreIncreased;
+
+
+		public int score = 0;
 		private void Awake()
 		{
 			if (Instance != null && Instance != this)
@@ -59,6 +63,12 @@ namespace FlipperDunkClone.Managers
 		public void ChangeState(GameState gameState)
 		{
 			GameState = gameState;
+		}
+
+		public void IncreaseScore(int gameScore)
+		{
+			score += gameScore;
+			OnGameScoreIncreased?.Invoke(score);
 		}
 	}
 }

@@ -1,18 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FlipperDunkClone.Managers;
+using TMPro;
 
-public class GameCanvas : MonoBehaviour
+namespace FlipperDunkClone.Canvases
 {
-    // Start is called before the first frame update
-    void Start()
+    public class GameCanvas : MonoBehaviour
     {
-        
-    }
+		public TextMeshProUGUI scoreText;
+		private void OnEnable()
+		{
+			GameManager.OnGameScoreIncreased += OnGameScoreIncreased;
+		}
+		private void OnDisable()
+		{
+			GameManager.OnGameScoreIncreased -= OnGameScoreIncreased;
+		}
+		void Start()
+        {
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+        }
+
+		private void OnGameScoreIncreased(int score)
+		{
+			UpdateScoreText();
+		}
+
+		public void UpdateScoreText()
+		{
+			scoreText.text = "Skor: " + GameManager.Instance.score.ToString();
+		}
+
+	}
 }
+
