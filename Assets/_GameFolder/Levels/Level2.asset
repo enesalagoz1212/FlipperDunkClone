@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1e6cd8332b9f834e8de0505a0e1a897, type: 3}
-  m_Name: Level1
+  m_Name: Level2
   m_EditorClassIdentifier: 
-  levelName: Level 1
-  maxScore: 3
+  levelName: Level2
+  maxScore: 5
   hoopPrefab: {fileID: 8624520260583960953, guid: 209bbc36092d45b40bb15fa3a70b646f, type: 3}
-  hoopPosition: {x: -3.5, y: 0.5, z: 0}
-  hoopHeight: 1
+  hoopPosition: {x: -3.5, y: 1.5, z: 0}
+  hoopHeight: -1

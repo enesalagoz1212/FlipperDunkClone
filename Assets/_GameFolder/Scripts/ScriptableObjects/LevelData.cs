@@ -8,7 +8,10 @@ namespace FlipperDunkClone.ScriptableObjects
     public class LevelData : ScriptableObject
     {
         public string levelName;
-    
+        public int maxScore;
+        public GameObject hoopPrefab;
+        public Vector3 hoopPosition;
+        public int hoopHeight;
     }
 }
 

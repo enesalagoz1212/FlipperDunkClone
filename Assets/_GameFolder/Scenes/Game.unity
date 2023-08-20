@@ -6112,7 +6112,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoopPrefab: {fileID: 8624520260583960953, guid: 209bbc36092d45b40bb15fa3a70b646f, type: 3}
   hoops: {fileID: 639163695}
-  levels: []
+  levels:
+  - {fileID: 11400000, guid: 73dce08c8ce866a48ae419ba55a11666, type: 2}
 --- !u!1 &1578330781
 GameObject:
   m_ObjectHideFlags: 0
