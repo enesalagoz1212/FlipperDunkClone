@@ -9,7 +9,7 @@ namespace FlipperDunkClone.Canvases
 	public class EndCanvas : MonoBehaviour
 	{
 		public GameObject endPanel;
-		public Button continueButton;
+		public Button restartButton;
 
 		private void OnEnable()
 		{
@@ -23,10 +23,10 @@ namespace FlipperDunkClone.Canvases
 		void Start()
 		{
 			endPanel.SetActive(false);
-			continueButton.onClick.AddListener(OnContinueButtonClicked);
+			restartButton.onClick.AddListener(OnRestartButtonClicked);
 		}
 
-		private void OnContinueButtonClicked()
+		private void OnRestartButtonClicked()
 		{
 			GameManager.Instance.RestartGame();
 			endPanel.SetActive(false);
