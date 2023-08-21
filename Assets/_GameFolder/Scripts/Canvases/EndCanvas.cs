@@ -1,18 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using FlipperDunkClone.Managers;
 
-public class EndCanvas : MonoBehaviour
+namespace FlipperDunkClone.Canvases
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	public class EndCanvas : MonoBehaviour
+	{
+		public GameObject endPanel;
+		public Button continueButton;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+		private void OnEnable()
+		{
+			GameManager.OnGameEnd += OnGameEnd;
+		}
+		private void OnDisable()
+		{
+			GameManager.OnGameEnd -= OnGameEnd;
+
+		}
+		void Start()
+		{
+			endPanel.SetActive(false);
+			continueButton.onClick.AddListener(OnContinueButtonClicked);
+		}
+
+		private void OnContinueButtonClicked()
+		{
+			GameManager.Instance.RestartGame();
+			endPanel.SetActive(false);
+		}
+
+		private void OnGameEnd()
+		{
+			endPanel.SetActive(true);
+		}
+	}
 }
+

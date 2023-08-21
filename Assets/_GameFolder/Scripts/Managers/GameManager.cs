@@ -23,6 +23,7 @@ namespace FlipperDunkClone.Managers
 		public static Action OnGameEnd;
 		public static Action OnGameScoreIncreased;
 
+		private bool _isGamePaused = false;
 
 		public int score = 0;
 		private void Awake()
@@ -66,6 +67,8 @@ namespace FlipperDunkClone.Managers
 			score = 0;
 			GameState = GameState.End;
 			OnGameEnd?.Invoke();
+
+			PauseGame();
 		}
 		public void ChangeState(GameState gameState)
 		{
@@ -76,10 +79,32 @@ namespace FlipperDunkClone.Managers
 		{
 			score++;
 			OnGameScoreIncreased?.Invoke();
-			Debug.Log("7");
-			LevelManager.Instance.LevelCompleted();
-			Debug.Log("8");
+
 		}
+
+		public void RestartGame()
+		{
+			GameState = GameState.Start;
+
+			score = 0;
+			LevelManager.Instance.LoadCurrentLevel();
+			OnGameStarted?.Invoke();
+
+			ResumeGame();
+		}
+
+		private void PauseGame()
+		{
+			_isGamePaused = true;
+			Time.timeScale = 0f;
+		}
+
+		private void ResumeGame()
+		{
+			_isGamePaused = false;
+			Time.timeScale = 1f;
+		}
+
 	}
 }
 

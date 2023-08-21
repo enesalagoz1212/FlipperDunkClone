@@ -5124,7 +5124,7 @@ GameObject:
   - component: {fileID: 1217108457}
   - component: {fileID: 1217108456}
   m_Layer: 5
-  m_Name: CompletedText
+  m_Name: PlayAgainText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5147,8 +5147,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 7, y: 484}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -18.155, y: 422.0924}
+  m_SizeDelta: {x: 772.1313, y: 173.8151}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1217108456
 MonoBehaviour:
@@ -5170,7 +5170,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: COMPLETED!
+  m_text: "PLAY AGA\u0130N"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
   m_sharedMaterial: {fileID: 2147374, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
@@ -5197,7 +5197,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 115
+  m_fontSize: 113.35
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5233,7 +5233,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -400.50708, y: -25.220337, z: -346.8883, w: -178.62012}
+  m_margin: {x: 9.710785, y: -2.5980225, z: 7.527893, w: 8.391113}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -5288,8 +5288,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.33172607, y: 0}
+  m_SizeDelta: {x: 0.6633, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1287046133
 MonoBehaviour:
@@ -5311,8 +5311,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 0570475a964109b46a6d7d007a72d734, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -6115,6 +6115,7 @@ MonoBehaviour:
   levels:
   - {fileID: 11400000, guid: 73dce08c8ce866a48ae419ba55a11666, type: 2}
   - {fileID: 11400000, guid: 59b4d6a6337b4334aaac02de7a0b9510, type: 2}
+  - {fileID: 11400000, guid: 980cdddcfb200ea458599c8b14c5414d, type: 2}
 --- !u!1 &1578330781
 GameObject:
   m_ObjectHideFlags: 0
@@ -7705,6 +7706,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10263b9d4d395f547a38b5cfbb9f635c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  endPanel: {fileID: 1287046131}
+  continueButton: {fileID: 236205882}
 --- !u!1 &2032084690
 GameObject:
   m_ObjectHideFlags: 0

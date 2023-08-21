@@ -47,10 +47,10 @@ namespace FlipperDunkClone.Managers
 		}
 		private void OnGameEnd()
 		{
-			RestartLevel();
+			
 		}
 
-		private void LoadCurrentLevel()
+		public void LoadCurrentLevel()
 		{
 			if (_currentLevelIndex >= 0 && _currentLevelIndex < levels.Length)
 			{
@@ -75,11 +75,7 @@ namespace FlipperDunkClone.Managers
 			}
 		}
 
-		private void RestartLevel()
-		{
-			GameManager.Instance.ChangeState(GameState.Start);
-			GameManager.OnGameStarted?.Invoke();
-		}
+	
 
 		private void HoopSpawn()
 		{
