@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level1
   m_EditorClassIdentifier: 
   levelName: Level 1
-  maxScore: 3
+  maxScore: 1
   hoopPrefab: {fileID: 8624520260583960953, guid: 209bbc36092d45b40bb15fa3a70b646f, type: 3}
   hoopPosition: {x: -3.5, y: 0.5, z: 0}
   hoopHeight: 1

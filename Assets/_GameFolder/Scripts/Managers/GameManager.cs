@@ -76,6 +76,9 @@ namespace FlipperDunkClone.Managers
 		{
 			score++;
 			OnGameScoreIncreased?.Invoke();
+			Debug.Log("7");
+			LevelManager.Instance.LevelCompleted();
+			Debug.Log("8");
 		}
 	}
 }

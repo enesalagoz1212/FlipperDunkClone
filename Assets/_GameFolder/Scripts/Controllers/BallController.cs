@@ -7,7 +7,7 @@ namespace FlipperDunkClone.Controllers
 {
 	public class BallController : MonoBehaviour
 	{
-
+		private Rigidbody2D _rigitbody2D;
 		private void OnEnable()
 		{
 			GameManager.OnGameStarted += OnGameStart;
@@ -18,13 +18,22 @@ namespace FlipperDunkClone.Controllers
 		}
 		void Start()
 		{
-
+			_rigitbody2D = GetComponent<Rigidbody2D>();
 		}
 
 
 		void Update()
 		{
-
+			if (_rigitbody2D.velocity.y<0)
+			{
+				Debug.Log("rb");
+				_rigitbody2D.gravityScale = 2f;
+			}
+			else
+			{
+				Debug.Log("-rb");
+				_rigitbody2D.gravityScale = 1.5f;
+			}
 		}
 
 		private void OnGameStart()

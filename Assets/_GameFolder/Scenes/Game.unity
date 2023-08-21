@@ -6114,6 +6114,7 @@ MonoBehaviour:
   hoops: {fileID: 639163695}
   levels:
   - {fileID: 11400000, guid: 73dce08c8ce866a48ae419ba55a11666, type: 2}
+  - {fileID: 11400000, guid: 59b4d6a6337b4334aaac02de7a0b9510, type: 2}
 --- !u!1 &1578330781
 GameObject:
   m_ObjectHideFlags: 0
@@ -8066,9 +8067,29 @@ PrefabInstance:
       value: -4.3919563
       objectReference: {fileID: 0}
     - target: {fileID: 6781396132193390660, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
+      propertyPath: m_UseMotor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6781396132193390660, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 1.3998152
+      objectReference: {fileID: 0}
+    - target: {fileID: 6781396132193390660, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: -0.068122774
+      objectReference: {fileID: 0}
+    - target: {fileID: 6781396132193390660, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 113115060}
+    - target: {fileID: 6781396132193390660, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
+      propertyPath: m_Motor.m_MotorSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6781396132193390660, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
+      propertyPath: m_Motor.m_MaximumMotorForce
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 6781396132193390661, guid: 4dfc6f1f703963c48b8d10b4cb3b3e2d, type: 3}
       propertyPath: m_Material
       value: 

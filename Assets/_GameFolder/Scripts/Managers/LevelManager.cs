@@ -16,6 +16,7 @@ namespace FlipperDunkClone.Managers
 		public LevelData[] levels;
 		private LevelData levelData;
 
+		private int _currentLevelIndex = 0;
 		private void Awake()
 		{
 			if (Instance != null && Instance != this)
@@ -42,25 +43,35 @@ namespace FlipperDunkClone.Managers
 		private void OnGameStarted()
 		{
 			HoopSpawn();
-			LoadLevel(0);
+			LoadCurrentLevel();
 		}
 		private void OnGameEnd()
 		{
 			RestartLevel();
 		}
 
-		public void LoadLevel(int levelIndex)
+		private void LoadCurrentLevel()
 		{
-			if (levelIndex >= 0 && levelIndex < levels.Length)
+			if (_currentLevelIndex >= 0 && _currentLevelIndex < levels.Length)
 			{
-				levelData = levels[levelIndex];
+				levelData = levels[_currentLevelIndex];
+			}
+		}
 
-				int maxScore = levelData.maxScore;
-				GameObject hoopPrefab = levelData.hoopPrefab;
-				Vector3 hoopPositon = levelData.hoopPosition;
-				int hoopHeight = levelData.hoopHeight;
+		private void NextLevel()
+		{
+			_currentLevelIndex++;
+			if (_currentLevelIndex < levels.Length)
+			{
+				LoadCurrentLevel();
+			}
+		}
 
-
+		public void LevelCompleted()
+		{
+			if (GameManager.Instance.score == levelData.maxScore)
+			{
+				NextLevel();
 			}
 		}
 
