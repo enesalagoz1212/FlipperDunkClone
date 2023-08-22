@@ -7,6 +7,7 @@ namespace FlipperDunkClone.Controllers
 {
 	public class BallController : MonoBehaviour
 	{
+		GameSettingsManager gameSettingsManager;
 		private Rigidbody2D _rigitbody2D;
 		private void OnEnable()
 		{
@@ -38,7 +39,7 @@ namespace FlipperDunkClone.Controllers
 
 		private void OnGameStart()
 		{
-			transform.position =new Vector2(3.5f, 6.5f);
+			transform.position = GameSettingsManager.Instance.gameSettings.ballTransformPosition;
 		}
 		private void OnTriggerEnter2D(Collider2D other)
 		{
