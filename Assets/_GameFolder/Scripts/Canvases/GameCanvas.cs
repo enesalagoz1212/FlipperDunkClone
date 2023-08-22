@@ -36,7 +36,7 @@ namespace FlipperDunkClone.Canvases
 
 		public void UpdateScoreText()
 		{
-			scoreText.text = "Skor: " + GameManager.Instance.score.ToString();
+			scoreText.text = "Skor: " + GameManager.Instance.currentScore.ToString();
 		}
 
 	}

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using FlipperDunkClone.ScriptableObjects;
 
 namespace FlipperDunkClone.Managers
 {
@@ -23,9 +24,17 @@ namespace FlipperDunkClone.Managers
 		public static Action OnGameEnd;
 		public static Action OnGameScoreIncreased;
 
+
+		[SerializeField] private LevelManager levelManager;
+		[SerializeField] private LevelDataManager levelDataManager;
+
+
 		private bool _isGamePaused = false;
 
-		public int score = 0;
+
+		public int CurrentScore => currentScore;
+		public int currentScore = 0;
+
 		private void Awake()
 		{
 			if (Instance != null && Instance != this)
@@ -51,20 +60,25 @@ namespace FlipperDunkClone.Managers
 
 		private void GameInitialize()
 		{
+			levelManager.Initialize(levelDataManager);
+
 			OnGameStart();
 		}
 
 		private void OnGameStart()
 		{
+			currentScore = 0;
 			GameState = GameState.Start;
+
+			
+
 			OnGameStarted?.Invoke();
 			GameState = GameState.Playing;
-			score = 0;
+			ResumeGame();
 		}
 
 		public void EndGame()
 		{
-			score = 0;
 			GameState = GameState.End;
 			OnGameEnd?.Invoke();
 
@@ -77,16 +91,18 @@ namespace FlipperDunkClone.Managers
 
 		public void IncreaseScore()
 		{
-			score++;
+			currentScore = currentScore + 1;
+
+			//Debug.Log("Current Score: " + currentScore);
+
 			OnGameScoreIncreased?.Invoke();
 
 		}
 
 		public void RestartGame()
 		{
-			GameState = GameState.Start;
 
-			score = 0;
+			GameState = GameState.Start;			
 			LevelManager.Instance.LoadCurrentLevel();
 			OnGameStarted?.Invoke();
 

@@ -7,14 +7,14 @@ using FlipperDunkClone.ScriptableObjects;
 namespace FlipperDunkClone.Managers
 {
 	public class LevelManager : MonoBehaviour
-	{
+	{	
+		public static LevelManager Instance { get; private set; }
+
 		public GameObject hoopPrefab;
 		public GameObject hoops;
-		public static LevelManager Instance { get; private set; }
-		public LevelData LevelData => levelData;
 
-		public LevelData[] levels;
-		private LevelData levelData;
+		private LevelDataManager _levelDataManager;
+		private LevelData _currentLevelData;
 
 		private int _currentLevelIndex = 0;
 		private void Awake()
@@ -27,6 +27,12 @@ namespace FlipperDunkClone.Managers
 			{
 				Instance = this;
 			}
+		}
+
+		public void Initialize(LevelDataManager levelDataManager)
+		{
+			_levelDataManager = levelDataManager;
+		
 		}
 
 		private void OnEnable()
@@ -42,8 +48,8 @@ namespace FlipperDunkClone.Managers
 
 		private void OnGameStarted()
 		{
-			HoopSpawn();
 			LoadCurrentLevel();
+			HoopSpawn();
 		}
 		private void OnGameEnd()
 		{
@@ -52,16 +58,17 @@ namespace FlipperDunkClone.Managers
 
 		public void LoadCurrentLevel()
 		{
-			if (_currentLevelIndex >= 0 && _currentLevelIndex < levels.Length)
+			if (_currentLevelIndex>=0 && _currentLevelIndex<_levelDataManager.levelDataArray.Length)
 			{
-				levelData = levels[_currentLevelIndex];
+				_currentLevelData = _levelDataManager.levelDataArray[_currentLevelIndex];
+				LevelCompleted();
 			}
 		}
 
 		private void NextLevel()
 		{
 			_currentLevelIndex++;
-			if (_currentLevelIndex < levels.Length)
+			if (_currentLevelIndex<_levelDataManager.levelDataArray.Length)
 			{
 				LoadCurrentLevel();
 			}
@@ -69,9 +76,14 @@ namespace FlipperDunkClone.Managers
 
 		public void LevelCompleted()
 		{
-			if (GameManager.Instance.score == levelData.maxScore)
+			Debug.Log("10");
+			Debug.Log("Current Score: " + GameManager.Instance.CurrentScore);
+			Debug.Log("Max Score for Current Level: " + _currentLevelData.maxScore);
+			if (GameManager.Instance.CurrentScore == _currentLevelData.maxScore)
 			{
+				Debug.Log("12");
 				NextLevel();
+				Debug.Log("15");
 			}
 		}
 
@@ -79,7 +91,7 @@ namespace FlipperDunkClone.Managers
 
 		private void HoopSpawn()
 		{
-			var hoop = Instantiate(hoopPrefab, new Vector3(-3.5f, 1f, 0f), Quaternion.identity, hoops.transform);
+			var hoop = Instantiate(hoopPrefab,_currentLevelData.hoopPosition, Quaternion.identity, hoops.transform);
 
 		}
 

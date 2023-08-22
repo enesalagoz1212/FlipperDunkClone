@@ -26,12 +26,12 @@ namespace FlipperDunkClone.Controllers
 		{
 			if (_rigitbody2D.velocity.y<0)
 			{
-				Debug.Log("rb");
+				//Debug.Log("rb");
 				_rigitbody2D.gravityScale = 2f;
 			}
 			else
 			{
-				Debug.Log("-rb");
+				//Debug.Log("-rb");
 				_rigitbody2D.gravityScale = 1.5f;
 			}
 		}
