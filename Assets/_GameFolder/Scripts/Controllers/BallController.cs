@@ -8,6 +8,7 @@ namespace FlipperDunkClone.Controllers
 	public class BallController : MonoBehaviour
 	{
 		GameSettingsManager gameSettingsManager;
+		LevelManager levelManager;
 		private Rigidbody2D _rigitbody2D;
 		private void OnEnable()
 		{
@@ -39,6 +40,8 @@ namespace FlipperDunkClone.Controllers
 
 		private void OnGameStart()
 		{
+			_rigitbody2D.velocity = Vector2.zero;
+			_rigitbody2D.angularVelocity = 0f;
 			transform.position = GameSettingsManager.Instance.gameSettings.ballTransformPosition;
 		}
 		private void OnTriggerEnter2D(Collider2D other)
@@ -49,6 +52,7 @@ namespace FlipperDunkClone.Controllers
 				if (transform.position.y > other.transform.position.y)
 				{
 					GameManager.Instance.IncreaseScore();
+					LevelManager.Instance.LevelCompleted();
 				}
 			}
 			else if (other.gameObject.CompareTag("End"))

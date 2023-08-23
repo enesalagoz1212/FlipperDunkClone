@@ -61,7 +61,6 @@ namespace FlipperDunkClone.Managers
 			if (_currentLevelIndex>=0 && _currentLevelIndex<_levelDataManager.levelDataArray.Length)
 			{
 				_currentLevelData = _levelDataManager.levelDataArray[_currentLevelIndex];
-				LevelCompleted();
 			}
 		}
 
@@ -77,9 +76,9 @@ namespace FlipperDunkClone.Managers
 		public void LevelCompleted()
 		{
 			Debug.Log("10");
-			Debug.Log("Current Score: " + GameManager.Instance.CurrentScore);
+			Debug.Log("Current Score: " + GameManager.Instance.currentScore);
 			Debug.Log("Max Score for Current Level: " + _currentLevelData.maxScore);
-			if (GameManager.Instance.CurrentScore == _currentLevelData.maxScore)
+			if (GameManager.Instance.currentScore == _currentLevelData.maxScore)
 			{
 				Debug.Log("12");
 				NextLevel();
@@ -88,7 +87,7 @@ namespace FlipperDunkClone.Managers
 		}
 
 	
-
+	
 		private void HoopSpawn()
 		{
 			var hoop = Instantiate(hoopPrefab,_currentLevelData.hoopPosition, Quaternion.identity, hoops.transform);

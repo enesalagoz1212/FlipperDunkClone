@@ -31,9 +31,7 @@ namespace FlipperDunkClone.Managers
 
 		private bool _isGamePaused = false;
 
-
-		public int CurrentScore => currentScore;
-		public int currentScore = 0;
+		public int currentScore;
 
 		private void Awake()
 		{
@@ -67,14 +65,12 @@ namespace FlipperDunkClone.Managers
 
 		private void OnGameStart()
 		{
-			currentScore = 0;
-			GameState = GameState.Start;
-
 			
-
+			GameState = GameState.Start;		
 			OnGameStarted?.Invoke();
 			GameState = GameState.Playing;
 			ResumeGame();
+			currentScore = 0;
 		}
 
 		public void EndGame()
@@ -91,7 +87,7 @@ namespace FlipperDunkClone.Managers
 
 		public void IncreaseScore()
 		{
-			currentScore = currentScore + 1;
+			currentScore++;
 
 			//Debug.Log("Current Score: " + currentScore);
 
@@ -102,7 +98,8 @@ namespace FlipperDunkClone.Managers
 		public void RestartGame()
 		{
 
-			GameState = GameState.Start;			
+			
+			GameState = GameState.Start;
 			LevelManager.Instance.LoadCurrentLevel();
 			OnGameStarted?.Invoke();
 

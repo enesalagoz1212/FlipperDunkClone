@@ -29,12 +29,7 @@ namespace FlipperDunkClone.Controllers
 
 				_rigitbody.velocity += Vector2.up * Physics2D.gravity.y * GameSettingsManager.Instance.gameSettings.fallSpeed * Time.deltaTime;
 			}
-		
-			if (Input.GetKeyDown(KeyCode.Space))
-			{
-				Debug.Log(_rigitbody.velocity.y);
-				Debug.Log(GameSettingsManager.Instance.gameSettings.maxFallSpeed);
-			}
+
 		}
 
 	}

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a5933dc8989afd47a4721fa3db18125, type: 3}
   m_Name: Variables
   m_EditorClassIdentifier: 
-  ballTransformPosition: {x: -3.5, y: 6, z: 0}
+  ballTransformPosition: {x: 3.5, y: 5, z: 0}
   jumpForce: 15
   fallSpeed: 100
   maxFallSpeed: 5
