@@ -5,33 +5,74 @@ using FlipperDunkClone.Managers;
 
 namespace FlipperDunkClone.Controllers
 {
-	public class PlayerController : MonoBehaviour
-	{
-		GameSettingsManager gameSettingManager;
+    public class PlayerController : MonoBehaviour
+    {
+        public float rotationSpeed;
+        public float maxRotation;
+        public float returnSpeed;
 
-		private Rigidbody2D _rigitbody;
+        private bool isRotating = false;
 
-		void Start()
-		{
+        void Update()
+        {
+            if (Input.GetMouseButtonDown(0) && !isRotating)
+            {
+                StartRotation();
+            }
 
-			_rigitbody = GetComponent<Rigidbody2D>();
-		}
+            if (Input.GetMouseButtonUp(0) && isRotating)
+            {
+                StopRotation();
+            }
 
-		void Update()
-		{
-			if (Input.GetMouseButton(0))
-			{
-				_rigitbody.velocity = new Vector2(_rigitbody.velocity.x, GameSettingsManager.Instance.gameSettings.jumpForce);
-			}
+            if (isRotating)
+            {
+                RotateStick();
+            }
+            else
+            {
+                ReturnToZero();
+            }
+        }
 
-			if (_rigitbody.velocity.y < GameSettingsManager.Instance.gameSettings.maxFallSpeed)
-			{
+        void StartRotation()
+        {
+            isRotating = true;
+        }
 
-				_rigitbody.velocity += Vector2.up * Physics2D.gravity.y * GameSettingsManager.Instance.gameSettings.fallSpeed * Time.deltaTime;
-			}
+        void StopRotation()
+        {
+            isRotating = false;
+        }
 
-		}
+        void RotateStick()
+        {
+       
+            float rotation = transform.localRotation.eulerAngles.z;
+            rotation -= rotationSpeed * Time.deltaTime;
 
-	}
+         
+            if (rotation < maxRotation)
+            {
+                rotation = maxRotation;
+            }
+
+            transform.localRotation = Quaternion.Euler(0, 0, rotation);
+        }
+
+        void ReturnToZero()
+        {
+          
+            float rotation = transform.localRotation.eulerAngles.z;
+            rotation += returnSpeed * Time.deltaTime;
+
+          
+            if (rotation > 0)
+            {
+                rotation = 0;
+            }
+
+            transform.localRotation = Quaternion.Euler(0, 0, rotation);
+        }
+    }
 }
-

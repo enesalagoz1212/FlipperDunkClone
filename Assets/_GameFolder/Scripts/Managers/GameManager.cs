@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using FlipperDunkClone.ScriptableObjects;
+using DG.Tweening;
 
 namespace FlipperDunkClone.Managers
 {
@@ -10,7 +11,7 @@ namespace FlipperDunkClone.Managers
 	{
 		Start = 0,
 		Playing = 1,
-		Pause = 2,
+		Reset = 2,
 		End = 3,
 	}
 	public class GameManager : MonoBehaviour
@@ -20,16 +21,16 @@ namespace FlipperDunkClone.Managers
 
 		public static Action OnGameStarted;
 		public static Action OnGamePlaying;
-		public static Action OnGamePaused;
+		public static Action OnGameReset;
 		public static Action OnGameEnd;
 		public static Action OnGameScoreIncreased;
 
 
 		[SerializeField] private LevelManager levelManager;
-		[SerializeField] private LevelDataManager levelDataManager;
+		[SerializeField] private UIManager uiManager;
 
 
-		private bool _isGamePaused = false;
+
 
 		public int currentScore;
 
@@ -58,7 +59,7 @@ namespace FlipperDunkClone.Managers
 
 		private void GameInitialize()
 		{
-			levelManager.Initialize(levelDataManager);
+			levelManager.Initialize();
 
 			OnGameStart();
 		}
@@ -69,30 +70,51 @@ namespace FlipperDunkClone.Managers
 			GameState = GameState.Start;		
 			OnGameStarted?.Invoke();
 			GameState = GameState.Playing;
-			ResumeGame();
+	
 			currentScore = 0;
 		}
 
+		public void ResetGame()
+		{
+			ChangeState(GameState.Reset);
+			OnGameReset?.Invoke();
+			DOVirtual.DelayedCall(0.5f, () =>
+			{
+				OnGameStart();
+			});
+
+		}
 		public void EndGame()
 		{
 			GameState = GameState.End;
 			OnGameEnd?.Invoke();
 
-			PauseGame();
 		}
 		public void ChangeState(GameState gameState)
 		{
 			GameState = gameState;
 		}
 
-		public void IncreaseScore()
-		{
-			currentScore++;
+		//public void IncreaseScore()
+		//{
+		//	currentScore++;
 
-			//Debug.Log("Current Score: " + currentScore);
+		//	//Debug.Log("Current Score: " + currentScore);
+
+		//	OnGameScoreIncreased?.Invoke();
+
+		//}
+		
+		public void DecreaseScore()
+		{
+			currentScore--;
 
 			OnGameScoreIncreased?.Invoke();
+			if (currentScore==0)
+			{
+				LevelManager.Instance.LoadCurrentLevel();
 
+			}
 		}
 
 		public void RestartGame()
@@ -103,20 +125,9 @@ namespace FlipperDunkClone.Managers
 			LevelManager.Instance.LoadCurrentLevel();
 			OnGameStarted?.Invoke();
 
-			ResumeGame();
+		
 		}
 
-		private void PauseGame()
-		{
-			_isGamePaused = true;
-			Time.timeScale = 0f;
-		}
-
-		private void ResumeGame()
-		{
-			_isGamePaused = false;
-			Time.timeScale = 1f;
-		}
 
 	}
 }

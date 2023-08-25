@@ -51,13 +51,14 @@ namespace FlipperDunkClone.Controllers
 			{
 				if (transform.position.y > other.transform.position.y)
 				{
-					GameManager.Instance.IncreaseScore();
+					GameManager.Instance.DecreaseScore();
+
 					LevelManager.Instance.LevelCompleted();
 				}
 			}
 			else if (other.gameObject.CompareTag("End"))
 			{
-				GameManager.Instance.EndGame();
+				GameManager.Instance.ResetGame();
 			}
 
 		}

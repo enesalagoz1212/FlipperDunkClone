@@ -7,13 +7,14 @@ using FlipperDunkClone.ScriptableObjects;
 namespace FlipperDunkClone.Managers
 {
 	public class LevelManager : MonoBehaviour
-	{	
+	{
 		public static LevelManager Instance { get; private set; }
 
 		public GameObject hoopPrefab;
 		public GameObject hoops;
+		private GameObject currentHoop;
 
-		private LevelDataManager _levelDataManager;
+		public LevelData[] levelDataArray;
 		private LevelData _currentLevelData;
 
 		private int _currentLevelIndex = 0;
@@ -29,21 +30,23 @@ namespace FlipperDunkClone.Managers
 			}
 		}
 
-		public void Initialize(LevelDataManager levelDataManager)
+		public void Initialize()
 		{
-			_levelDataManager = levelDataManager;
-		
+
+
 		}
 
 		private void OnEnable()
 		{
 			GameManager.OnGameStarted += OnGameStarted;
 			GameManager.OnGameEnd += OnGameEnd;
+			GameManager.OnGameReset += OnGameResetAction;
 		}
 		private void OnDisable()
 		{
 			GameManager.OnGameStarted -= OnGameStarted;
 			GameManager.OnGameEnd -= OnGameEnd;
+			GameManager.OnGameReset -= OnGameResetAction;
 		}
 
 		private void OnGameStarted()
@@ -51,23 +54,27 @@ namespace FlipperDunkClone.Managers
 			LoadCurrentLevel();
 			HoopSpawn();
 		}
-		private void OnGameEnd()
+		private void OnGameResetAction()
 		{
 			
+		}
+		private void OnGameEnd()
+		{
+
 		}
 
 		public void LoadCurrentLevel()
 		{
-			if (_currentLevelIndex>=0 && _currentLevelIndex<_levelDataManager.levelDataArray.Length)
+			if (_currentLevelIndex >= 0 && _currentLevelIndex < levelDataArray.Length)
 			{
-				_currentLevelData = _levelDataManager.levelDataArray[_currentLevelIndex];
+				_currentLevelData = levelDataArray[_currentLevelIndex];
 			}
 		}
 
 		private void NextLevel()
 		{
 			_currentLevelIndex++;
-			if (_currentLevelIndex<_levelDataManager.levelDataArray.Length)
+			if (_currentLevelIndex < levelDataArray.Length)
 			{
 				LoadCurrentLevel();
 			}
@@ -86,14 +93,23 @@ namespace FlipperDunkClone.Managers
 			}
 		}
 
-	
-	
+
+
 		private void HoopSpawn()
 		{
-			var hoop = Instantiate(hoopPrefab,_currentLevelData.hoopPosition, Quaternion.identity, hoops.transform);
+			RemoveHoop();
+
+			currentHoop = Instantiate(hoopPrefab, _currentLevelData.hoopPosition, Quaternion.identity, hoops.transform);
 
 		}
 
+		private void RemoveHoop()
+		{
+			if (currentHoop!=null)
+			{
+				Destroy(currentHoop);
+			}
+		}
 	}
 }
 

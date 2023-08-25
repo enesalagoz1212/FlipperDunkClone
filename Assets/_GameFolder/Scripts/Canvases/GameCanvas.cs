@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using FlipperDunkClone.Managers;
 using TMPro;
+using FlipperDunkClone.ScriptableObjects;
 
 namespace FlipperDunkClone.Canvases
 {
     public class GameCanvas : MonoBehaviour
     {
 		public TextMeshProUGUI scoreText;
+
+		LevelData levelData;
+
+		private SettingsCanvas _settingCanvas;
+		private LevelManager _levelManager;
 		private void OnEnable()
 		{
 			GameManager.OnGameScoreIncreased += OnGameScoreIncreased;
@@ -18,6 +24,13 @@ namespace FlipperDunkClone.Canvases
 		{
 			GameManager.OnGameScoreIncreased -= OnGameScoreIncreased;
 			GameManager.OnGameStarted -= OnGameStart;
+		}
+
+		public void Initialize(LevelManager levelManager,SettingsCanvas settingsCanvas)
+		{
+			_settingCanvas = settingsCanvas;
+			_levelManager = levelManager;
+		
 		}
 		void Start()
         {
@@ -36,7 +49,7 @@ namespace FlipperDunkClone.Canvases
 
 		public void UpdateScoreText()
 		{
-			scoreText.text = "Skor: " + GameManager.Instance.currentScore.ToString();
+			scoreText.text = " " + GameManager.Instance.currentScore.ToString();
 		}
 
 	}
