@@ -8,84 +8,104 @@ namespace FlipperDunkClone.Controllers
     public class PlayerController : MonoBehaviour
     {
         public float rotationSpeed;
-        public float maxRotation;
-        public float returnSpeed;
 
         private Rigidbody2D rb;
-        private bool isRotating = false;
+        private bool _isRotating;
 
         private void Start()
         {
             rb = GetComponent<Rigidbody2D>();
+            _isRotating = false;
         }
 
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0) && !isRotating)
+            if (Input.GetMouseButtonDown(0))
             {
-                StartRotation();
+                _isRotating = true;
+            }
+            else if (Input.GetMouseButton(0))
+            {
+                _isRotating = true;
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                _isRotating = false;
             }
 
-            if (Input.GetMouseButtonUp(0) && isRotating)
+            if (_isRotating)
             {
-                StopRotation();
-            }
-
-            if (isRotating)
-            {
-                RotateStick();
+                IncreaseRotation();
             }
             else
             {
-                ReturnToZero();
+                DecreaseRotation();
             }
         }
 
-        private void StartRotation()
+        private void IncreaseRotation()
         {
-            isRotating = true;
-        }
-
-        private void StopRotation()
-        {
-            isRotating = false;
-        }
-
-        private void RotateStick()
-        {
-            float currentRotation = transform.localRotation.eulerAngles.z;
-            float newRotation = currentRotation - (rotationSpeed * Time.deltaTime);
-
-            if (newRotation < maxRotation)
+            // 0 to -65
+            var currentEulerZ = transform.localEulerAngles.z;
+            if (currentEulerZ > 180f)
             {
-                newRotation = maxRotation;
+                currentEulerZ -= 360f;
             }
-
-            
-            if (currentRotation > maxRotation)
-            {
-                newRotation -= (rotationSpeed*6) * Time.deltaTime; 
-      
-            }
-            rb.MoveRotation(newRotation);
+            currentEulerZ -= Time.deltaTime * rotationSpeed;
+            currentEulerZ = Mathf.Clamp(currentEulerZ, -65f, 0f);
+            rb.MoveRotation(currentEulerZ);
+            // transform.rotation = Quaternion.Euler(0f, 0f, currentEulerZ);
         }
 
-        private void ReturnToZero()
+        private void DecreaseRotation()
         {
-            float currentRotation = transform.localRotation.eulerAngles.z;
-
-         
-            float returnSpeedModified = returnSpeed * (1f - Mathf.Abs(currentRotation) / Mathf.Abs(maxRotation));
-
-            float newRotation = currentRotation + (returnSpeedModified * Time.deltaTime);
-
+            // -65 to 0
+            var currentEulerZ = transform.localEulerAngles.z;
+            if (currentEulerZ > 180f)
+            {
+                currentEulerZ -= 360f;
+            }
+            currentEulerZ += Time.deltaTime * rotationSpeed;
+            currentEulerZ = Mathf.Clamp(currentEulerZ, -65f, 0f);
+            rb.MoveRotation(currentEulerZ);
+            // transform.rotation = Quaternion.Euler(0f, 0f, currentEulerZ);
+        }
         
-            if (newRotation > 0)
-            {
-                newRotation = 0;
-            }
-
-            rb.MoveRotation(newRotation);
-        }
+        // private void RotateStick()
+        // {
+        //     float currentRotation = transform.localRotation.eulerAngles.z;
+        //     float newRotation = currentRotation - (rotationSpeed * Time.deltaTime);
+        //
+        //     if (newRotation < maxRotation)
+        //     {
+        //         newRotation = maxRotation;
+        //     }
+        //
+        //     
+        //     if (currentRotation > maxRotation)
+        //     {
+        //         newRotation -= (rotationSpeed*6) * Time.deltaTime; 
+        //
+        //     }
+        //     rb.MoveRotation(newRotation);
+        // }
+        //
+        // private void ReturnToZero()
+        // {
+        //     float currentRotation = transform.localRotation.eulerAngles.z;
+        //
+        //  
+        //     float returnSpeedModified = returnSpeed * (1f - Mathf.Abs(currentRotation) / Mathf.Abs(maxRotation));
+        //
+        //     float newRotation = currentRotation + (returnSpeedModified * Time.deltaTime);
+        //
+        //
+        //     if (newRotation > 0)
+        //     {
+        //         newRotation = 0;
+        //     }
+        //
+        //     rb.MoveRotation(newRotation);
+        // }
     }
 }
