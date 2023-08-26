@@ -11,9 +11,15 @@ namespace FlipperDunkClone.Controllers
         public float maxRotation;
         public float returnSpeed;
 
+        private Rigidbody2D rb;
         private bool isRotating = false;
 
-        void Update()
+        private void Start()
+        {
+            rb = GetComponent<Rigidbody2D>();
+        }
+
+        private void Update()
         {
             if (Input.GetMouseButtonDown(0) && !isRotating)
             {
@@ -35,44 +41,51 @@ namespace FlipperDunkClone.Controllers
             }
         }
 
-        void StartRotation()
+        private void StartRotation()
         {
             isRotating = true;
         }
 
-        void StopRotation()
+        private void StopRotation()
         {
             isRotating = false;
         }
 
-        void RotateStick()
+        private void RotateStick()
         {
-       
-            float rotation = transform.localRotation.eulerAngles.z;
-            rotation -= rotationSpeed * Time.deltaTime;
+            float currentRotation = transform.localRotation.eulerAngles.z;
+            float newRotation = currentRotation - (rotationSpeed * Time.deltaTime);
 
-         
-            if (rotation < maxRotation)
+            if (newRotation < maxRotation)
             {
-                rotation = maxRotation;
+                newRotation = maxRotation;
             }
 
-            transform.localRotation = Quaternion.Euler(0, 0, rotation);
+            
+            if (currentRotation > maxRotation)
+            {
+                newRotation -= (rotationSpeed*6) * Time.deltaTime; 
+      
+            }
+            rb.MoveRotation(newRotation);
         }
 
-        void ReturnToZero()
+        private void ReturnToZero()
         {
-          
-            float rotation = transform.localRotation.eulerAngles.z;
-            rotation += returnSpeed * Time.deltaTime;
+            float currentRotation = transform.localRotation.eulerAngles.z;
 
-          
-            if (rotation > 0)
+         
+            float returnSpeedModified = returnSpeed * (1f - Mathf.Abs(currentRotation) / Mathf.Abs(maxRotation));
+
+            float newRotation = currentRotation + (returnSpeedModified * Time.deltaTime);
+
+        
+            if (newRotation > 0)
             {
-                rotation = 0;
+                newRotation = 0;
             }
 
-            transform.localRotation = Quaternion.Euler(0, 0, rotation);
+            rb.MoveRotation(newRotation);
         }
     }
 }
