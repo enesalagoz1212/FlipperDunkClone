@@ -52,7 +52,7 @@ namespace FlipperDunkClone.Controllers
                 currentEulerZ -= 360f;
             }
             currentEulerZ -= Time.deltaTime * rotationSpeed;
-            currentEulerZ = Mathf.Clamp(currentEulerZ, -65f, 0f);
+            currentEulerZ = Mathf.Clamp(currentEulerZ, -75f, 0f);
             rb.MoveRotation(currentEulerZ);
             // transform.rotation = Quaternion.Euler(0f, 0f, currentEulerZ);
         }
@@ -66,7 +66,7 @@ namespace FlipperDunkClone.Controllers
                 currentEulerZ -= 360f;
             }
             currentEulerZ += Time.deltaTime * rotationSpeed;
-            currentEulerZ = Mathf.Clamp(currentEulerZ, -65f, 0f);
+            currentEulerZ = Mathf.Clamp(currentEulerZ, -75f, 0f);
             rb.MoveRotation(currentEulerZ);
             // transform.rotation = Quaternion.Euler(0f, 0f, currentEulerZ);
         }

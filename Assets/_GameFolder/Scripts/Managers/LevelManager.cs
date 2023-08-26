@@ -10,6 +10,8 @@ namespace FlipperDunkClone.Managers
 	{
 		public static LevelManager Instance { get; private set; }
 
+		private UIManager _uiManager;
+
 		public GameObject hoopPrefab;
 		public GameObject hoops;
 		private GameObject currentHoop;
@@ -18,6 +20,7 @@ namespace FlipperDunkClone.Managers
 		private LevelData _currentLevelData;
 
 		private int _currentLevelIndex = 0;
+		private int maxScore;
 		private void Awake()
 		{
 			if (Instance != null && Instance != this)
@@ -30,9 +33,9 @@ namespace FlipperDunkClone.Managers
 			}
 		}
 
-		public void Initialize()
+		public void Initialize(UIManager uiManager)
 		{
-
+			_uiManager = uiManager;
 
 		}
 
@@ -51,6 +54,7 @@ namespace FlipperDunkClone.Managers
 
 		private void OnGameStarted()
 		{
+			Debug.Log("OnGameStarted called");
 			LoadCurrentLevel();
 			HoopSpawn();
 		}
@@ -65,17 +69,22 @@ namespace FlipperDunkClone.Managers
 
 		public void LoadCurrentLevel()
 		{
+			
 			if (_currentLevelIndex >= 0 && _currentLevelIndex < levelDataArray.Length)
 			{
 				_currentLevelData = levelDataArray[_currentLevelIndex];
+				GameManager.Instance.currentScore = _currentLevelData.maxScore;
 			}
 		}
 
 		private void NextLevel()
 		{
+			Debug.Log("Level geçiþi oldu.");
 			_currentLevelIndex++;
 			if (_currentLevelIndex < levelDataArray.Length)
 			{
+				Debug.Log("Next level if bloðuna girdi");
+
 				LoadCurrentLevel();
 			}
 		}
@@ -85,14 +94,13 @@ namespace FlipperDunkClone.Managers
 			Debug.Log("10");
 			Debug.Log("Current Score: " + GameManager.Instance.currentScore);
 			Debug.Log("Max Score for Current Level: " + _currentLevelData.maxScore);
-			if (GameManager.Instance.currentScore == _currentLevelData.maxScore)
+			if (GameManager.Instance.currentScore ==0)
 			{
 				Debug.Log("12");
 				NextLevel();
 				Debug.Log("15");
 			}
 		}
-
 
 
 		private void HoopSpawn()

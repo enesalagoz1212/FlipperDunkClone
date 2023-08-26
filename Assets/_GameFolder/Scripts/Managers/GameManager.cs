@@ -23,7 +23,7 @@ namespace FlipperDunkClone.Managers
 		public static Action OnGamePlaying;
 		public static Action OnGameReset;
 		public static Action OnGameEnd;
-		public static Action OnGameScoreIncreased;
+		public static Action OnGameScoredecreased;
 
 
 		[SerializeField] private LevelManager levelManager;
@@ -59,7 +59,7 @@ namespace FlipperDunkClone.Managers
 
 		private void GameInitialize()
 		{
-			levelManager.Initialize();
+			levelManager.Initialize(uiManager);
 
 			OnGameStart();
 		}
@@ -70,8 +70,8 @@ namespace FlipperDunkClone.Managers
 			GameState = GameState.Start;		
 			OnGameStarted?.Invoke();
 			GameState = GameState.Playing;
-	
-			currentScore = 0;
+
+		 
 		}
 
 		public void ResetGame()
@@ -95,25 +95,15 @@ namespace FlipperDunkClone.Managers
 			GameState = gameState;
 		}
 
-		//public void IncreaseScore()
-		//{
-		//	currentScore++;
-
-		//	//Debug.Log("Current Score: " + currentScore);
-
-		//	OnGameScoreIncreased?.Invoke();
-
-		//}
 		
 		public void DecreaseScore()
 		{
 			currentScore--;
 
-			OnGameScoreIncreased?.Invoke();
+			OnGameScoredecreased?.Invoke();
 			if (currentScore==0)
 			{
-				LevelManager.Instance.LoadCurrentLevel();
-
+				LevelManager.Instance.LevelCompleted();
 			}
 		}
 
