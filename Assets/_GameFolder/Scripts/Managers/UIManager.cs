@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FlipperDunkClone.Canvases;
+using FlipperDunkClone.Controllers;
 
 namespace FlipperDunkClone.Managers
 {
@@ -28,9 +29,9 @@ namespace FlipperDunkClone.Managers
             }
         }
 
-        public void Initialize(LevelManager levelManager)
+        public void Initialize(LevelManager levelManager ,BallController ballController)
         {
-
+            endCanvas.Initialize(ballController);
             gameCanvas.Initialize(levelManager, settingsCanvas);
         }
 

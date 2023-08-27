@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using FlipperDunkClone.ScriptableObjects;
 using DG.Tweening;
+using FlipperDunkClone.Controllers;
 
 namespace FlipperDunkClone.Managers
 {
@@ -28,6 +29,7 @@ namespace FlipperDunkClone.Managers
 
 		[SerializeField] private LevelManager levelManager;
 		[SerializeField] private UIManager uiManager;
+		[SerializeField] private BallController ballController;
 
 
 
@@ -60,28 +62,24 @@ namespace FlipperDunkClone.Managers
 		private void GameInitialize()
 		{
 			levelManager.Initialize(uiManager);
-
+			uiManager.Initialize(levelManager, ballController);
 			OnGameStart();
 		}
 
 		private void OnGameStart()
 		{
-			
-			GameState = GameState.Start;		
+
+			GameState = GameState.Start;
 			OnGameStarted?.Invoke();
 			GameState = GameState.Playing;
-
-		 
+			//ResetGame();		 
 		}
 
 		public void ResetGame()
 		{
 			ChangeState(GameState.Reset);
 			OnGameReset?.Invoke();
-			DOVirtual.DelayedCall(0.5f, () =>
-			{
-				OnGameStart();
-			});
+
 
 		}
 		public void EndGame()
@@ -95,30 +93,39 @@ namespace FlipperDunkClone.Managers
 			GameState = gameState;
 		}
 
-		
+
 		public void DecreaseScore()
 		{
 			currentScore--;
-
 			OnGameScoredecreased?.Invoke();
-			if (currentScore==0)
+
+			if (currentScore == 0)
 			{
-				LevelManager.Instance.LevelCompleted();
+				DOVirtual.DelayedCall(0.2f, () =>
+				{
+					GameState = GameState.End;
+					OnGameEnd?.Invoke();
+					PauseGame();
+				});
 			}
 		}
 
 		public void RestartGame()
 		{
-
-			
 			GameState = GameState.Start;
 			LevelManager.Instance.LoadCurrentLevel();
 			OnGameStarted?.Invoke();
-
-		
 		}
 
+		public void PauseGame()
+		{
+			Time.timeScale = 0;
+		}
 
+		public void ResumeGame()
+		{
+			Time.timeScale = 1;
+		}
 	}
 }
 

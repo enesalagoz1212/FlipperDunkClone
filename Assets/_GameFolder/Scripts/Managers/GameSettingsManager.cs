@@ -5,12 +5,12 @@ using FlipperDunkClone.ScriptableObjects;
 
 namespace FlipperDunkClone.Managers
 {
-    public class GameSettingsManager : MonoBehaviour
-    {
-        public static GameSettingsManager Instance { get; private set; }
+	public class GameSettingsManager : MonoBehaviour
+	{
+		public static GameSettingsManager Instance { get; private set; }
 
-        public GameSettings gameSettings;
-
+		public GameSettings gameSettings;
+		
 
 		private void Awake()
 		{

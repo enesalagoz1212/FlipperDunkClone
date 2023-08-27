@@ -54,13 +54,16 @@ namespace FlipperDunkClone.Managers
 
 		private void OnGameStarted()
 		{
+
 			Debug.Log("OnGameStarted called");
 			LoadCurrentLevel();
+			Debug.Log("Enes");
 			HoopSpawn();
 		}
 		private void OnGameResetAction()
 		{
-			
+			GameManager.Instance.ChangeState(GameState.Start);
+			GameManager.OnGameStarted?.Invoke();
 		}
 		private void OnGameEnd()
 		{
@@ -69,38 +72,28 @@ namespace FlipperDunkClone.Managers
 
 		public void LoadCurrentLevel()
 		{
-			
+
 			if (_currentLevelIndex >= 0 && _currentLevelIndex < levelDataArray.Length)
 			{
 				_currentLevelData = levelDataArray[_currentLevelIndex];
+				Debug.Log("a");
 				GameManager.Instance.currentScore = _currentLevelData.maxScore;
+				
+				Debug.Log("b");
 			}
 		}
 
-		private void NextLevel()
+		public void NextLevel()
 		{
-			Debug.Log("Level geçiþi oldu.");
+			GameManager.Instance.ResumeGame();
 			_currentLevelIndex++;
 			if (_currentLevelIndex < levelDataArray.Length)
 			{
-				Debug.Log("Next level if bloðuna girdi");
-
 				LoadCurrentLevel();
+				HoopSpawn();
 			}
 		}
 
-		public void LevelCompleted()
-		{
-			Debug.Log("10");
-			Debug.Log("Current Score: " + GameManager.Instance.currentScore);
-			Debug.Log("Max Score for Current Level: " + _currentLevelData.maxScore);
-			if (GameManager.Instance.currentScore ==0)
-			{
-				Debug.Log("12");
-				NextLevel();
-				Debug.Log("15");
-			}
-		}
 
 
 		private void HoopSpawn()
@@ -113,7 +106,7 @@ namespace FlipperDunkClone.Managers
 
 		private void RemoveHoop()
 		{
-			if (currentHoop!=null)
+			if (currentHoop != null)
 			{
 				Destroy(currentHoop);
 			}

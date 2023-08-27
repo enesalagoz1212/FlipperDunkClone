@@ -9,41 +9,73 @@ namespace FlipperDunkClone.Controllers
 	{
 		GameSettingsManager gameSettingsManager;
 		LevelManager levelManager;
-		private Rigidbody2D _rigitbody2D;
+		private UIManager _uiManager;
+
+		private Rigidbody2D _rigidbody2D;
+
+		
+		private bool _canClick;
+
+
+		public void Initialize(UIManager uiManager)
+		{
+			_uiManager = uiManager;
+
+		}
 		private void OnEnable()
 		{
 			GameManager.OnGameStarted += OnGameStart;
+			GameManager.OnGameReset += OnGameReset;
 		}
 		private void OnDisable()
 		{
 			GameManager.OnGameStarted -= OnGameStart;
+			GameManager.OnGameReset -= OnGameReset;
 		}
+
 		void Start()
 		{
-			_rigitbody2D = GetComponent<Rigidbody2D>();
+			_canClick = true;
+			_rigidbody2D = GetComponent<Rigidbody2D>();
 		}
 
 
-		void Update()
+		private void Update()
 		{
-			if (_rigitbody2D.velocity.y<0)
+			if (GameManager.Instance.GameState==GameState.Playing)
 			{
-				//Debug.Log("rb");
-				_rigitbody2D.gravityScale = 5f;
-			}
-			else
-			{
-				//Debug.Log("-rb");
-				_rigitbody2D.gravityScale = 3f;
+				Debug.Log("ewrfewtwtwe egfagfawgf");
+				GravitScale();
+				Debug.Log("yjdjfdj");
 			}
 		}
 
 		private void OnGameStart()
 		{
-			_rigitbody2D.velocity = Vector2.zero;
-			_rigitbody2D.angularVelocity = 0f;
+			BallTransformPosition();
+			_rigidbody2D.velocity = Vector2.zero;
+			_rigidbody2D.angularVelocity = 0f;			
+		}
+
+		private void GravitScale()
+		{
+			if (_rigidbody2D.velocity.y < 0)
+			{
+				Debug.Log("rb");
+				_rigidbody2D.gravityScale = 5f;
+			}
+			else
+			{
+				Debug.Log("-rb");
+				_rigidbody2D.gravityScale = 3f;
+			}
+		}
+		public void BallTransformPosition()
+		{
+			Debug.Log("Ball");
 			transform.position = GameSettingsManager.Instance.gameSettings.ballTransformPosition;
 		}
+
 		private void OnTriggerEnter2D(Collider2D other)
 		{
 
@@ -52,17 +84,23 @@ namespace FlipperDunkClone.Controllers
 				if (transform.position.y > other.transform.position.y)
 				{
 					GameManager.Instance.DecreaseScore();
-
-					LevelManager.Instance.LevelCompleted();
 				}
 			}
-			else if (other.gameObject.CompareTag("End"))
+			else if (other.gameObject.CompareTag("Reset"))
 			{
 				GameManager.Instance.ResetGame();
 			}
+		}
+
+		private void OnGameReset()
+		{
+			_canClick = false;
+			_rigidbody2D.velocity = Vector2.zero;
+
 
 		}
-	
+
+
 	}
 
 }
