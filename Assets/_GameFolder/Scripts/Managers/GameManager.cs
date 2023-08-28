@@ -33,7 +33,6 @@ namespace FlipperDunkClone.Managers
 		[SerializeField] private BallController ballController;
 
 
-		[SerializeField] private ResetCanvas resetCanvas;
 
 
 		public int currentScore;
@@ -65,7 +64,7 @@ namespace FlipperDunkClone.Managers
 		{
 			levelManager.Initialize(uiManager);
 			uiManager.Initialize(levelManager, ballController);
-			ballController.Initialize(uiManager,resetCanvas);
+			ballController.Initialize(uiManager);
 			OnGameStart();
 		}
 

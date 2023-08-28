@@ -20,10 +20,10 @@ namespace FlipperDunkClone.Controllers
 		private bool _canClick;
 
 
-		public void Initialize(UIManager uiManager, ResetCanvas resetCanvas)
+		public void Initialize(UIManager uiManager)
 		{
 			_uiManager = uiManager;
-			_resetCanvas = resetCanvas;
+			
 		}
 		private void OnEnable()
 		{
@@ -88,7 +88,7 @@ namespace FlipperDunkClone.Controllers
 			}
 			else if (other.gameObject.CompareTag("Fail"))
 			{
-				_resetCanvas.ResetPanelGame();
+				UIManager.Instance.ResetCanvas.ResetPanelGame();
 			}
 		}
 
