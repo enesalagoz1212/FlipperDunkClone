@@ -50,7 +50,7 @@ namespace FlipperDunkClone.Canvases
 
 		private void OnGameReset()
 		{
-			
+			Debug.Log(1234);
 		}
 
 		private void OnGameEnd()

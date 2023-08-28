@@ -43,13 +43,13 @@ namespace FlipperDunkClone.Managers
 		{
 			GameManager.OnGameStarted += OnGameStarted;
 			GameManager.OnGameEnd += OnGameEnd;
-			GameManager.OnGameReset += OnGameResetAction;
+			GameManager.OnGameReset += OnGameReset;
 		}
 		private void OnDisable()
 		{
 			GameManager.OnGameStarted -= OnGameStarted;
 			GameManager.OnGameEnd -= OnGameEnd;
-			GameManager.OnGameReset -= OnGameResetAction;
+			GameManager.OnGameReset -= OnGameReset;
 		}
 
 		private void OnGameStarted()
@@ -57,10 +57,9 @@ namespace FlipperDunkClone.Managers
 			LoadCurrentLevel();
 			HoopSpawn();
 		}
-		private void OnGameResetAction()
+		private void OnGameReset()
 		{
-			GameManager.Instance.ChangeState(GameState.Start);
-			GameManager.OnGameStarted?.Invoke();
+			
 		}
 		private void OnGameEnd()
 		{
@@ -84,7 +83,7 @@ namespace FlipperDunkClone.Managers
 				LoadCurrentLevel();
 				HoopSpawn();
 			}
-			GameManager.Instance.ResumeGame();
+	
 		}
 
 

@@ -10,7 +10,7 @@ namespace FlipperDunkClone.Canvases
 	public class EndCanvas : MonoBehaviour
 	{
 		BallController _ballController;
-
+		public GameObject Ball;
 
 		public GameObject endPanel;
 		public Button nextButton;
@@ -38,9 +38,15 @@ namespace FlipperDunkClone.Canvases
 
 		private void NextButtonClicked()
 		{
+			GameManager.Instance.ResetGame();
+
+			GameManager.Instance.ChangeState(GameState.Start);
+			GameManager.OnGameStarted?.Invoke();
 
 			LevelManager.Instance.NextLevel();
-			GameManager.Instance.ResetGame();
+
+			Ball.gameObject.SetActive(true);
+			_ballController.BallTransformPosition();
 
 			endPanel.SetActive(false);
 		}

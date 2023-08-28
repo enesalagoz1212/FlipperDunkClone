@@ -965,7 +965,6 @@ MonoBehaviour:
   levelManager: {fileID: 1544162212}
   uiManager: {fileID: 521339614}
   ballController: {fileID: 171787526}
-  resetCanvas: {fileID: 1919593705}
   currentScore: 0
 --- !u!4 &223941801
 Transform:
@@ -7544,6 +7543,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10263b9d4d395f547a38b5cfbb9f635c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Ball: {fileID: 171787521}
   endPanel: {fileID: 2070442924}
   nextButton: {fileID: 209581617}
 --- !u!114 &1732243642

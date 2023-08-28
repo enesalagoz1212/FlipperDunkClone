@@ -17,7 +17,6 @@ namespace FlipperDunkClone.Controllers
 		private Rigidbody2D _rigidbody2D;
 
 
-		private bool _canClick;
 
 
 		public void Initialize(UIManager uiManager)
@@ -40,7 +39,7 @@ namespace FlipperDunkClone.Controllers
 
 		void Start()
 		{
-			_canClick = true;
+
 			_rigidbody2D = GetComponent<Rigidbody2D>();
 		}
 
@@ -89,6 +88,7 @@ namespace FlipperDunkClone.Controllers
 			else if (other.gameObject.CompareTag("Fail"))
 			{
 				UIManager.Instance.ResetCanvas.ResetPanelGame();
+				gameObject.SetActive(false);
 			}
 		}
 
@@ -97,12 +97,17 @@ namespace FlipperDunkClone.Controllers
 			_rigidbody2D.velocity = Vector2.zero;
 			//_rigidbody2D.constraints
 			BallTransformPosition();
-			//gameObject.SetActive(true);
+			gameObject.SetActive(true); 
+			Debug.Log("e");
 		}
 
+		public void BallSetActice()
+		{
+			gameObject.SetActive(true);
+		}
 		private void OnGameEnd()
 		{
-			//gameObject.SetActive(false);
+			gameObject.SetActive(false);
 		}
 	}
 

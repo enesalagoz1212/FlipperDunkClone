@@ -40,6 +40,10 @@ namespace FlipperDunkClone.Canvases
 		private void OnRestartButtonClicked()
 		{
 			GameManager.Instance.ResetGame();
+
+			_ballController.BallTransformPosition();
+			_ballController.BallSetActice();
+
 			resetPanel.SetActive(false);
 		}
 
