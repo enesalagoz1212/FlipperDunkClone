@@ -12,8 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1e6cd8332b9f834e8de0505a0e1a897, type: 3}
   m_Name: Level2
   m_EditorClassIdentifier: 
-  levelName: Level2
   maxScore: 3
-  hoopPrefab: {fileID: 8624520260583960953, guid: 209bbc36092d45b40bb15fa3a70b646f, type: 3}
-  hoopPosition: {x: -3.5, y: 4, z: 0}
-  hoopHeight: 1
+  hoopPosition: {x: -3.5, y: 0.5, z: 0}

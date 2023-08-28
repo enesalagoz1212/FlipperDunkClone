@@ -2,35 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FlipperDunkClone.Managers;
+using FlipperDunkClone.Canvases;
 
 namespace FlipperDunkClone.Controllers
 {
 	public class BallController : MonoBehaviour
 	{
-		GameSettingsManager gameSettingsManager;
-		LevelManager levelManager;
-		private UIManager _uiManager;
+		GameSettingsManager _gameSettingsManager;
+		LevelManager _levelManager;
+	    UIManager _uiManager;
+		ResetCanvas _resetCanvas;
+
 
 		private Rigidbody2D _rigidbody2D;
 
-		
+
 		private bool _canClick;
 
 
-		public void Initialize(UIManager uiManager)
+		public void Initialize(UIManager uiManager, ResetCanvas resetCanvas)
 		{
 			_uiManager = uiManager;
-
+			_resetCanvas = resetCanvas;
 		}
 		private void OnEnable()
 		{
 			GameManager.OnGameStarted += OnGameStart;
 			GameManager.OnGameReset += OnGameReset;
+			GameManager.OnGameEnd += OnGameEnd;
 		}
 		private void OnDisable()
 		{
 			GameManager.OnGameStarted -= OnGameStart;
 			GameManager.OnGameReset -= OnGameReset;
+			GameManager.OnGameEnd -= OnGameEnd;
 		}
 
 		void Start()
@@ -42,19 +47,14 @@ namespace FlipperDunkClone.Controllers
 
 		private void Update()
 		{
-			if (GameManager.Instance.GameState==GameState.Playing)
-			{
-				Debug.Log("ewrfewtwtwe egfagfawgf");
-				GravitScale();
-				Debug.Log("yjdjfdj");
-			}
+			GravitScale();
 		}
 
 		private void OnGameStart()
 		{
 			BallTransformPosition();
 			_rigidbody2D.velocity = Vector2.zero;
-			_rigidbody2D.angularVelocity = 0f;			
+			_rigidbody2D.angularVelocity = 0f;
 		}
 
 		private void GravitScale()
@@ -86,21 +86,24 @@ namespace FlipperDunkClone.Controllers
 					GameManager.Instance.DecreaseScore();
 				}
 			}
-			else if (other.gameObject.CompareTag("Reset"))
+			else if (other.gameObject.CompareTag("Fail"))
 			{
-				GameManager.Instance.ResetGame();
+				_resetCanvas.ResetPanelGame();
 			}
 		}
 
 		private void OnGameReset()
 		{
-			_canClick = false;
 			_rigidbody2D.velocity = Vector2.zero;
-
-
+			//_rigidbody2D.constraints
+			BallTransformPosition();
+			//gameObject.SetActive(true);
 		}
 
-
+		private void OnGameEnd()
+		{
+			//gameObject.SetActive(false);
+		}
 	}
 
 }

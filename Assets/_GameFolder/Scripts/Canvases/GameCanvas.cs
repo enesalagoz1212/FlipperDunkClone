@@ -21,11 +21,15 @@ namespace FlipperDunkClone.Canvases
 		{
 			GameManager.OnGameScoredecreased += OnGameScoredecreased;
 			GameManager.OnGameStarted += OnGameStart;
+			GameManager.OnGameReset += OnGameReset;
+			GameManager.OnGameEnd += OnGameEnd;
 		}
 		private void OnDisable()
 		{
 			GameManager.OnGameScoredecreased -= OnGameScoredecreased;
 			GameManager.OnGameStarted -= OnGameStart;
+			GameManager.OnGameReset -= OnGameReset;
+			GameManager.OnGameEnd -= OnGameEnd;
 		}
 
 		public void Initialize(LevelManager levelManager, SettingsCanvas settingsCanvas)
@@ -42,6 +46,16 @@ namespace FlipperDunkClone.Canvases
 		private void OnGameStart()
 		{
 			UpdateLevelDataMaxScore();
+		}
+
+		private void OnGameReset()
+		{
+			
+		}
+
+		private void OnGameEnd()
+		{
+			levelIndex++;
 		}
 
 		private void OnGameScoredecreased()

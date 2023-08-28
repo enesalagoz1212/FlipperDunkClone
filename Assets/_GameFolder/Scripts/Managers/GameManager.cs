@@ -5,6 +5,7 @@ using System;
 using FlipperDunkClone.ScriptableObjects;
 using DG.Tweening;
 using FlipperDunkClone.Controllers;
+using FlipperDunkClone.Canvases;
 
 namespace FlipperDunkClone.Managers
 {
@@ -32,6 +33,7 @@ namespace FlipperDunkClone.Managers
 		[SerializeField] private BallController ballController;
 
 
+		[SerializeField] private ResetCanvas resetCanvas;
 
 
 		public int currentScore;
@@ -63,6 +65,7 @@ namespace FlipperDunkClone.Managers
 		{
 			levelManager.Initialize(uiManager);
 			uiManager.Initialize(levelManager, ballController);
+			ballController.Initialize(uiManager,resetCanvas);
 			OnGameStart();
 		}
 
@@ -71,16 +74,13 @@ namespace FlipperDunkClone.Managers
 
 			GameState = GameState.Start;
 			OnGameStarted?.Invoke();
-			GameState = GameState.Playing;
-			//ResetGame();		 
+			GameState = GameState.Playing;	 
 		}
 
 		public void ResetGame()
 		{
 			ChangeState(GameState.Reset);
 			OnGameReset?.Invoke();
-
-
 		}
 		public void EndGame()
 		{
@@ -110,12 +110,6 @@ namespace FlipperDunkClone.Managers
 			}
 		}
 
-		public void RestartGame()
-		{
-			GameState = GameState.Start;
-			LevelManager.Instance.LoadCurrentLevel();
-			OnGameStarted?.Invoke();
-		}
 
 		public void PauseGame()
 		{

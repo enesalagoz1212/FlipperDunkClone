@@ -54,10 +54,7 @@ namespace FlipperDunkClone.Managers
 
 		private void OnGameStarted()
 		{
-
-			Debug.Log("OnGameStarted called");
 			LoadCurrentLevel();
-			Debug.Log("Enes");
 			HoopSpawn();
 		}
 		private void OnGameResetAction()
@@ -72,26 +69,22 @@ namespace FlipperDunkClone.Managers
 
 		public void LoadCurrentLevel()
 		{
-
 			if (_currentLevelIndex >= 0 && _currentLevelIndex < levelDataArray.Length)
 			{
 				_currentLevelData = levelDataArray[_currentLevelIndex];
-				Debug.Log("a");
 				GameManager.Instance.currentScore = _currentLevelData.maxScore;
-				
-				Debug.Log("b");
 			}
 		}
 
 		public void NextLevel()
 		{
-			GameManager.Instance.ResumeGame();
 			_currentLevelIndex++;
 			if (_currentLevelIndex < levelDataArray.Length)
 			{
 				LoadCurrentLevel();
 				HoopSpawn();
 			}
+			GameManager.Instance.ResumeGame();
 		}
 
 
