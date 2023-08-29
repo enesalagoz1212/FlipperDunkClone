@@ -59,7 +59,7 @@ namespace FlipperDunkClone.Managers
 		}
 		private void OnGameReset()
 		{
-			
+			LoadCurrentLevel();
 		}
 		private void OnGameEnd()
 		{
@@ -81,7 +81,7 @@ namespace FlipperDunkClone.Managers
 			if (_currentLevelIndex < levelDataArray.Length)
 			{
 				LoadCurrentLevel();
-				HoopSpawn();
+				
 			}
 	
 		}

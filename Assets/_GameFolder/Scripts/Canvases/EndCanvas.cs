@@ -45,8 +45,8 @@ namespace FlipperDunkClone.Canvases
 
 			LevelManager.Instance.NextLevel();
 
-			Ball.gameObject.SetActive(true);
-			_ballController.BallTransformPosition();
+			Ball.gameObject.SetActive(true);                   
+			_ballController.BallTransformPosition();               
 
 			endPanel.SetActive(false);
 		}

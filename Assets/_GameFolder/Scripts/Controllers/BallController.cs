@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using FlipperDunkClone.Managers;
 using FlipperDunkClone.Canvases;
+using FlipperDunkClone.Controllers;
 
 namespace FlipperDunkClone.Controllers
 {
@@ -12,17 +13,17 @@ namespace FlipperDunkClone.Controllers
 		LevelManager _levelManager;
 	    UIManager _uiManager;
 		ResetCanvas _resetCanvas;
-
+		HoopController _hoopController;
 
 		private Rigidbody2D _rigidbody2D;
 
 
 
 
-		public void Initialize(UIManager uiManager)
+		public void Initialize(UIManager uiManager, HoopController hoopController)
 		{
 			_uiManager = uiManager;
-			
+			_hoopController = hoopController;
 		}
 		private void OnEnable()
 		{
@@ -82,7 +83,9 @@ namespace FlipperDunkClone.Controllers
 			{
 				if (transform.position.y > other.transform.position.y)
 				{
-					GameManager.Instance.DecreaseScore();
+					_hoopController.SpawnRandomHoop();
+					GameManager.Instance.OnBasketThrown();
+
 				}
 			}
 			else if (other.gameObject.CompareTag("Fail"))
