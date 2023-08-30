@@ -38,6 +38,7 @@ namespace FlipperDunkClone.Canvases
 			_levelManager = levelManager;
 
 		}
+
 		void Start()
 		{
 

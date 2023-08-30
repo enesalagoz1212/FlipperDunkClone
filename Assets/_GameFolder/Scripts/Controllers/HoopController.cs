@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FlipperDunkClone.Managers;
+using FlipperDunkClone.ScriptableObjects;
 
 namespace FlipperDunkClone.Controllers
 {
@@ -11,16 +12,27 @@ namespace FlipperDunkClone.Controllers
 		public GameObject hoopPrefab;
 
 
+
+
 		LevelManager _levelManager;
+		private LevelData _currentLevelData;
 
 		public void Initialize(LevelManager levelManager)
 		{
 			_levelManager = levelManager;
 		}
 
+		private void Start()
+		{
+
+		}
+
+
+
+
 		public void SpawnRandomHoop()
 		{
-			RemoveRandomHoop();
+			
 			int randomIndex;
 			do
 			{
@@ -31,7 +43,7 @@ namespace FlipperDunkClone.Controllers
 			} while (spawnPoints[randomIndex].position == hoopPrefab.transform.position);
 
 			Transform spawnTransform = spawnPoints[randomIndex];
-			if (randomIndex == 2)
+			if (randomIndex == 2 || randomIndex == 3)
 			{
 				Debug.Log("randomIndex 2 veya 3 ");
 				Quaternion hooRotation = Quaternion.Euler(-180, 0, 180);
@@ -44,13 +56,14 @@ namespace FlipperDunkClone.Controllers
 
 		}
 
-		public void RemoveRandomHoop()
-		{
-			if (hoopPrefab != null)
-			{
-				Destroy(hoopPrefab);
-			}
-		}
+
+		//public void RemoveRandomHoop()
+		//{
+		//	if (hoopPrefab != null)
+		//	{
+		//		Destroy(hoopPrefab);
+		//	}
+		//}
 	}
 }
 

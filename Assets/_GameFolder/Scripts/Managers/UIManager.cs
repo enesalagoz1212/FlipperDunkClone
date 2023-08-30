@@ -34,7 +34,8 @@ namespace FlipperDunkClone.Managers
         {
             endCanvas.Initialize(ballController);
             gameCanvas.Initialize(levelManager, settingsCanvas);
-            resetCanvas.Initialize(ballController);                                          
+            resetCanvas.Initialize(ballController);
+            settingsCanvas.Initialize(gameCanvas);
         }
 
         void Start()

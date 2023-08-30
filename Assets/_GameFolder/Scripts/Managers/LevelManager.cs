@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using FlipperDunkClone.ScriptableObjects;
+using FlipperDunkClone.Controllers;
 
 namespace FlipperDunkClone.Managers
 {
@@ -11,6 +12,7 @@ namespace FlipperDunkClone.Managers
 		public static LevelManager Instance { get; private set; }
 
 		private UIManager _uiManager;
+		private HoopController _hoopController;
 
 		public GameObject hoopPrefab;
 		public GameObject hoops;
@@ -33,12 +35,16 @@ namespace FlipperDunkClone.Managers
 			}
 		}
 
-		public void Initialize(UIManager uiManager)
+		public void Initialize(UIManager uiManager,HoopController hoopController)
 		{
 			_uiManager = uiManager;
-
+			_hoopController = hoopController;
 		}
 
+		private void Start()
+		{
+			HoopSpawn();
+		}
 		private void OnEnable()
 		{
 			GameManager.OnGameStarted += OnGameStarted;
@@ -52,10 +58,7 @@ namespace FlipperDunkClone.Managers
 			GameManager.OnGameReset -= OnGameReset;
 		}
 
-		private void Start()
-		{
-			HoopSpawn();
-		}
+
 		private void OnGameStarted()
 		{
 			LoadCurrentLevel();
@@ -67,9 +70,7 @@ namespace FlipperDunkClone.Managers
 		private void OnGameReset()
 		{
 			LoadCurrentLevel();
-			HoopSpawn();
 		}
-
 		private void OnGameEnd()
 		{
 
@@ -100,7 +101,8 @@ namespace FlipperDunkClone.Managers
 		private void HoopSpawn()
 		{
 			RemoveHoop();
-			currentHoop = Instantiate(hoopPrefab, _currentLevelData.hoopPosition, Quaternion.identity, hoops.transform);
+
+			var currentHoop = Instantiate(hoopPrefab, _currentLevelData.hoopPosition, Quaternion.identity, hoops.transform);
 
 		}
 

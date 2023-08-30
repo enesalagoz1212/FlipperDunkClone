@@ -604,7 +604,7 @@ GameObject:
   - component: {fileID: 177157072}
   - component: {fileID: 177157071}
   m_Layer: 5
-  m_Name: Background
+  m_Name: SettingPanelBackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7070,8 +7070,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5effc4b8acaf4064eb4a5354d7332d8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  settingPanel: {fileID: 0}
-  settingButton: {fileID: 0}
+  settingPanel: {fileID: 177157069}
+  settingButton: {fileID: 916216458}
 --- !u!114 &1492805216
 MonoBehaviour:
   m_ObjectHideFlags: 0
