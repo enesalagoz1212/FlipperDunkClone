@@ -552,7 +552,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 171787521}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.1, y: 3.34, z: 0}
+  m_LocalPosition: {x: 3, y: -4, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1027,7 +1027,7 @@ MonoBehaviour:
   levelManager: {fileID: 1544162212}
   uiManager: {fileID: 521339614}
   ballController: {fileID: 171787526}
-  hoopController: {fileID: -7816926483982457310, guid: 209bbc36092d45b40bb15fa3a70b646f, type: 3}
+  hoopController: {fileID: 1140164134}
   currentScore: 0
 --- !u!4 &223941801
 Transform:
@@ -1045,6 +1045,7 @@ Transform:
   - {fileID: 1679816995}
   - {fileID: 974771552}
   - {fileID: 171787524}
+  - {fileID: 1140164133}
   - {fileID: 1410668484}
   - {fileID: 521339613}
   - {fileID: 619394802}
@@ -2490,7 +2491,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 223941801}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &521339612
 GameObject:
@@ -2526,7 +2527,7 @@ Transform:
   - {fileID: 1732243640}
   - {fileID: 1919593700}
   m_Father: {fileID: 223941801}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &521339614
 MonoBehaviour:
@@ -3343,7 +3344,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 223941801}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &639163695
 GameObject:
@@ -5807,6 +5808,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1002368879}
   m_CullTransparentMesh: 1
+--- !u!1 &1140164132
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1140164133}
+  - component: {fileID: 1140164134}
+  m_Layer: 0
+  m_Name: HoopController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1140164133
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140164132}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 223941801}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1140164134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140164132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67cd2219194ca8f48aa9ef748e617b5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPoints:
+  - {fileID: 1404237183}
+  - {fileID: 1870573090}
+  - {fileID: 41391233}
+  - {fileID: 151448979}
+  hoopPrefab: {fileID: 8624520260583960953, guid: 209bbc36092d45b40bb15fa3a70b646f, type: 3}
 --- !u!1 &1148885104
 GameObject:
   m_ObjectHideFlags: 0
@@ -6493,7 +6544,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 223941801}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1410668485
 MonoBehaviour:
@@ -7019,6 +7070,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5effc4b8acaf4064eb4a5354d7332d8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  settingPanel: {fileID: 0}
+  settingButton: {fileID: 0}
 --- !u!114 &1492805216
 MonoBehaviour:
   m_ObjectHideFlags: 0

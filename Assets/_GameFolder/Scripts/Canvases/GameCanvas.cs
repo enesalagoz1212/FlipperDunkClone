@@ -43,6 +43,14 @@ namespace FlipperDunkClone.Canvases
 
 		}
 
+		public void OnSettingButtonClick()
+		{
+			if (_settingCanvas != null)
+			{
+				_settingCanvas.ChangeSettingButtonInteractable();
+			}
+		}
+
 		private void OnGameStart()
 		{
 			UpdateLevelDataMaxScore();

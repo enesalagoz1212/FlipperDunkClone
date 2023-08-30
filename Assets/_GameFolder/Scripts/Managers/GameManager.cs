@@ -32,6 +32,7 @@ namespace FlipperDunkClone.Managers
 		[SerializeField] private UIManager uiManager;
 		[SerializeField] private BallController ballController;
 		[SerializeField] private HoopController hoopController;
+		
 
 
 
@@ -65,7 +66,8 @@ namespace FlipperDunkClone.Managers
 		{
 			levelManager.Initialize(uiManager);
 			uiManager.Initialize(levelManager, ballController);
-			ballController.Initialize(uiManager,hoopController);
+			ballController.Initialize(uiManager,hoopController,levelManager);
+			hoopController.Initialize(levelManager);
 			
 			OnGameStart();
 		}

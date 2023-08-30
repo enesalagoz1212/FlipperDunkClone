@@ -52,15 +52,24 @@ namespace FlipperDunkClone.Managers
 			GameManager.OnGameReset -= OnGameReset;
 		}
 
+		private void Start()
+		{
+			HoopSpawn();
+		}
 		private void OnGameStarted()
+		{
+			LoadCurrentLevel();
+
+			
+
+		}
+
+		private void OnGameReset()
 		{
 			LoadCurrentLevel();
 			HoopSpawn();
 		}
-		private void OnGameReset()
-		{
-			LoadCurrentLevel();
-		}
+
 		private void OnGameEnd()
 		{
 
@@ -81,9 +90,9 @@ namespace FlipperDunkClone.Managers
 			if (_currentLevelIndex < levelDataArray.Length)
 			{
 				LoadCurrentLevel();
-				
+
 			}
-	
+
 		}
 
 
@@ -91,12 +100,11 @@ namespace FlipperDunkClone.Managers
 		private void HoopSpawn()
 		{
 			RemoveHoop();
-
 			currentHoop = Instantiate(hoopPrefab, _currentLevelData.hoopPosition, Quaternion.identity, hoops.transform);
 
 		}
 
-		private void RemoveHoop()
+		public void RemoveHoop()
 		{
 			if (currentHoop != null)
 			{

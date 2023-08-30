@@ -17,13 +17,14 @@ namespace FlipperDunkClone.Controllers
 
 		private Rigidbody2D _rigidbody2D;
 
+		private bool onBasketThrown = true;
 
 
-
-		public void Initialize(UIManager uiManager, HoopController hoopController)
+		public void Initialize(UIManager uiManager, HoopController hoopController,LevelManager levelManager)
 		{
 			_uiManager = uiManager;
 			_hoopController = hoopController;
+			_levelManager = levelManager;
 		}
 		private void OnEnable()
 		{
@@ -70,6 +71,7 @@ namespace FlipperDunkClone.Controllers
 				_rigidbody2D.gravityScale = 3f;
 			}
 		}
+
 		public void BallTransformPosition()
 		{
 			Debug.Log("Ball");
@@ -79,13 +81,14 @@ namespace FlipperDunkClone.Controllers
 		private void OnTriggerEnter2D(Collider2D other)
 		{
 
-			if (other.gameObject.CompareTag("Hoop"))
+			if (other.gameObject.CompareTag("Hoop")&& onBasketThrown)
 			{
 				if (transform.position.y > other.transform.position.y)
 				{
-					_hoopController.SpawnRandomHoop();
+					_levelManager.RemoveHoop();
 					GameManager.Instance.OnBasketThrown();
-
+					_hoopController.SpawnRandomHoop();
+					
 				}
 			}
 			else if (other.gameObject.CompareTag("Fail"))
@@ -98,7 +101,6 @@ namespace FlipperDunkClone.Controllers
 		private void OnGameReset()
 		{
 			_rigidbody2D.velocity = Vector2.zero;
-			//_rigidbody2D.constraints
 			BallTransformPosition();
 			gameObject.SetActive(true); 
 			Debug.Log("e");
