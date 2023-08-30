@@ -16,9 +16,7 @@ namespace FlipperDunkClone.Controllers
 		HoopController _hoopController;
 
 		private Rigidbody2D _rigidbody2D;
-
-		private bool onBasketThrown = true;
-
+		
 
 		public void Initialize(UIManager uiManager, HoopController hoopController, LevelManager levelManager)
 		{
@@ -48,7 +46,7 @@ namespace FlipperDunkClone.Controllers
 
 		private void Update()
 		{
-			GravitScale();
+			GravityScale();
 		}
 
 		private void OnGameStart()
@@ -58,16 +56,16 @@ namespace FlipperDunkClone.Controllers
 			_rigidbody2D.angularVelocity = 0f;
 		}
 
-		private void GravitScale()
+		private void GravityScale()
 		{
 			if (_rigidbody2D.velocity.y < 0)
 			{
-				Debug.Log("rb");
+				// Debug.Log("rb");
 				_rigidbody2D.gravityScale = 5f;
 			}
 			else
 			{
-				Debug.Log("-rb");
+				// Debug.Log("-rb");
 				_rigidbody2D.gravityScale = 3f;
 			}
 		}
@@ -80,22 +78,17 @@ namespace FlipperDunkClone.Controllers
 
 		private void OnTriggerEnter2D(Collider2D other)
 		{
-
-			if (other.gameObject.CompareTag("Hoop") && onBasketThrown)
+			if (other.gameObject.CompareTag("Hoop"))
 			{
 				if (transform.position.y > other.transform.position.y)
 				{
-					_levelManager.RemoveHoop();
 					GameManager.Instance.OnBasketThrown();
-					_hoopController.SpawnRandomHoop();
-					
-
 				}
 			}
 			else if (other.gameObject.CompareTag("Fail"))
 			{
-				UIManager.Instance.ResetCanvas.ResetPanelGame();
-				gameObject.SetActive(false);
+				// UIManager.Instance.ResetCanvas.ResetPanelGame();
+				// gameObject.SetActive(false);
 			}
 		}
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,62 +9,48 @@ namespace FlipperDunkClone.Controllers
 {
 	public class HoopController : MonoBehaviour
 	{
-		public Transform[] spawnPoints;
-		public GameObject hoopPrefab;
-
-
-
-
-		LevelManager _levelManager;
+		public GameObject hoop;
+		private LevelManager _levelManager;
 		private LevelData _currentLevelData;
+
+		private void Awake()
+		{
+			hoop.SetActive(false);
+		}
+
+		private void OnEnable()
+		{
+			GameManager.OnGameStarted += OnGameStarted;
+			GameManager.OnGameEnd += OnGameEnd;
+		}
+
+		private void OnDisable()
+		{
+			GameManager.OnGameStarted -= OnGameStarted;
+			GameManager.OnGameEnd -= OnGameEnd;
+		}
 
 		public void Initialize(LevelManager levelManager)
 		{
 			_levelManager = levelManager;
 		}
 
-		private void Start()
+		private void OnGameStarted()
 		{
-
+			hoop.SetActive(true);
+			SpawnRandomHoop();
 		}
 
-
-
+		private void OnGameEnd()
+		{
+			hoop.SetActive(false);
+		}
 
 		public void SpawnRandomHoop()
 		{
-			
-			int randomIndex;
-			do
-			{
-				Debug.Log("Spawn random Points");
-				randomIndex = Random.Range(0, spawnPoints.Length);
-
-
-			} while (spawnPoints[randomIndex].position == hoopPrefab.transform.position);
-
-			Transform spawnTransform = spawnPoints[randomIndex];
-			if (randomIndex == 2 || randomIndex == 3)
-			{
-				Debug.Log("randomIndex 2 veya 3 ");
-				Quaternion hooRotation = Quaternion.Euler(-180, 0, 180);
-				var hoopRandomSpawn = Instantiate(hoopPrefab, spawnTransform.position, hooRotation);
-			}
-			else
-			{
-				var hoopRandomSpawn = Instantiate(hoopPrefab, spawnTransform.position, Quaternion.identity);
-			}
-
+			var randomTransform = _levelManager.ReturnRandomHoopSpawnPosition();
+			transform.position = randomTransform.position;
 		}
-
-
-		//public void RemoveRandomHoop()
-		//{
-		//	if (hoopPrefab != null)
-		//	{
-		//		Destroy(hoopPrefab);
-		//	}
-		//}
 	}
 }
 

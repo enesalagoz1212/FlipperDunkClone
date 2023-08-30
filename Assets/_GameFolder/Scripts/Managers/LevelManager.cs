@@ -14,15 +14,15 @@ namespace FlipperDunkClone.Managers
 		private UIManager _uiManager;
 		private HoopController _hoopController;
 
-		public GameObject hoopPrefab;
-		public GameObject hoops;
-		private GameObject currentHoop;
-
 		public LevelData[] levelDataArray;
 		private LevelData _currentLevelData;
 
+		public Transform[] hoopSpawnPoints;
+		private int _lastHoopSpawnIndex;
+
 		private int _currentLevelIndex = 0;
 		private int maxScore;
+		
 		private void Awake()
 		{
 			if (Instance != null && Instance != this)
@@ -33,6 +33,8 @@ namespace FlipperDunkClone.Managers
 			{
 				Instance = this;
 			}
+
+			_lastHoopSpawnIndex = -1;
 		}
 
 		public void Initialize(UIManager uiManager,HoopController hoopController)
@@ -40,11 +42,7 @@ namespace FlipperDunkClone.Managers
 			_uiManager = uiManager;
 			_hoopController = hoopController;
 		}
-
-		private void Start()
-		{
-			HoopSpawn();
-		}
+		
 		private void OnEnable()
 		{
 			GameManager.OnGameStarted += OnGameStarted;
@@ -57,23 +55,20 @@ namespace FlipperDunkClone.Managers
 			GameManager.OnGameEnd -= OnGameEnd;
 			GameManager.OnGameReset -= OnGameReset;
 		}
-
-
+		
 		private void OnGameStarted()
 		{
 			LoadCurrentLevel();
-
-			
-
 		}
 
 		private void OnGameReset()
 		{
 			LoadCurrentLevel();
 		}
+		
 		private void OnGameEnd()
 		{
-
+			_lastHoopSpawnIndex = -1;
 		}
 
 		public void LoadCurrentLevel()
@@ -91,28 +86,19 @@ namespace FlipperDunkClone.Managers
 			if (_currentLevelIndex < levelDataArray.Length)
 			{
 				LoadCurrentLevel();
-
 			}
-
 		}
 
-
-
-		private void HoopSpawn()
+		public Transform ReturnRandomHoopSpawnPosition()
 		{
-			RemoveHoop();
-
-			var currentHoop = Instantiate(hoopPrefab, _currentLevelData.hoopPosition, Quaternion.identity, hoops.transform);
-
-		}
-
-		public void RemoveHoop()
-		{
-			if (currentHoop != null)
+			var randomIndex = Random.Range(0, hoopSpawnPoints.Length);
+			while (randomIndex == _lastHoopSpawnIndex)
 			{
-				Destroy(currentHoop);
+				randomIndex = Random.Range(0, hoopSpawnPoints.Length);
 			}
+
+			_lastHoopSpawnIndex = randomIndex;
+			return hoopSpawnPoints[_lastHoopSpawnIndex];
 		}
 	}
 }
-

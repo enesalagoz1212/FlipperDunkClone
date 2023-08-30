@@ -22,21 +22,15 @@ namespace FlipperDunkClone.Managers
 		public GameState GameState { get; set; }
 
 		public static Action OnGameStarted;
-		public static Action OnGamePlaying;
 		public static Action OnGameReset;
 		public static Action OnGameEnd;
-		public static Action OnGameScoredecreased;
-
-
+		public static Action<int> OnGameScoreChanged;
+		
 		[SerializeField] private LevelManager levelManager;
 		[SerializeField] private UIManager uiManager;
 		[SerializeField] private BallController ballController;
 		[SerializeField] private HoopController hoopController;
 		
-
-
-
-
 		public int currentScore;
 
 		private void Awake()
@@ -57,11 +51,6 @@ namespace FlipperDunkClone.Managers
 		}
 
 
-		void Update()
-		{
-
-		}
-
 		private void GameInitialize()
 		{
 			levelManager.Initialize(uiManager,hoopController);
@@ -74,46 +63,61 @@ namespace FlipperDunkClone.Managers
 
 		private void OnGameStart()
 		{
-
-			GameState = GameState.Start;
-			OnGameStarted?.Invoke();
-			GameState = GameState.Playing;	 
+			ChangeState(GameState.Start);
 		}
 
 		public void ResetGame()
 		{
 			ChangeState(GameState.Reset);
-			OnGameReset?.Invoke();
 		}
-		public void EndGame()
+		
+		public void EndGame(bool isSuccess)
 		{
-			GameState = GameState.End;
+			ChangeState(GameState.End);
 			OnGameEnd?.Invoke();
-
 		}
+		
 		public void ChangeState(GameState gameState)
 		{
 			GameState = gameState;
-		}
 
+			switch (GameState)
+			{
+				case GameState.Start:
+					OnGameStarted?.Invoke();
+					ChangeState(GameState.Playing);
+					break;
+				
+				case GameState.Playing:
+					break;
+				
+				case GameState.Reset:
+					OnGameReset?.Invoke();
+					break;
+				
+				case GameState.End:
+					// TODO => INVOKE OnGameEnd With Boolean
+					break;
+				
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
+		}
 
 		public void OnBasketThrown()
 		{
 			currentScore--;
-			OnGameScoredecreased?.Invoke();
+			OnGameScoreChanged?.Invoke(currentScore);
 
 			if (currentScore == 0)
 			{
 				DOVirtual.DelayedCall(0.2f, () =>
 				{
-					GameState = GameState.End;
-					OnGameEnd?.Invoke();
-				
+					EndGame(true);
 				});
 			}
+			
+			hoopController.SpawnRandomHoop();
 		}
-
-
 	}
 }
-

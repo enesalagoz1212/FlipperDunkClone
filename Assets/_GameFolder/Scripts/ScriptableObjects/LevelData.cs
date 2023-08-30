@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace FlipperDunkClone.ScriptableObjects
@@ -8,7 +6,6 @@ namespace FlipperDunkClone.ScriptableObjects
     public class LevelData : ScriptableObject
     {
         public int maxScore;
-        public Vector3 hoopPosition;
     }
 }
 
