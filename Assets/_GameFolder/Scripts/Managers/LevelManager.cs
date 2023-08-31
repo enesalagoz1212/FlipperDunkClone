@@ -22,7 +22,7 @@ namespace FlipperDunkClone.Managers
 
 		private int _currentLevelIndex = 0;
 		private int maxScore;
-		
+
 		private void Awake()
 		{
 			if (Instance != null && Instance != this)
@@ -37,12 +37,12 @@ namespace FlipperDunkClone.Managers
 			_lastHoopSpawnIndex = -1;
 		}
 
-		public void Initialize(UIManager uiManager,HoopController hoopController)
+		public void Initialize(UIManager uiManager, HoopController hoopController)
 		{
 			_uiManager = uiManager;
 			_hoopController = hoopController;
 		}
-		
+
 		private void OnEnable()
 		{
 			GameManager.OnGameStarted += OnGameStarted;
@@ -55,7 +55,7 @@ namespace FlipperDunkClone.Managers
 			GameManager.OnGameEnd -= OnGameEnd;
 			GameManager.OnGameReset -= OnGameReset;
 		}
-		
+
 		private void OnGameStarted()
 		{
 			LoadCurrentLevel();
@@ -65,7 +65,7 @@ namespace FlipperDunkClone.Managers
 		{
 			LoadCurrentLevel();
 		}
-		
+
 		private void OnGameEnd(bool IsSuccessful)
 		{
 			_lastHoopSpawnIndex = -1;
@@ -73,7 +73,7 @@ namespace FlipperDunkClone.Managers
 
 		public void LoadCurrentLevel()
 		{
-			if (_currentLevelIndex >= 0 && _currentLevelIndex < levelDataArray.Length)
+			if (_currentLevelIndex >= 0 && _currentLevelIndex <= levelDataArray.Length)
 			{
 				_currentLevelData = levelDataArray[_currentLevelIndex];
 				GameManager.Instance.currentScore = _currentLevelData.maxScore;
@@ -83,8 +83,10 @@ namespace FlipperDunkClone.Managers
 		public void NextLevel()
 		{
 			_currentLevelIndex++;
-			if (_currentLevelIndex < levelDataArray.Length)
+			if (_currentLevelIndex <= levelDataArray.Length)
 			{
+				int totalLevels = levelDataArray.Length;
+				_currentLevelIndex = _currentLevelIndex % totalLevels;
 				LoadCurrentLevel();
 			}
 		}

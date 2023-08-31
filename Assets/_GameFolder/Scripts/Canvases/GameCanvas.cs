@@ -82,9 +82,10 @@ namespace FlipperDunkClone.Canvases
 
 		public void UpdateLevelDataMaxScore()
 		{
-			if (levelIndex >= 0 && levelIndex < LevelManager.Instance.levelDataArray.Length)
+			if (levelIndex >= 0 && levelIndex <= LevelManager.Instance.levelDataArray.Length)
 			{
-				int maxScore = LevelManager.Instance.levelDataArray[levelIndex].maxScore;
+				int totalLevels = LevelManager.Instance.levelDataArray.Length;
+				int maxScore = LevelManager.Instance.levelDataArray[levelIndex % totalLevels].maxScore;
 				scoreText.text = maxScore.ToString();
 			}
 		}

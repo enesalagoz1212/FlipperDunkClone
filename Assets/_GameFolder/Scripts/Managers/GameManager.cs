@@ -117,7 +117,7 @@ namespace FlipperDunkClone.Managers
 
 			if (currentScore == 0)
 			{
-				DOVirtual.DelayedCall(0.2f, () =>
+				DOVirtual.DelayedCall(0.1f, () =>
 				{
 					EndGame(true);
 				});

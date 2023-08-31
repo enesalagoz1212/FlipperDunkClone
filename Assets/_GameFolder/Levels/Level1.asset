@@ -13,4 +13,3 @@ MonoBehaviour:
   m_Name: Level1
   m_EditorClassIdentifier: 
   maxScore: 2
-  hoopPosition: {x: -3.5, y: 2, z: 0}

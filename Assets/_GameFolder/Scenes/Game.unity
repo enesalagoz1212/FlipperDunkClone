@@ -1028,6 +1028,7 @@ MonoBehaviour:
   uiManager: {fileID: 521339614}
   ballController: {fileID: 171787526}
   hoopController: {fileID: 1140164134}
+  playerController: {fileID: 1679816998}
   currentScore: 0
 --- !u!4 &223941801
 Transform:
@@ -7213,6 +7214,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 73dce08c8ce866a48ae419ba55a11666, type: 2}
   - {fileID: 11400000, guid: 59b4d6a6337b4334aaac02de7a0b9510, type: 2}
   - {fileID: 11400000, guid: 980cdddcfb200ea458599c8b14c5414d, type: 2}
+  - {fileID: 11400000, guid: 2962d419dd7724b4f8c8fee40167800d, type: 2}
   hoopSpawnPoints:
   - {fileID: 1404237183}
   - {fileID: 1870573090}
