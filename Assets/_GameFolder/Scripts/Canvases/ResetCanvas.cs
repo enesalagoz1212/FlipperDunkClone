@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using FlipperDunkClone.Controllers;
 using FlipperDunkClone.Managers;
+using TMPro;
 
 namespace FlipperDunkClone.Canvases
 {
@@ -14,6 +15,7 @@ namespace FlipperDunkClone.Canvases
 		public GameObject resetPanel;
 		public Button restartButton;
 
+		public TextMeshProUGUI resetLevelText;
 		public void Initialize(BallController ballController)
 		{
 			_ballController = ballController;
@@ -69,9 +71,10 @@ namespace FlipperDunkClone.Canvases
 		{
 
 		}
-		void Update()
+		
+		public void UpdateResetLevelText(int LevelText)
 		{
-
+			resetLevelText.text = "LEVEL " + LevelText.ToString();
 		}
 	}
 

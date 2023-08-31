@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using FlipperDunkClone.ScriptableObjects;
 using FlipperDunkClone.Controllers;
+using FlipperDunkClone.Canvases;
 
 namespace FlipperDunkClone.Managers
 {
@@ -13,6 +14,7 @@ namespace FlipperDunkClone.Managers
 
 		private UIManager _uiManager;
 		private HoopController _hoopController;
+
 
 		public LevelData[] levelDataArray;
 		private LevelData _currentLevelData;
@@ -59,16 +61,28 @@ namespace FlipperDunkClone.Managers
 		private void OnGameStarted()
 		{
 			LoadCurrentLevel();
+
 		}
 
 		private void OnGameReset()
 		{
 			LoadCurrentLevel();
+
 		}
 
 		private void OnGameEnd(bool IsSuccessful)
 		{
 			_lastHoopSpawnIndex = -1;
+			if (IsSuccessful)
+			{
+
+				UIManager.Instance.EndCanvas.UpdateEndLevelText(_currentLevelIndex + 1);
+			}
+			else
+			{
+				UIManager.Instance.ResetCanvas.UpdateResetLevelText(_currentLevelIndex + 1);
+
+			}
 		}
 
 		public void LoadCurrentLevel()
@@ -77,6 +91,7 @@ namespace FlipperDunkClone.Managers
 			{
 				_currentLevelData = levelDataArray[_currentLevelIndex];
 				GameManager.Instance.currentScore = _currentLevelData.maxScore;
+				UIManager.Instance.GameCanvas.UpdateLevelsText(_currentLevelIndex + 1);
 			}
 		}
 

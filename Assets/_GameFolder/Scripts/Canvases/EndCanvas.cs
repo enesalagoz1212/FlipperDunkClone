@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using FlipperDunkClone.Managers;
 using FlipperDunkClone.Controllers;
+using TMPro;
 
 namespace FlipperDunkClone.Canvases
 {
@@ -15,6 +16,7 @@ namespace FlipperDunkClone.Canvases
 		public GameObject endPanel;
 		public Button nextButton;
 
+		public TextMeshProUGUI endLevelText;
 		private void OnEnable()
 		{
 			GameManager.OnGameEnd += OnGameEnd;
@@ -58,6 +60,11 @@ namespace FlipperDunkClone.Canvases
 			{
 				endPanel.SetActive(true);
 			}
+		}
+
+		public void UpdateEndLevelText(int endLevel) 
+		{
+			endLevelText.text = "LEVEL " + endLevel.ToString();
 		}
 	}
 }

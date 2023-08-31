@@ -10,6 +10,7 @@ namespace FlipperDunkClone.Canvases
 	public class GameCanvas : MonoBehaviour
 	{
 		public TextMeshProUGUI scoreText;
+		public TextMeshProUGUI levelsText;
 
 		LevelData levelData;
 
@@ -73,6 +74,11 @@ namespace FlipperDunkClone.Canvases
 		private void OnGameScoreChanged(int score)
 		{
 			UpdateScoreText(score);
+		}
+
+		public void UpdateLevelsText(int level)
+		{
+			levelsText.text = "LEVEL " + level.ToString(); 
 		}
 
 		private void UpdateScoreText(int score)
