@@ -22,6 +22,7 @@ namespace FlipperDunkClone.Managers
 		public GameState GameState { get; set; }
 
 		public static Action OnGameStarted;
+		public static Action OnGamePlaying;
 		public static Action OnGameReset;
 		public static Action<bool> OnGameEnd;
 		public static Action<int> OnGameScoreChanged;
@@ -30,6 +31,7 @@ namespace FlipperDunkClone.Managers
 		[SerializeField] private UIManager uiManager;
 		[SerializeField] private BallController ballController;
 		[SerializeField] private HoopController hoopController;
+		[SerializeField] private PlayerController playerController;
 
 		public int currentScore;
 
@@ -50,7 +52,10 @@ namespace FlipperDunkClone.Managers
 			GameInitialize();
 		}
 
-
+		private void Update()
+		{
+			
+		}
 		private void GameInitialize()
 		{
 			levelManager.Initialize(uiManager, hoopController);
@@ -89,6 +94,7 @@ namespace FlipperDunkClone.Managers
 					break;
 
 				case GameState.Playing:
+					playerController.SetIsRotating(true);
 					break;
 
 				case GameState.Reset:
