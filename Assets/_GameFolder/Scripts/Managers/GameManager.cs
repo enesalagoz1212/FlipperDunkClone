@@ -23,14 +23,14 @@ namespace FlipperDunkClone.Managers
 
 		public static Action OnGameStarted;
 		public static Action OnGameReset;
-		public static Action OnGameEnd;
+		public static Action<bool> OnGameEnd;
 		public static Action<int> OnGameScoreChanged;
-		
+
 		[SerializeField] private LevelManager levelManager;
 		[SerializeField] private UIManager uiManager;
 		[SerializeField] private BallController ballController;
 		[SerializeField] private HoopController hoopController;
-		
+
 		public int currentScore;
 
 		private void Awake()
@@ -53,11 +53,11 @@ namespace FlipperDunkClone.Managers
 
 		private void GameInitialize()
 		{
-			levelManager.Initialize(uiManager,hoopController);
+			levelManager.Initialize(uiManager, hoopController);
 			uiManager.Initialize(levelManager, ballController);
-			ballController.Initialize(uiManager,hoopController,levelManager);
+			ballController.Initialize(uiManager, hoopController, levelManager);
 			hoopController.Initialize(levelManager);
-			
+
 			OnGameStart();
 		}
 
@@ -70,13 +70,13 @@ namespace FlipperDunkClone.Managers
 		{
 			ChangeState(GameState.Reset);
 		}
-		
-		public void EndGame(bool isSuccess)
+
+		public void EndGame(bool IsSucccesful)
 		{
 			ChangeState(GameState.End);
-			OnGameEnd?.Invoke();
+			OnGameEnd?.Invoke(IsSucccesful);
 		}
-		
+
 		public void ChangeState(GameState gameState)
 		{
 			GameState = gameState;
@@ -87,18 +87,18 @@ namespace FlipperDunkClone.Managers
 					OnGameStarted?.Invoke();
 					ChangeState(GameState.Playing);
 					break;
-				
+
 				case GameState.Playing:
 					break;
-				
+
 				case GameState.Reset:
 					OnGameReset?.Invoke();
 					break;
-				
+
 				case GameState.End:
 					// TODO => INVOKE OnGameEnd With Boolean
 					break;
-				
+
 				default:
 					throw new ArgumentOutOfRangeException();
 			}
@@ -116,7 +116,7 @@ namespace FlipperDunkClone.Managers
 					EndGame(true);
 				});
 			}
-			
+
 			hoopController.SpawnRandomHoop();
 		}
 	}

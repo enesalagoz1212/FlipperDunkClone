@@ -41,7 +41,7 @@ namespace FlipperDunkClone.Controllers
 			SpawnRandomHoop();
 		}
 
-		private void OnGameEnd()
+		private void OnGameEnd(bool IsSuccessful)
 		{
 			hoop.SetActive(false);
 		}

@@ -23,11 +23,13 @@ namespace FlipperDunkClone.Canvases
 		private void OnEnable()
 		{
 			GameManager.OnGameReset += OnGameReset;
+			GameManager.OnGameEnd += OnGameEnd;
 
 		}
 		private void OnDisable()
 		{
 			GameManager.OnGameReset -= OnGameReset;
+			GameManager.OnGameEnd -= OnGameEnd;
 
 
 		}
@@ -41,19 +43,28 @@ namespace FlipperDunkClone.Canvases
 		{
 			GameManager.Instance.ResetGame();
 
+			GameManager.Instance.ChangeState(GameState.Start);
+			GameManager.OnGameStarted?.Invoke();
+
 			_ballController.BallTransformPosition();
-			_ballController.BallSetActice();
+			_ballController.BallSetActive();
 
 			resetPanel.SetActive(false);
 		}
 
-		public void ResetPanelGame()
+		private void ResetPanelGame()
 		{
 			Debug.Log("oyun fail oldu");  
 			resetPanel.SetActive(true);
 		}
 
-
+		private void OnGameEnd(bool IsSuccessful)
+		{
+			if (!IsSuccessful)
+			{
+				ResetPanelGame();
+			}
+		}
 		private void OnGameReset()
 		{
 

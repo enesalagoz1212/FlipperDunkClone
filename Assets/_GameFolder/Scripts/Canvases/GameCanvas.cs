@@ -62,9 +62,12 @@ namespace FlipperDunkClone.Canvases
 			UpdateLevelDataMaxScore();
 		}
 
-		private void OnGameEnd()
+		private void OnGameEnd(bool IsSuccessful)
 		{
-			levelIndex++;
+			if (IsSuccessful)
+			{
+				levelIndex++;
+			}
 		}
 
 		private void OnGameScoreChanged(int score)
@@ -81,7 +84,7 @@ namespace FlipperDunkClone.Canvases
 		{
 			if (levelIndex >= 0 && levelIndex < LevelManager.Instance.levelDataArray.Length)
 			{
-				int maxScore = LevelManager.Instance.levelDataArray[levelIndex].maxScore;			
+				int maxScore = LevelManager.Instance.levelDataArray[levelIndex].maxScore;
 				scoreText.text = maxScore.ToString();
 			}
 		}

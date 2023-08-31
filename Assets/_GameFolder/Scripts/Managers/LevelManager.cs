@@ -66,7 +66,7 @@ namespace FlipperDunkClone.Managers
 			LoadCurrentLevel();
 		}
 		
-		private void OnGameEnd()
+		private void OnGameEnd(bool IsSuccessful)
 		{
 			_lastHoopSpawnIndex = -1;
 		}

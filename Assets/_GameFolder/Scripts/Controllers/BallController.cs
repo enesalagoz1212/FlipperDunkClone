@@ -82,13 +82,13 @@ namespace FlipperDunkClone.Controllers
 			{
 				if (transform.position.y > other.transform.position.y)
 				{
+					
 					GameManager.Instance.OnBasketThrown();
 				}
 			}
 			else if (other.gameObject.CompareTag("Fail"))
 			{
-				// UIManager.Instance.ResetCanvas.ResetPanelGame();
-				// gameObject.SetActive(false);
+				GameManager.Instance.EndGame(false);
 			}
 		}
 
@@ -100,11 +100,11 @@ namespace FlipperDunkClone.Controllers
 			Debug.Log("e");
 		}
 
-		public void BallSetActice()
+		public void BallSetActive()
 		{
 			gameObject.SetActive(true);
 		}
-		private void OnGameEnd()
+		private void OnGameEnd(bool IsSuccessful)
 		{
 			gameObject.SetActive(false);
 		}
