@@ -50,12 +50,14 @@ namespace FlipperDunkClone.Managers
 			GameManager.OnGameStarted += OnGameStarted;
 			GameManager.OnGameEnd += OnGameEnd;
 			GameManager.OnGameReset += OnGameReset;
+
 		}
 		private void OnDisable()
 		{
 			GameManager.OnGameStarted -= OnGameStarted;
 			GameManager.OnGameEnd -= OnGameEnd;
 			GameManager.OnGameReset -= OnGameReset;
+
 		}
 
 		private void OnGameStarted()
@@ -75,8 +77,10 @@ namespace FlipperDunkClone.Managers
 			_lastHoopSpawnIndex = -1;
 			if (IsSuccessful)
 			{
-
+				int nextLvelIndex = _currentLevelIndex + 1;
+				PlayerPrefsManager.CurrentLevel = nextLvelIndex;
 				UIManager.Instance.EndCanvas.UpdateEndLevelText(_currentLevelIndex + 1);
+
 			}
 			else
 			{
@@ -92,17 +96,22 @@ namespace FlipperDunkClone.Managers
 				_currentLevelData = levelDataArray[_currentLevelIndex];
 				GameManager.Instance.currentScore = _currentLevelData.maxScore;
 				UIManager.Instance.GameCanvas.UpdateLevelsText(_currentLevelIndex + 1);
+
+				PlayerPrefsManager.CurrentLevel = _currentLevelIndex + 1;
 			}
 		}
 
 		public void NextLevel()
 		{
+			
 			_currentLevelIndex++;
 			if (_currentLevelIndex <= levelDataArray.Length)
 			{
 				int totalLevels = levelDataArray.Length;
 				_currentLevelIndex = _currentLevelIndex % totalLevels;
+
 				LoadCurrentLevel();
+				
 			}
 		}
 
@@ -117,5 +126,7 @@ namespace FlipperDunkClone.Managers
 			_lastHoopSpawnIndex = randomIndex;
 			return hoopSpawnPoints[_lastHoopSpawnIndex];
 		}
+
+
 	}
 }

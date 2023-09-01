@@ -12,6 +12,7 @@ namespace FlipperDunkClone.Canvases
 		public TextMeshProUGUI scoreText;
 		public TextMeshProUGUI levelsText;
 
+
 		LevelData levelData;
 
 		private SettingsCanvas _settingCanvas;
@@ -24,6 +25,8 @@ namespace FlipperDunkClone.Canvases
 			GameManager.OnGameStarted += OnGameStart;
 			GameManager.OnGameReset += OnGameReset;
 			GameManager.OnGameEnd += OnGameEnd;
+			
+
 		}
 		private void OnDisable()
 		{
@@ -31,6 +34,8 @@ namespace FlipperDunkClone.Canvases
 			GameManager.OnGameStarted -= OnGameStart;
 			GameManager.OnGameReset -= OnGameReset;
 			GameManager.OnGameEnd -= OnGameEnd;
+			
+
 		}
 
 		public void Initialize(LevelManager levelManager, SettingsCanvas settingsCanvas)
@@ -55,7 +60,9 @@ namespace FlipperDunkClone.Canvases
 
 		private void OnGameStart()
 		{
+		
 			UpdateLevelDataMaxScore();
+			
 		}
 
 		private void OnGameReset()
@@ -71,6 +78,7 @@ namespace FlipperDunkClone.Canvases
 			}
 		}
 
+		
 		private void OnGameScoreChanged(int score)
 		{
 			UpdateScoreText(score);
@@ -78,7 +86,7 @@ namespace FlipperDunkClone.Canvases
 
 		public void UpdateLevelsText(int level)
 		{
-			levelsText.text = "LEVEL " + level.ToString(); 
+			levelsText.text = "LEVEL " + level.ToString();
 		}
 
 		private void UpdateScoreText(int score)
@@ -92,7 +100,7 @@ namespace FlipperDunkClone.Canvases
 			{
 				int totalLevels = LevelManager.Instance.levelDataArray.Length;
 				int maxScore = LevelManager.Instance.levelDataArray[levelIndex % totalLevels].maxScore;
-				scoreText.text = maxScore.ToString();
+				scoreText.text =maxScore.ToString();
 			}
 		}
 	}

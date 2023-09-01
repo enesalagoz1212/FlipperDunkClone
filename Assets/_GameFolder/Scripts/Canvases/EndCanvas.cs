@@ -17,14 +17,16 @@ namespace FlipperDunkClone.Canvases
 		public Button nextButton;
 
 		public TextMeshProUGUI endLevelText;
+		public TextMeshProUGUI diamondText;
 		private void OnEnable()
 		{
 			GameManager.OnGameEnd += OnGameEnd;
+			GameManager.OnDiamondScored += OnDiamondScore;
 		}
 		private void OnDisable()
 		{
 			GameManager.OnGameEnd -= OnGameEnd;
-
+			GameManager.OnDiamondScored -= OnDiamondScore;
 		}
 
 		public void Initialize(BallController ballController)
@@ -62,9 +64,14 @@ namespace FlipperDunkClone.Canvases
 			}
 		}
 
-		public void UpdateEndLevelText(int endLevel) 
+		public void UpdateEndLevelText(int endLevel)
 		{
 			endLevelText.text = "LEVEL " + endLevel.ToString();
+		}
+
+		private void OnDiamondScore(int score)
+		{
+			diamondText.text = " " + PlayerPrefsManager.DiamondScore.ToString();
 		}
 	}
 }

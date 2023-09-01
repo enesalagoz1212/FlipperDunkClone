@@ -1031,6 +1031,7 @@ MonoBehaviour:
   hoopController: {fileID: 1140164134}
   playerController: {fileID: 1679816998}
   currentScore: 0
+  diamondScore: 0
 --- !u!4 &223941801
 Transform:
   m_ObjectHideFlags: 0
@@ -1049,6 +1050,7 @@ Transform:
   - {fileID: 171787524}
   - {fileID: 1140164133}
   - {fileID: 1410668484}
+  - {fileID: 1887813374}
   - {fileID: 521339613}
   - {fileID: 619394802}
   - {fileID: 519420032}
@@ -1464,7 +1466,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 14
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2559,7 +2561,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 223941801}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &521339612
 GameObject:
@@ -2595,7 +2597,7 @@ Transform:
   - {fileID: 1732243640}
   - {fileID: 1919593700}
   m_Father: {fileID: 223941801}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &521339614
 MonoBehaviour:
@@ -2732,8 +2734,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -11.8, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 0.0009589195, y: 0}
+  m_SizeDelta: {x: 183.37, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &534682503
 MonoBehaviour:
@@ -2755,7 +2757,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 14
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2782,7 +2784,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 69.25
+  m_fontSize: 70
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2818,7 +2820,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 22.131775, y: -17.685791, z: 95.69238, w: -17.472412}
+  m_margin: {x: 5.6992188, y: 0.24072266, z: 103.53522, w: 4.935791}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -3412,7 +3414,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 223941801}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &645911019
 GameObject:
@@ -7732,6 +7734,7 @@ MonoBehaviour:
   endPanel: {fileID: 2070442924}
   nextButton: {fileID: 209581617}
   endLevelText: {fileID: 922441042}
+  diamondText: {fileID: 534682503}
 --- !u!114 &1732243642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8721,6 +8724,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1887630265}
   m_CullTransparentMesh: 1
+--- !u!1 &1887813373
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1887813374}
+  m_Layer: 0
+  m_Name: PlayerPrefs Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1887813374
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887813373}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 223941801}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1895320152
 GameObject:
   m_ObjectHideFlags: 0
@@ -8915,6 +8949,7 @@ MonoBehaviour:
   resetPanel: {fileID: 645911019}
   restartButton: {fileID: 651873818}
   resetLevelText: {fileID: 538756033}
+  resetDiamondScore: {fileID: 275442919}
 --- !u!1 &1946384560
 GameObject:
   m_ObjectHideFlags: 0

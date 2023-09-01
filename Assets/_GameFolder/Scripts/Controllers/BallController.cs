@@ -107,6 +107,7 @@ namespace FlipperDunkClone.Controllers
 		private void OnGameEnd(bool IsSuccessful)
 		{
 			gameObject.SetActive(false);
+			GameManager.OnDiamondScored?.Invoke(PlayerPrefsManager.DiamondScore);
 		}
 	}
 

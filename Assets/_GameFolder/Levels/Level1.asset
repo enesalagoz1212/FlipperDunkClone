@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Level1
   m_EditorClassIdentifier: 
   maxScore: 2
+  diamondScore: 2

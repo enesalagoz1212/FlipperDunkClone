@@ -6,9 +6,40 @@ namespace FlipperDunkClone.Managers
 {
     public static class PlayerPrefsManager
     {
+        
+
         private const string VibrationKey = "IsVibrationOn";
         private const string SoundKey = "IsSoundOn";
-        
+        private const string DiamondScorePrefsString = "DiamondScore";
+        private const string CurrentLevelKey = "CurrentLevel";
+
+
+
+        public static int CurrentLevel
+		{
+			get
+			{
+                return PlayerPrefs.GetInt(CurrentLevelKey, 1);
+			}
+			set
+			{
+                PlayerPrefs.SetInt(CurrentLevelKey,value);
+			}
+		}
+
+        public static int DiamondScore
+		{
+            get
+            {
+                return PlayerPrefs.GetInt(DiamondScorePrefsString);
+            }
+            set
+            {
+                PlayerPrefs.SetInt(DiamondScorePrefsString, value);
+            }
+        }
+
+
         public static bool IsVibrationOn
         {
             get
@@ -35,5 +66,6 @@ namespace FlipperDunkClone.Managers
             set => PlayerPrefs.SetString(SoundKey, value.ToString());
         }
 
+        
     }
 }

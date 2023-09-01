@@ -16,6 +16,7 @@ namespace FlipperDunkClone.Canvases
 		public Button restartButton;
 
 		public TextMeshProUGUI resetLevelText;
+		public TextMeshProUGUI resetDiamondScore;
 		public void Initialize(BallController ballController)
 		{
 			_ballController = ballController;
@@ -26,12 +27,14 @@ namespace FlipperDunkClone.Canvases
 		{
 			GameManager.OnGameReset += OnGameReset;
 			GameManager.OnGameEnd += OnGameEnd;
+			GameManager.OnDiamondScored += OnDiamondScore;
 
 		}
 		private void OnDisable()
 		{
 			GameManager.OnGameReset -= OnGameReset;
 			GameManager.OnGameEnd -= OnGameEnd;
+			GameManager.OnDiamondScored = OnDiamondScore;
 
 
 		}
@@ -76,6 +79,14 @@ namespace FlipperDunkClone.Canvases
 		{
 			resetLevelText.text = "LEVEL " + LevelText.ToString();
 		}
+
+		private void OnDiamondScore(int score)
+		{
+			resetDiamondScore.text = PlayerPrefsManager.DiamondScore.ToString();
+		}
+
+		
+
 	}
 
 }

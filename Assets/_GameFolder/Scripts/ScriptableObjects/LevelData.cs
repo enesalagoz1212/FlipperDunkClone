@@ -6,6 +6,7 @@ namespace FlipperDunkClone.ScriptableObjects
     public class LevelData : ScriptableObject
     {
         public int maxScore;
+        public int diamondScore;
     }
 }
 

@@ -26,6 +26,7 @@ namespace FlipperDunkClone.Managers
 		public static Action OnGameReset;
 		public static Action<bool> OnGameEnd;
 		public static Action<int> OnGameScoreChanged;
+		public static Action<int> OnDiamondScored;
 
 		[SerializeField] private LevelManager levelManager;
 		[SerializeField] private UIManager uiManager;
@@ -34,7 +35,9 @@ namespace FlipperDunkClone.Managers
 		[SerializeField] private PlayerController playerController;
 
 		public int currentScore;
+		public int diamondScore = 0;
 
+		LevelData LevelData;
 		private void Awake()
 		{
 			if (Instance != null && Instance != this)
@@ -54,7 +57,7 @@ namespace FlipperDunkClone.Managers
 
 		private void Update()
 		{
-			
+
 		}
 		private void GameInitialize()
 		{
@@ -76,13 +79,12 @@ namespace FlipperDunkClone.Managers
 			ChangeState(GameState.Reset);
 		}
 
-		public void EndGame(bool IsSucccesful)
+		public void EndGame(bool IsSuccesful)
 		{
-			ChangeState(GameState.End);
-			OnGameEnd?.Invoke(IsSucccesful);
+			ChangeState(GameState.End,IsSuccesful);
 		}
 
-		public void ChangeState(GameState gameState)
+		public void ChangeState(GameState gameState, bool isSuccessful = false)
 		{
 			GameState = gameState;
 
@@ -103,6 +105,12 @@ namespace FlipperDunkClone.Managers
 
 				case GameState.End:
 					// TODO => INVOKE OnGameEnd With Boolean
+
+					if (isSuccessful)
+					{
+						IncreaseDiamondScore(2);
+					}
+					OnGameEnd?.Invoke(isSuccessful);
 					break;
 
 				default:
@@ -120,10 +128,17 @@ namespace FlipperDunkClone.Managers
 				DOVirtual.DelayedCall(0.1f, () =>
 				{
 					EndGame(true);
+
 				});
 			}
 
 			hoopController.SpawnRandomHoop();
+		}
+
+		public void IncreaseDiamondScore(int score)
+		{
+			PlayerPrefsManager.DiamondScore += score;
+			OnDiamondScored?.Invoke(PlayerPrefsManager.DiamondScore);
 		}
 	}
 }
