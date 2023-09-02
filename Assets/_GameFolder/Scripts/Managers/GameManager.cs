@@ -50,6 +50,7 @@ namespace FlipperDunkClone.Managers
 
 		void Start()
 		{
+			Application.targetFrameRate = 60;
 			GameInitialize();
 		}
 
