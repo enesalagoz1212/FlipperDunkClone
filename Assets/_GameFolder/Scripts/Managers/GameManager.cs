@@ -120,8 +120,6 @@ namespace FlipperDunkClone.Managers
 					break;
 
 				case GameState.End:
-					// TODO => INVOKE OnGameEnd With Boolean
-
 					if (isSuccessful)
 					{
 						IncreaseDiamondScore(2);
