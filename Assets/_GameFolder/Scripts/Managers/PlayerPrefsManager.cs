@@ -6,14 +6,10 @@ namespace FlipperDunkClone.Managers
 {
 	public static class PlayerPrefsManager
 	{
-
-
 		private const string VibrationKey = "IsVibrationOn";
 		private const string SoundKey = "IsSoundOn";
 		private const string DiamondScorePrefsString = "DiamondScore";
 		private const string CurrentLevelKey = "CurrentLevel";
-
-
 
 		public static int CurrentLevel
 		{

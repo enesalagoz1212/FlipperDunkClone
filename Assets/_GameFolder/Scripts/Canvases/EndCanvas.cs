@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using FlipperDunkClone.Managers;
 using FlipperDunkClone.Controllers;
 using TMPro;
+using UnityEngine.PlayerLoop;
 
 namespace FlipperDunkClone.Canvases
 {
@@ -18,24 +19,21 @@ namespace FlipperDunkClone.Canvases
 		
 		private void OnEnable()
 		{
-			GameManager.OnGameEnd += OnGameEnd;
 			GameManager.OnDiamondScored += OnDiamondScore;
 		}
 		private void OnDisable()
 		{
-			GameManager.OnGameEnd -= OnGameEnd;
 			GameManager.OnDiamondScored -= OnDiamondScore;
 		}
 
 		public void Initialize()
 		{
-			
+			nextButton.onClick.AddListener(NextButtonClicked);
 		}
 		
-		void Start()
+		private void Start()
 		{
 			endPanel.SetActive(false);
-			nextButton.onClick.AddListener(NextButtonClicked);
 		}
 
 		private void NextButtonClicked()
@@ -45,19 +43,17 @@ namespace FlipperDunkClone.Canvases
 
 			endPanel.SetActive(false);
 		}
-
-
-		private void OnGameEnd(bool IsSuccessful)
+		
+		public void OnGameSuccess()
 		{
-			if (IsSuccessful)
-			{
-				endPanel.SetActive(true);
-			}
+			endPanel.SetActive(true);
+			UpdateEndLevelText();
 		}
 
-		public void UpdateEndLevelText(int endLevel)
+		private void UpdateEndLevelText()
 		{
-			endLevelText.text = "LEVEL " + endLevel.ToString();
+			var finishedLevel = PlayerPrefsManager.CurrentLevel - 1;
+			endLevelText.text = "LEVEL " + finishedLevel.ToString();
 		}
 
 		private void OnDiamondScore(int score)

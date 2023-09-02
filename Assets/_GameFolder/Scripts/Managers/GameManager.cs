@@ -71,7 +71,7 @@ namespace FlipperDunkClone.Managers
 		private void GameInitialize()
 		{
 			levelManager.Initialize(uiManager, hoopController);
-			uiManager.Initialize(levelManager, ballController);
+			uiManager.Initialize(levelManager);
 			ballController.Initialize();
 			hoopController.Initialize(levelManager);
 
@@ -125,6 +125,7 @@ namespace FlipperDunkClone.Managers
 					if (isSuccessful)
 					{
 						IncreaseDiamondScore(2);
+						PlayerPrefsManager.CurrentLevel++;
 					}
 					
 					OnGameEnd?.Invoke(isSuccessful);

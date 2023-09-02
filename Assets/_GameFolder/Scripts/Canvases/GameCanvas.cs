@@ -58,7 +58,7 @@ namespace FlipperDunkClone.Canvases
 
 		private void OnGameStart()
 		{
-			UpdateLevelsText(PlayerPrefsManager.CurrentLevel);
+			UpdateLevelsText();
 			UpdateLevelDataMaxScore();
 		}
 
@@ -81,9 +81,9 @@ namespace FlipperDunkClone.Canvases
 			UpdateScoreText(score);
 		}
 
-		public void UpdateLevelsText(int level)
+		public void UpdateLevelsText()
 		{
-			levelsText.text = "LEVEL " + level.ToString();
+			levelsText.text = "LEVEL " + PlayerPrefsManager.CurrentLevel;
 		}
 
 		public void UpdateScoreText(int score)

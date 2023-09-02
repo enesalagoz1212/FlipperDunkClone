@@ -69,22 +69,12 @@ namespace FlipperDunkClone.Managers
 			LoadCurrentLevel();
 		}
 
-		private void OnGameEnd(bool IsSuccessful)
+		private void OnGameEnd(bool isSuccessful)
 		{
 			_lastHoopSpawnIndex = -1;
-			if (IsSuccessful)
-			{
-				int nextLvelIndex = PlayerPrefsManager.CurrentLevel;
-				PlayerPrefsManager.CurrentLevel = nextLvelIndex;
-				UIManager.Instance.EndCanvas.UpdateEndLevelText(PlayerPrefsManager.CurrentLevel);
-			}
-			else
-			{
-				UIManager.Instance.ResetCanvas.UpdateResetLevelText(PlayerPrefsManager.CurrentLevel);
-			}
 		}
 
-		public void LoadCurrentLevel()
+		private void LoadCurrentLevel()
 		{
 			var currentLevelIndex = PlayerPrefsManager.CurrentLevel % levelDataArray.Length;
 			if (currentLevelIndex == 0)
@@ -99,22 +89,7 @@ namespace FlipperDunkClone.Managers
 
 		public void NextLevel()
 		{
-
-			int savedLevel = PlayerPrefsManager.CurrentLevel;
-			savedLevel++;
-			if (savedLevel < levelDataArray.Length)
-			{
-				PlayerPrefsManager.CurrentLevel = savedLevel;
-				LoadCurrentLevel();
-
-			}
-			else
-			{
-				PlayerPrefsManager.CurrentLevel = savedLevel;
-				LoadCurrentLevel();
-				GameManager.Instance.currentScore = _currentLevelData.maxScore;
-				UIManager.Instance.GameCanvas.UpdateScoreText(GameManager.Instance.currentScore);
-			}
+			LoadCurrentLevel();
 		}
 
 		public Transform ReturnRandomHoopSpawnPosition()
