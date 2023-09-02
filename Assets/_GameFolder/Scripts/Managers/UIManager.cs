@@ -10,9 +10,7 @@ namespace FlipperDunkClone.Managers
     {
         public static UIManager Instance { get; private set; }
 
-        public ResetCanvas ResetCanvas => resetCanvas;
         public GameCanvas GameCanvas => gameCanvas;
-        public EndCanvas EndCanvas => endCanvas;
 
         [SerializeField] private GameCanvas gameCanvas;
         [SerializeField] private SettingsCanvas settingsCanvas;

@@ -11,20 +11,13 @@ namespace FlipperDunkClone.Managers
 	public class LevelManager : MonoBehaviour
 	{
 		public static LevelManager Instance { get; private set; }
-
-		private UIManager _uiManager;
-		private HoopController _hoopController;
-
-
+		
 		public LevelData[] levelDataArray;
 		private LevelData _currentLevelData;
 
 		public Transform[] hoopSpawnPoints;
 		private int _lastHoopSpawnIndex;
-
-		private int _currentLevelIndex = 0;
-		private int maxScore;
-
+		
 		private void Awake()
 		{
 			if (Instance != null && Instance != this)
@@ -39,10 +32,9 @@ namespace FlipperDunkClone.Managers
 			_lastHoopSpawnIndex = -1;
 		}
 
-		public void Initialize(UIManager uiManager, HoopController hoopController)
+		public void Initialize()
 		{
-			_uiManager = uiManager;
-			_hoopController = hoopController;
+			
 		}
 
 		private void OnEnable()
