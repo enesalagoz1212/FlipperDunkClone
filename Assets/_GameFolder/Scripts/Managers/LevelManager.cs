@@ -94,9 +94,12 @@ namespace FlipperDunkClone.Managers
 		{
 			int savedLevel = PlayerPrefsManager.CurrentLevel;
 			UIManager.Instance.GameCanvas.UpdateLevelsText(savedLevel);
+
+			UIManager.Instance.GameCanvas.UpdateScoreText(GameManager.Instance.currentScore);
+
 			if (savedLevel >= 0 && savedLevel < levelDataArray.Length)
 			{
-				_currentLevelData = levelDataArray[savedLevel];
+				_currentLevelData = levelDataArray[savedLevel-1];
 				GameManager.Instance.currentScore = _currentLevelData.maxScore;
 				UIManager.Instance.GameCanvas.UpdateScoreText(GameManager.Instance.currentScore);
 				UIManager.Instance.GameCanvas.UpdateLevelsText(savedLevel);
