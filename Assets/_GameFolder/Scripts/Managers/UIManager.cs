@@ -18,8 +18,7 @@ namespace FlipperDunkClone.Managers
         [SerializeField] private SettingsCanvas settingsCanvas;
         [SerializeField] private EndCanvas endCanvas;
         [SerializeField] private ResetCanvas resetCanvas;
-
-
+        
         private void Awake()
         {
             if (Instance == null)
@@ -34,22 +33,12 @@ namespace FlipperDunkClone.Managers
 
         public void Initialize(LevelManager levelManager ,BallController ballController)
         {
-            endCanvas.Initialize(ballController);
+            endCanvas.Initialize();
             gameCanvas.Initialize(levelManager, settingsCanvas);
             resetCanvas.Initialize(ballController);
             settingsCanvas.Initialize(gameCanvas);
         }
 
-        void Start()
-        {
-
-        }
-
-
-        void Update()
-        {
-
-        }
     }
 }
 

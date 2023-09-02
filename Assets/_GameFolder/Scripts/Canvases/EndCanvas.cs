@@ -10,14 +10,12 @@ namespace FlipperDunkClone.Canvases
 {
 	public class EndCanvas : MonoBehaviour
 	{
-		BallController _ballController;
-		public GameObject Ball;
-
 		public GameObject endPanel;
 		public Button nextButton;
 
 		public TextMeshProUGUI endLevelText;
 		public TextMeshProUGUI diamondText;
+		
 		private void OnEnable()
 		{
 			GameManager.OnGameEnd += OnGameEnd;
@@ -29,11 +27,11 @@ namespace FlipperDunkClone.Canvases
 			GameManager.OnDiamondScored -= OnDiamondScore;
 		}
 
-		public void Initialize(BallController ballController)
+		public void Initialize()
 		{
-			_ballController = ballController;
-
+			
 		}
+		
 		void Start()
 		{
 			endPanel.SetActive(false);
@@ -43,14 +41,7 @@ namespace FlipperDunkClone.Canvases
 		private void NextButtonClicked()
 		{
 			GameManager.Instance.ResetGame();
-
-			GameManager.Instance.ChangeState(GameState.Start);
-			GameManager.OnGameStarted?.Invoke();
-
 			LevelManager.Instance.NextLevel();
-
-			Ball.gameObject.SetActive(true);
-			_ballController.BallTransformPosition();
 
 			endPanel.SetActive(false);
 		}

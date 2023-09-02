@@ -35,9 +35,7 @@ namespace FlipperDunkClone.Managers
 		[SerializeField] private PlayerController playerController;
 
 		public int currentScore;
-		public int diamondScore = 0;
 
-		LevelData LevelData;
 		private void Awake()
 		{
 			if (Instance != null && Instance != this)
@@ -57,13 +55,24 @@ namespace FlipperDunkClone.Managers
 
 		private void Update()
 		{
-
+			if (GameState == GameState.Playing)
+			{
+				if (Input.GetKeyDown(KeyCode.A))
+				{
+					OnBasketThrown();
+				}
+				else if (Input.GetKeyDown(KeyCode.S))
+				{
+					EndGame(false);
+				}
+			}
 		}
+		
 		private void GameInitialize()
 		{
 			levelManager.Initialize(uiManager, hoopController);
 			uiManager.Initialize(levelManager, ballController);
-			ballController.Initialize(uiManager, hoopController, levelManager);
+			ballController.Initialize();
 			hoopController.Initialize(levelManager);
 
 			OnGameStart();
@@ -87,6 +96,8 @@ namespace FlipperDunkClone.Managers
 		public void ChangeState(GameState gameState, bool isSuccessful = false)
 		{
 			GameState = gameState;
+			
+			Debug.Log($"Game State: {gameState}");
 
 			switch (GameState)
 			{
@@ -101,6 +112,11 @@ namespace FlipperDunkClone.Managers
 
 				case GameState.Reset:
 					OnGameReset?.Invoke();
+
+					DOVirtual.DelayedCall(0.25f, () =>
+					{
+						ChangeState(GameState.Start);
+					});
 					break;
 
 				case GameState.End:

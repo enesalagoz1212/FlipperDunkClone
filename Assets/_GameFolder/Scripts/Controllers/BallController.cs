@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,20 +11,15 @@ namespace FlipperDunkClone.Controllers
 	public class BallController : MonoBehaviour
 	{
 		GameSettingsManager _gameSettingsManager;
-		LevelManager _levelManager;
-		UIManager _uiManager;
 		ResetCanvas _resetCanvas;
-		HoopController _hoopController;
 
 		private Rigidbody2D _rigidbody2D;
 		
-
-		public void Initialize(UIManager uiManager, HoopController hoopController, LevelManager levelManager)
+		public void Initialize()
 		{
-			_uiManager = uiManager;
-			_hoopController = hoopController;
-			_levelManager = levelManager;
+			
 		}
+		
 		private void OnEnable()
 		{
 			GameManager.OnGameStarted += OnGameStart;
@@ -37,23 +33,39 @@ namespace FlipperDunkClone.Controllers
 			GameManager.OnGameEnd -= OnGameEnd;
 		}
 
-		void Start()
+		private void Start()
 		{
-
 			_rigidbody2D = GetComponent<Rigidbody2D>();
 		}
-
-
+		
 		private void Update()
 		{
-			GravityScale();
+			switch (GameManager.Instance.GameState)
+			{
+				case GameState.Start:
+					break;
+				
+				case GameState.Playing:
+					GravityScale();
+					break;
+				
+				case GameState.Reset:
+					break;
+				
+				case GameState.End:
+					break;
+				
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
 		}
 
 		private void OnGameStart()
 		{
-			BallTransformPosition();
+			transform.position = GameSettingsManager.Instance.gameSettings.ballTransformPosition;
 			_rigidbody2D.velocity = Vector2.zero;
 			_rigidbody2D.angularVelocity = 0f;
+			_rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
 		}
 
 		private void GravityScale()
@@ -70,19 +82,12 @@ namespace FlipperDunkClone.Controllers
 			}
 		}
 
-		public void BallTransformPosition()
-		{
-			Debug.Log("Ball");
-			transform.position = GameSettingsManager.Instance.gameSettings.ballTransformPosition;
-		}
-
 		private void OnTriggerEnter2D(Collider2D other)
 		{
 			if (other.gameObject.CompareTag("Hoop"))
 			{
 				if (transform.position.y > other.transform.position.y)
 				{
-					
 					GameManager.Instance.OnBasketThrown();
 				}
 			}
@@ -94,22 +99,19 @@ namespace FlipperDunkClone.Controllers
 
 		private void OnGameReset()
 		{
-			_rigidbody2D.velocity = Vector2.zero;
-			BallTransformPosition();
-			gameObject.SetActive(true);
-			Debug.Log("e");
+			FreezeRigidbody();
 		}
-
-		public void BallSetActive()
-		{
-			gameObject.SetActive(true);
-		}
+		
 		private void OnGameEnd(bool IsSuccessful)
 		{
-			gameObject.SetActive(false);
+			FreezeRigidbody();
 			GameManager.OnDiamondScored?.Invoke(PlayerPrefsManager.DiamondScore);
 		}
+
+		private void FreezeRigidbody()
+		{
+			_rigidbody2D.bodyType = RigidbodyType2D.Static;
+			_rigidbody2D.velocity = Vector2.zero;
+		}
 	}
-
 }
-

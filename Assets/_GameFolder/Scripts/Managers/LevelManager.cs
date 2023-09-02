@@ -50,27 +50,23 @@ namespace FlipperDunkClone.Managers
 			GameManager.OnGameStarted += OnGameStarted;
 			GameManager.OnGameEnd += OnGameEnd;
 			GameManager.OnGameReset += OnGameReset;
-
 		}
+		
 		private void OnDisable()
 		{
 			GameManager.OnGameStarted -= OnGameStarted;
 			GameManager.OnGameEnd -= OnGameEnd;
 			GameManager.OnGameReset -= OnGameReset;
-
 		}
 
 		private void OnGameStarted()
 		{
-			
 			LoadCurrentLevel();
-			
 		}
 
 		private void OnGameReset()
 		{
 			LoadCurrentLevel();
-
 		}
 
 		private void OnGameEnd(bool IsSuccessful)
@@ -81,31 +77,24 @@ namespace FlipperDunkClone.Managers
 				int nextLvelIndex = PlayerPrefsManager.CurrentLevel;
 				PlayerPrefsManager.CurrentLevel = nextLvelIndex;
 				UIManager.Instance.EndCanvas.UpdateEndLevelText(PlayerPrefsManager.CurrentLevel);
-
 			}
 			else
 			{
 				UIManager.Instance.ResetCanvas.UpdateResetLevelText(PlayerPrefsManager.CurrentLevel);
-
 			}
 		}
 
 		public void LoadCurrentLevel()
 		{
-			int savedLevel = PlayerPrefsManager.CurrentLevel;
-			UIManager.Instance.GameCanvas.UpdateLevelsText(savedLevel);
-
-			UIManager.Instance.GameCanvas.UpdateScoreText(GameManager.Instance.currentScore);
-
-			if (savedLevel >= 0 && savedLevel < levelDataArray.Length)
+			var currentLevelIndex = PlayerPrefsManager.CurrentLevel % levelDataArray.Length;
+			if (currentLevelIndex == 0)
 			{
-				_currentLevelData = levelDataArray[savedLevel-1];
-				GameManager.Instance.currentScore = _currentLevelData.maxScore;
-				UIManager.Instance.GameCanvas.UpdateScoreText(GameManager.Instance.currentScore);
-				UIManager.Instance.GameCanvas.UpdateLevelsText(savedLevel);
-
-				
+				currentLevelIndex = levelDataArray.Length;
 			}
+			_currentLevelData = levelDataArray[currentLevelIndex - 1];
+
+			GameManager.Instance.currentScore = _currentLevelData.maxScore;
+			UIManager.Instance.GameCanvas.UpdateScoreText(GameManager.Instance.currentScore);
 		}
 
 		public void NextLevel()
@@ -122,7 +111,6 @@ namespace FlipperDunkClone.Managers
 			else
 			{
 				PlayerPrefsManager.CurrentLevel = savedLevel;
-				UIManager.Instance.GameCanvas.UpdateLevelsText(PlayerPrefsManager.CurrentLevel);
 				LoadCurrentLevel();
 				GameManager.Instance.currentScore = _currentLevelData.maxScore;
 				UIManager.Instance.GameCanvas.UpdateScoreText(GameManager.Instance.currentScore);

@@ -47,19 +47,12 @@ namespace FlipperDunkClone.Canvases
 		private void OnRestartButtonClicked()
 		{
 			GameManager.Instance.ResetGame();
-
-			GameManager.Instance.ChangeState(GameState.Start);
-			GameManager.OnGameStarted?.Invoke();
-
-			_ballController.BallTransformPosition();
-			_ballController.BallSetActive();
-
+			
 			resetPanel.SetActive(false);
 		}
 
 		private void ResetPanelGame()
 		{
-			Debug.Log("oyun fail oldu");  
 			resetPanel.SetActive(true);
 		}
 
