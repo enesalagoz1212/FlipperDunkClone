@@ -19,7 +19,7 @@ namespace FlipperDunkClone.Managers
 		{
 			get
 			{
-                return PlayerPrefs.GetInt(CurrentLevelKey, 1);
+                return PlayerPrefs.GetInt(CurrentLevelKey);
 			}
 			set
 			{

@@ -94,12 +94,12 @@ namespace FlipperDunkClone.Managers
 		{
 			int savedLevel = PlayerPrefsManager.CurrentLevel;
 			UIManager.Instance.GameCanvas.UpdateLevelsText(savedLevel);
-			if (savedLevel >= 1 && savedLevel <= levelDataArray.Length)
+			if (savedLevel >= 0 && savedLevel < levelDataArray.Length)
 			{
-				_currentLevelData = levelDataArray[savedLevel-1];
+				_currentLevelData = levelDataArray[savedLevel];
 				GameManager.Instance.currentScore = _currentLevelData.maxScore;
 				UIManager.Instance.GameCanvas.UpdateScoreText(GameManager.Instance.currentScore);
-				//UIManager.Instance.GameCanvas.UpdateLevelsText(savedLevel);
+				UIManager.Instance.GameCanvas.UpdateLevelsText(savedLevel);
 
 				
 			}
@@ -107,9 +107,23 @@ namespace FlipperDunkClone.Managers
 
 		public void NextLevel()
 		{
+
 			int savedLevel = PlayerPrefsManager.CurrentLevel;
-			savedLevel = (savedLevel % levelDataArray.Length) + 1;
-			LoadCurrentLevel();
+			savedLevel++;
+			if (savedLevel < levelDataArray.Length)
+			{
+				PlayerPrefsManager.CurrentLevel = savedLevel;
+				LoadCurrentLevel();
+
+			}
+			else
+			{
+				PlayerPrefsManager.CurrentLevel = savedLevel;
+				UIManager.Instance.GameCanvas.UpdateLevelsText(PlayerPrefsManager.CurrentLevel);
+				LoadCurrentLevel();
+				GameManager.Instance.currentScore = _currentLevelData.maxScore;
+				UIManager.Instance.GameCanvas.UpdateScoreText(GameManager.Instance.currentScore);
+			}
 		}
 
 		public Transform ReturnRandomHoopSpawnPosition()
