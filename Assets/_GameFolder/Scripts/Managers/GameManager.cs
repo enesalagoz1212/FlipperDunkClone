@@ -110,6 +110,7 @@ namespace FlipperDunkClone.Managers
 					{
 						IncreaseDiamondScore(2);
 					}
+					
 					OnGameEnd?.Invoke(isSuccessful);
 					break;
 

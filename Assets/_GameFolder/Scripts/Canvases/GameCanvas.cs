@@ -76,6 +76,7 @@ namespace FlipperDunkClone.Canvases
 			{
 				levelIndex++;
 			}
+			
 		}
 
 		
@@ -89,8 +90,9 @@ namespace FlipperDunkClone.Canvases
 			levelsText.text = "LEVEL " + level.ToString();
 		}
 
-		private void UpdateScoreText(int score)
+		public void UpdateScoreText(int score)
 		{
+			//int maxScore = LevelManager.Instance.levelDataArray[levelIndex].maxScore;
 			scoreText.text = score.ToString();
 		}
 
@@ -100,7 +102,7 @@ namespace FlipperDunkClone.Canvases
 			{
 				int totalLevels = LevelManager.Instance.levelDataArray.Length;
 				int maxScore = LevelManager.Instance.levelDataArray[levelIndex % totalLevels].maxScore;
-				scoreText.text =maxScore.ToString();
+				scoreText.text = maxScore.ToString();
 			}
 		}
 	}

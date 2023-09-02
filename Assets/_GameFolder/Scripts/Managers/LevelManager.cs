@@ -62,8 +62,9 @@ namespace FlipperDunkClone.Managers
 
 		private void OnGameStarted()
 		{
+			
 			LoadCurrentLevel();
-
+			
 		}
 
 		private void OnGameReset()
@@ -77,42 +78,38 @@ namespace FlipperDunkClone.Managers
 			_lastHoopSpawnIndex = -1;
 			if (IsSuccessful)
 			{
-				int nextLvelIndex = _currentLevelIndex + 1;
+				int nextLvelIndex = PlayerPrefsManager.CurrentLevel;
 				PlayerPrefsManager.CurrentLevel = nextLvelIndex;
-				UIManager.Instance.EndCanvas.UpdateEndLevelText(_currentLevelIndex + 1);
+				UIManager.Instance.EndCanvas.UpdateEndLevelText(PlayerPrefsManager.CurrentLevel);
 
 			}
 			else
 			{
-				UIManager.Instance.ResetCanvas.UpdateResetLevelText(_currentLevelIndex + 1);
+				UIManager.Instance.ResetCanvas.UpdateResetLevelText(PlayerPrefsManager.CurrentLevel);
 
 			}
 		}
 
 		public void LoadCurrentLevel()
 		{
-			if (_currentLevelIndex >= 0 && _currentLevelIndex <= levelDataArray.Length)
+			int savedLevel = PlayerPrefsManager.CurrentLevel;
+			UIManager.Instance.GameCanvas.UpdateLevelsText(savedLevel);
+			if (savedLevel >= 1 && savedLevel <= levelDataArray.Length)
 			{
-				_currentLevelData = levelDataArray[_currentLevelIndex];
+				_currentLevelData = levelDataArray[savedLevel-1];
 				GameManager.Instance.currentScore = _currentLevelData.maxScore;
-				UIManager.Instance.GameCanvas.UpdateLevelsText(_currentLevelIndex + 1);
+				UIManager.Instance.GameCanvas.UpdateScoreText(GameManager.Instance.currentScore);
+				//UIManager.Instance.GameCanvas.UpdateLevelsText(savedLevel);
 
-				PlayerPrefsManager.CurrentLevel = _currentLevelIndex + 1;
+				
 			}
 		}
 
 		public void NextLevel()
 		{
-			
-			_currentLevelIndex++;
-			if (_currentLevelIndex <= levelDataArray.Length)
-			{
-				int totalLevels = levelDataArray.Length;
-				_currentLevelIndex = _currentLevelIndex % totalLevels;
-
-				LoadCurrentLevel();
-				
-			}
+			int savedLevel = PlayerPrefsManager.CurrentLevel;
+			savedLevel = (savedLevel % levelDataArray.Length) + 1;
+			LoadCurrentLevel();
 		}
 
 		public Transform ReturnRandomHoopSpawnPosition()
