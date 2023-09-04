@@ -71,13 +71,11 @@ namespace FlipperDunkClone.Controllers
 		private void GravityScale()
 		{
 			if (_rigidbody2D.velocity.y < 0)
-			{
-				// Debug.Log("rb");
+			{				
 				_rigidbody2D.gravityScale = 5f;
 			}
 			else
-			{
-				// Debug.Log("-rb");
+			{				
 				_rigidbody2D.gravityScale = 3f;
 			}
 		}

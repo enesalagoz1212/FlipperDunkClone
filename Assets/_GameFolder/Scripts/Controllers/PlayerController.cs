@@ -7,6 +7,100 @@ namespace FlipperDunkClone.Controllers
 {
 	public class PlayerController : MonoBehaviour
 	{
+		private HingeJoint2D hingeJoint;
+		private bool isMoving = false;
+
+		public float moveSpeed = 100f;
+		private bool isClosed = false;
+
+		public Vector3 initialPosition;
+		public Quaternion initialRotation;
+
+		private void OnEnable()
+		{
+			GameManager.OnGameStarted += OnGameStart;
+			GameManager.OnGameEnd += OnGameEnd;
+		}
+		private void OnDisable()
+		{			
+			GameManager.OnGameStarted -= OnGameStart;
+			GameManager.OnGameEnd = OnGameEnd;
+		}
+		private void Start()
+		{
+			isClosed = false;
+			hingeJoint = GetComponent<HingeJoint2D>();
+			ResetMotor();
+		}
+
+		private void Update()
+		{
+			if (GameManager.Instance.GameState != GameState.Playing || isClosed)
+			{
+				return;
+			}
+			if (Input.GetMouseButtonDown(0))
+			{
+				isMoving = true;
+			}
+			else if (Input.GetMouseButtonUp(0))
+			{
+				isMoving = false;
+				ReturnToInitialPosition();
+			}
+
+			if (isMoving)
+			{
+				MoveUp();
+			}
+		}
+
+		private void MoveUp()
+		{
+			JointMotor2D motor = hingeJoint.motor;
+			motor.motorSpeed = moveSpeed;
+			hingeJoint.motor = motor;
+		}
+
+		private void ReturnToInitialPosition()
+		{
+			JointMotor2D motor = hingeJoint.motor;
+			motor.motorSpeed = -moveSpeed / 2;
+			hingeJoint.motor = motor;
+		}
+
+		private void ResetMotor()
+		{
+			JointMotor2D motor = hingeJoint.motor;
+			motor.motorSpeed = 0f;
+			hingeJoint.motor = motor;
+		}
+
+		private void OnGameStart()
+		{
+			initialPosition = transform.position;
+			initialRotation = transform.rotation;
+			isClosed = false;
+		}
+
+		private void OnGameEnd(bool isSuccessful)
+		{
+			transform.position = initialPosition;
+			transform.rotation = initialRotation;
+			isClosed = true;
+		}
+
+
+
+
+
+
+
+
+
+		/* 
+		 * Eski Kod
+		 * 
 		public float rotationSpeed;
 
 		private Rigidbody2D rb;
@@ -96,6 +190,15 @@ namespace FlipperDunkClone.Controllers
 			rb.MoveRotation(currentEulerZ);
 			// transform.rotation = Quaternion.Euler(0f, 0f, currentEulerZ);
 		}
+
+		*/
+
+
+
+
+
+
+		//**************************************************************
 
 		// private void RotateStick()
 		// {
