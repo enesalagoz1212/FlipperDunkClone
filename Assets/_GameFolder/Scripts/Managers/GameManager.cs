@@ -108,6 +108,7 @@ namespace FlipperDunkClone.Managers
 					break;
 
 				case GameState.Playing:
+					
 					//playerController.SetIsRotating(true);
 					break;
 

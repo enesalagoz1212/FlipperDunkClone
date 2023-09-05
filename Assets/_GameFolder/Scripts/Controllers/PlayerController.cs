@@ -2,35 +2,54 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FlipperDunkClone.Managers;
+using DG.Tweening;
+using DG.Tweening;
 
 namespace FlipperDunkClone.Controllers
 {
 	public class PlayerController : MonoBehaviour
 	{
+		private Rigidbody2D _rigidbody2D;
 		private HingeJoint2D hingeJoint;
-		private bool isMoving = false;
+		private bool _isMoving = false;
 
 		public float moveSpeed = 100f;
 		private bool isClosed = false;
 
-		public Vector3 initialPosition;
-		public Quaternion initialRotation;
+		private Vector3 initialPosition;
+		private Quaternion initialRotation;
+
+
 
 		private void OnEnable()
 		{
 			GameManager.OnGameStarted += OnGameStart;
 			GameManager.OnGameEnd += OnGameEnd;
+			GameManager.OnGameReset += OnGameReset;
 		}
 		private void OnDisable()
-		{			
+		{
 			GameManager.OnGameStarted -= OnGameStart;
 			GameManager.OnGameEnd = OnGameEnd;
+			GameManager.OnGameReset -= OnGameReset;
 		}
+
+		private void Awake()
+		{
+			_rigidbody2D = GetComponent<Rigidbody2D>();
+		}
+
 		private void Start()
 		{
+
+			initialPosition = transform.position;
+			initialRotation = transform.rotation;
+
+			transform.rotation = Quaternion.identity;
+
 			isClosed = false;
 			hingeJoint = GetComponent<HingeJoint2D>();
-			ResetMotor();
+
 		}
 
 		private void Update()
@@ -39,17 +58,17 @@ namespace FlipperDunkClone.Controllers
 			{
 				return;
 			}
-			if (Input.GetMouseButtonDown(0))
+			if (Input.GetMouseButton(0))
 			{
-				isMoving = true;
+				_isMoving = true;
 			}
 			else if (Input.GetMouseButtonUp(0))
 			{
-				isMoving = false;
+				_isMoving = false;
 				ReturnToInitialPosition();
 			}
 
-			if (isMoving)
+			if (_isMoving)
 			{
 				MoveUp();
 			}
@@ -76,22 +95,44 @@ namespace FlipperDunkClone.Controllers
 			hingeJoint.motor = motor;
 		}
 
+
 		private void OnGameStart()
 		{
+			Debug.Log("Start 1");
+
 			initialPosition = transform.position;
 			initialRotation = transform.rotation;
+
 			isClosed = false;
+			//_rigidbody2D.isKinematic = false;
+			Debug.Log("Start 2");
+
 		}
 
 		private void OnGameEnd(bool isSuccessful)
 		{
-			transform.position = initialPosition;
-			transform.rotation = initialRotation;
-			isClosed = true;
+			DOVirtual.DelayedCall(0.5f, () =>
+			{
+			Debug.Log("End 1");
+				isClosed = true;
+
+			});
+
+			//_rigidbody2D.isKinematic = true;
+
+		
+			Debug.Log("End 2");
 		}
 
 
-
+		private void OnGameReset()
+		{
+			Debug.Log("Reset 1");
+			transform.position = initialPosition;
+			transform.rotation = initialRotation;
+			ResetMotor();
+			Debug.Log("Reset 2");
+		}
 
 
 

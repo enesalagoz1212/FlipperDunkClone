@@ -11,13 +11,13 @@ namespace FlipperDunkClone.Managers
 	public class LevelManager : MonoBehaviour
 	{
 		public static LevelManager Instance { get; private set; }
-		
+
 		public LevelData[] levelDataArray;
 		private LevelData _currentLevelData;
 
 		public Transform[] hoopSpawnPoints;
 		private int _lastHoopSpawnIndex;
-		
+
 		private void Awake()
 		{
 			if (Instance != null && Instance != this)
@@ -30,11 +30,12 @@ namespace FlipperDunkClone.Managers
 			}
 
 			_lastHoopSpawnIndex = -1;
+
 		}
 
 		public void Initialize()
 		{
-			
+
 		}
 
 		private void OnEnable()
@@ -43,7 +44,7 @@ namespace FlipperDunkClone.Managers
 			GameManager.OnGameEnd += OnGameEnd;
 			GameManager.OnGameReset += OnGameReset;
 		}
-		
+
 		private void OnDisable()
 		{
 			GameManager.OnGameStarted -= OnGameStarted;
@@ -52,7 +53,7 @@ namespace FlipperDunkClone.Managers
 		}
 
 		private void OnGameStarted()
-		{
+		{			
 			LoadCurrentLevel();
 		}
 
@@ -86,6 +87,7 @@ namespace FlipperDunkClone.Managers
 
 		public Transform ReturnRandomHoopSpawnPosition()
 		{
+		
 			var randomIndex = Random.Range(0, hoopSpawnPoints.Length);
 			while (randomIndex == _lastHoopSpawnIndex)
 			{
@@ -93,7 +95,27 @@ namespace FlipperDunkClone.Managers
 			}
 
 			_lastHoopSpawnIndex = randomIndex;
-			return hoopSpawnPoints[_lastHoopSpawnIndex];
+
+			Transform hoopSpawnTransform = hoopSpawnPoints[_lastHoopSpawnIndex];
+
+
+			if (randomIndex == 2 || randomIndex == 3)
+			{
+			
+				Debug.Log("2 yada 3");
+				hoopSpawnTransform.localScale = new Vector3(-1, 1, 1);
+
+			}
+			else
+			{
+			
+				Debug.Log("0 yada 1");
+				hoopSpawnTransform.localScale = new Vector3(1, 1, 1);
+
+			}
+
+	
+			return hoopSpawnTransform;
 		}
 
 
