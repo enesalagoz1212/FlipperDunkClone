@@ -45,11 +45,10 @@ namespace FlipperDunkClone.Controllers
 			initialPosition = transform.position;
 			initialRotation = transform.rotation;
 
-			transform.rotation = Quaternion.identity;
 
 			isClosed = false;
 			hingeJoint = GetComponent<HingeJoint2D>();
-
+			ResetMotor();
 		}
 
 		private void Update()
@@ -58,7 +57,7 @@ namespace FlipperDunkClone.Controllers
 			{
 				return;
 			}
-			if (Input.GetMouseButton(0))
+			if (Input.GetMouseButtonDown(0))
 			{
 				_isMoving = true;
 			}
@@ -76,15 +75,17 @@ namespace FlipperDunkClone.Controllers
 
 		private void MoveUp()
 		{
+
 			JointMotor2D motor = hingeJoint.motor;
 			motor.motorSpeed = moveSpeed;
 			hingeJoint.motor = motor;
+
 		}
 
 		private void ReturnToInitialPosition()
 		{
 			JointMotor2D motor = hingeJoint.motor;
-			motor.motorSpeed = -moveSpeed / 2;
+			motor.motorSpeed = -moveSpeed / 1.5f;
 			hingeJoint.motor = motor;
 		}
 
@@ -98,29 +99,18 @@ namespace FlipperDunkClone.Controllers
 
 		private void OnGameStart()
 		{
-			Debug.Log("Start 1");
-
-			initialPosition = transform.position;
-			initialRotation = transform.rotation;
-
+			transform.rotation = Quaternion.identity;
 			isClosed = false;
-			//_rigidbody2D.isKinematic = false;
 			Debug.Log("Start 2");
 
 		}
 
 		private void OnGameEnd(bool isSuccessful)
 		{
-			DOVirtual.DelayedCall(0.5f, () =>
-			{
-			Debug.Log("End 1");
-				isClosed = true;
-
-			});
-
-			//_rigidbody2D.isKinematic = true;
-
-		
+			transform.position = initialPosition;
+			transform.rotation = Quaternion.identity;
+	
+			ResetMotor();
 			Debug.Log("End 2");
 		}
 
@@ -129,9 +119,7 @@ namespace FlipperDunkClone.Controllers
 		{
 			Debug.Log("Reset 1");
 			transform.position = initialPosition;
-			transform.rotation = initialRotation;
-			ResetMotor();
-			Debug.Log("Reset 2");
+			transform.rotation = Quaternion.identity;
 		}
 
 
