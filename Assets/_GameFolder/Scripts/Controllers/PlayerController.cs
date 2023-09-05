@@ -55,11 +55,10 @@ namespace FlipperDunkClone.Controllers
 		{
 			if (GameManager.Instance.GameState != GameState.Playing || isClosed)
 			{
-				moveSpeed = 0;
+				_rigidbody2D.bodyType = RigidbodyType2D.Static;			
 			}
 			if (GameManager.Instance.GameState == GameState.Playing && Input.GetMouseButtonDown(0))
 			{
-				moveSpeed = 450;
 				_isMoving = true;
 			}
 			else if (Input.GetMouseButtonUp(0))
@@ -102,6 +101,7 @@ namespace FlipperDunkClone.Controllers
 		{
 			transform.rotation = Quaternion.identity;
 			isClosed = false;
+			_rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
 			Debug.Log("Start 2");
 
 		}
