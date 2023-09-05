@@ -13,8 +13,9 @@ namespace FlipperDunkClone.Controllers
 		private HingeJoint2D hingeJoint;
 		private bool _isMoving = false;
 
-		public float moveSpeed = 100f;
+		public float moveSpeed;
 		private bool isClosed = false;
+
 
 		private Vector3 initialPosition;
 		private Quaternion initialRotation;
@@ -37,17 +38,16 @@ namespace FlipperDunkClone.Controllers
 		private void Awake()
 		{
 			_rigidbody2D = GetComponent<Rigidbody2D>();
+			hingeJoint = GetComponent<HingeJoint2D>();
 		}
 
 		private void Start()
 		{
-
 			initialPosition = transform.position;
 			initialRotation = transform.rotation;
 
-
 			isClosed = false;
-			hingeJoint = GetComponent<HingeJoint2D>();
+
 			ResetMotor();
 		}
 
@@ -55,10 +55,11 @@ namespace FlipperDunkClone.Controllers
 		{
 			if (GameManager.Instance.GameState != GameState.Playing || isClosed)
 			{
-				return;
+				moveSpeed = 0;
 			}
-			if (Input.GetMouseButtonDown(0))
+			if (GameManager.Instance.GameState == GameState.Playing && Input.GetMouseButtonDown(0))
 			{
+				moveSpeed = 450;
 				_isMoving = true;
 			}
 			else if (Input.GetMouseButtonUp(0))
@@ -109,7 +110,7 @@ namespace FlipperDunkClone.Controllers
 		{
 			transform.position = initialPosition;
 			transform.rotation = Quaternion.identity;
-	
+			isClosed = true;
 			ResetMotor();
 			Debug.Log("End 2");
 		}
