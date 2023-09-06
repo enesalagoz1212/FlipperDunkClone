@@ -15,6 +15,8 @@ namespace FlipperDunkClone.Controllers
 		private LevelData _currentLevelData;
 
 		private bool _allowHoopSpawn = true;
+
+		private Tween moveUpDownTween;
 		private void Awake()
 		{
 			hoop.SetActive(false);
@@ -41,6 +43,7 @@ namespace FlipperDunkClone.Controllers
 		private void OnGameStarted()
 		{
 			hoop.SetActive(true);
+			DOTween.Init();
 			SpawnRandomHoop();
 			_allowHoopSpawn = true;
 		}
@@ -65,15 +68,31 @@ namespace FlipperDunkClone.Controllers
 
 			if (randomTransform.localScale.x > 0)
 			{
+				Debug.Log("a");
 				targetPosition += new Vector3(2.25f, 0f, 0f);
 			}
 			else
 			{
+				Debug.Log("b");
 				targetPosition -= new Vector3(2.2f, 0f, 0f);
 			}
 
-			transform.DOMove(targetPosition, 1.0f).SetEase(Ease.Linear);
-
+			var moveRightLeftTween = transform.DOMove(targetPosition, 1.0f).SetEase(Ease.Linear);
+			moveRightLeftTween.OnComplete(() =>
+			{
+				if (randomTransform.position.y == 6)
+				{
+					Debug.Log("1111");
+					moveUpDownTween = transform.DOMoveY(transform.position.y - 6.0f, 2.0f).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
+				}
+				else
+				{
+					if (moveUpDownTween != null)
+					{
+						moveUpDownTween.Kill();
+					}
+				}
+			});
 		}
 	}
 }

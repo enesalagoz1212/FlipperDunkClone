@@ -53,7 +53,7 @@ namespace FlipperDunkClone.Managers
 		}
 
 		private void OnGameStarted()
-		{			
+		{
 			LoadCurrentLevel();
 		}
 
@@ -87,7 +87,6 @@ namespace FlipperDunkClone.Managers
 
 		public Transform ReturnRandomHoopSpawnPosition()
 		{
-		
 			var randomIndex = Random.Range(0, hoopSpawnPoints.Length);
 			while (randomIndex == _lastHoopSpawnIndex)
 			{
@@ -98,26 +97,15 @@ namespace FlipperDunkClone.Managers
 
 			Transform hoopSpawnTransform = hoopSpawnPoints[_lastHoopSpawnIndex];
 
-
-			if (randomIndex == 2 || randomIndex == 3)
+			if (randomIndex == 2 || randomIndex == 3 || randomIndex == 4)
 			{
-			
-				Debug.Log("2 yada 3");
 				hoopSpawnTransform.localScale = new Vector3(-1, 1, 1);
-
 			}
 			else
 			{
-			
-				Debug.Log("0 yada 1");
 				hoopSpawnTransform.localScale = new Vector3(1, 1, 1);
-
 			}
-
-	
 			return hoopSpawnTransform;
 		}
-
-
 	}
 }
