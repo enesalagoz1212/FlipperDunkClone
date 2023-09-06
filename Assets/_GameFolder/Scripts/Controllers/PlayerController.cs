@@ -3,22 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using FlipperDunkClone.Managers;
 using DG.Tweening;
-using DG.Tweening;
+
 
 namespace FlipperDunkClone.Controllers
 {
 	public class PlayerController : MonoBehaviour
 	{
 		private Rigidbody2D _rigidbody2D;
-		private HingeJoint2D hingeJoint;
+		private HingeJoint2D _hingeJoint;
+
 		private bool _isMoving = false;
-
 		public float moveSpeed;
-		private bool isClosed = false;
 
-
-		private Vector3 initialPosition;
-		private Quaternion initialRotation;
+		private Vector3 _initialPosition;
+		private Quaternion _initialRotation;
 
 
 
@@ -26,37 +24,28 @@ namespace FlipperDunkClone.Controllers
 		{
 			GameManager.OnGameStarted += OnGameStart;
 			GameManager.OnGameEnd += OnGameEnd;
-			GameManager.OnGameReset += OnGameReset;
 		}
 		private void OnDisable()
 		{
 			GameManager.OnGameStarted -= OnGameStart;
 			GameManager.OnGameEnd = OnGameEnd;
-			GameManager.OnGameReset -= OnGameReset;
 		}
 
 		private void Awake()
 		{
 			_rigidbody2D = GetComponent<Rigidbody2D>();
-			hingeJoint = GetComponent<HingeJoint2D>();
+			_hingeJoint = GetComponent<HingeJoint2D>();
 		}
 
 		private void Start()
 		{
-			initialPosition = transform.position;
-			initialRotation = transform.rotation;
-
-			isClosed = false;
-
+			_initialPosition = transform.position;
+			_initialRotation = transform.rotation;
 			ResetMotor();
 		}
 
 		private void Update()
 		{
-			if (GameManager.Instance.GameState != GameState.Playing || isClosed)
-			{
-				_rigidbody2D.bodyType = RigidbodyType2D.Static;			
-			}
 			if (GameManager.Instance.GameState == GameState.Playing && Input.GetMouseButtonDown(0))
 			{
 				_isMoving = true;
@@ -75,54 +64,39 @@ namespace FlipperDunkClone.Controllers
 
 		private void MoveUp()
 		{
-
-			JointMotor2D motor = hingeJoint.motor;
+			JointMotor2D motor = _hingeJoint.motor;
 			motor.motorSpeed = moveSpeed;
-			hingeJoint.motor = motor;
-
+			_hingeJoint.motor = motor;
 		}
 
 		private void ReturnToInitialPosition()
 		{
-			JointMotor2D motor = hingeJoint.motor;
+			JointMotor2D motor = _hingeJoint.motor;
 			motor.motorSpeed = -moveSpeed / 1.5f;
-			hingeJoint.motor = motor;
+			_hingeJoint.motor = motor;
 		}
 
 		private void ResetMotor()
 		{
-			JointMotor2D motor = hingeJoint.motor;
+			JointMotor2D motor = _hingeJoint.motor;
 			motor.motorSpeed = 0f;
-			hingeJoint.motor = motor;
+			_hingeJoint.motor = motor;
 		}
 
 
 		private void OnGameStart()
 		{
 			transform.rotation = Quaternion.identity;
-			isClosed = false;
 			_rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
-			Debug.Log("Start 2");
-
 		}
 
 		private void OnGameEnd(bool isSuccessful)
 		{
-			transform.position = initialPosition;
+			transform.position = _initialPosition;
 			transform.rotation = Quaternion.identity;
-			isClosed = true;
 			ResetMotor();
-			Debug.Log("End 2");
+			_rigidbody2D.bodyType = RigidbodyType2D.Static;
 		}
-
-
-		private void OnGameReset()
-		{
-			Debug.Log("Reset 1");
-			transform.position = initialPosition;
-			transform.rotation = Quaternion.identity;
-		}
-
 
 
 
