@@ -54,7 +54,7 @@ namespace FlipperDunkClone.Canvases
 
 		private void Start()
 		{
-			
+
 		}
 		private void Update()
 		{
@@ -66,7 +66,10 @@ namespace FlipperDunkClone.Canvases
 
 					if (!_isShootText && Input.GetMouseButtonDown(0))
 					{
-						gameImageBackground.gameObject.SetActive(false);
+						DOVirtual.DelayedCall(0.5f, () =>
+						{
+							gameImageBackground.gameObject.SetActive(false);
+						});
 						tabToStartText.transform.DOPause();
 						tabToStartText.DOKill();
 						tabToShootText.gameObject.SetActive(true);
@@ -84,7 +87,7 @@ namespace FlipperDunkClone.Canvases
 					break;
 				case GameState.End:
 					_isShootText = false;
-					
+
 					break;
 				default:
 					break;
@@ -99,10 +102,11 @@ namespace FlipperDunkClone.Canvases
 			}
 		}
 
+
 		private void OnGameStart()
 		{
 			gameImageBackground.gameObject.SetActive(true);
-			storeButton.onClick.AddListener(StorePanel);
+			storeButton.onClick.AddListener(OnStoreButtonClick);
 			StartTextTween();
 			UpdateLevelsText();
 			UpdateLevelDataMaxScore();
@@ -160,7 +164,7 @@ namespace FlipperDunkClone.Canvases
 			tabToShootText.transform.DOScale(1.4f, 0.7f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo);
 		}
 
-		public void StorePanel()
+		public void OnStoreButtonClick()
 		{
 			storePanel.gameObject.SetActive(true);
 			Debug.Log("Store Panel acildi");

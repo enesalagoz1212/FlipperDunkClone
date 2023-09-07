@@ -68,7 +68,7 @@ namespace FlipperDunkClone.Managers
 				}
 			}
 		}
-		
+
 		private void GameInitialize()
 		{
 			levelManager.Initialize();
@@ -91,23 +91,25 @@ namespace FlipperDunkClone.Managers
 
 		public void EndGame(bool IsSuccesful)
 		{
-			ChangeState(GameState.End,IsSuccesful);
+			ChangeState(GameState.End, IsSuccesful);
 		}
 
 		public void ChangeState(GameState gameState, bool isSuccessful = false)
 		{
 			GameState = gameState;
-			
+
 			Debug.Log($"Game State: {gameState}");
 
 			switch (GameState)
 			{
 				case GameState.Start:
 					OnGameStarted?.Invoke();
+
 					ChangeState(GameState.Playing);
+
 					break;
 
-				case GameState.Playing:					
+				case GameState.Playing:
 					//playerController.SetIsRotating(true);
 					break;
 
@@ -126,7 +128,7 @@ namespace FlipperDunkClone.Managers
 						IncreaseDiamondScore(2);
 						PlayerPrefsManager.CurrentLevel++;
 					}
-					
+
 					OnGameEnd?.Invoke(isSuccessful);
 					break;
 
