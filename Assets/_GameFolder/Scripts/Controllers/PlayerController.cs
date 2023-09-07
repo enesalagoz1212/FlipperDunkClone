@@ -13,6 +13,7 @@ namespace FlipperDunkClone.Controllers
 		private HingeJoint2D _hingeJoint;
 
 		private bool _isMoving = false;
+		private bool firstClick = true;
 		public float moveSpeed;
 
 		private Vector3 _initialPosition;
@@ -46,20 +47,62 @@ namespace FlipperDunkClone.Controllers
 
 		private void Update()
 		{
-			if (GameManager.Instance.GameState == GameState.Playing && Input.GetMouseButtonDown(0))
+			switch (GameManager.Instance.GameState)
 			{
-				_isMoving = true;
-			}
-			else if (Input.GetMouseButtonUp(0))
-			{
-				_isMoving = false;
-				ReturnToInitialPosition();
+				case GameState.Start:
+					break;
+				case GameState.Playing:
+					if (Input.GetMouseButtonDown(0))
+					{
+						if (firstClick)
+						{
+							firstClick = false;
+							_rigidbody2D.bodyType = RigidbodyType2D.Static;
+						}
+						else
+						{
+							_isMoving = true;
+							_rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+						}
+					}
+					else if (Input.GetMouseButtonUp(0))
+					{
+						_isMoving = false;
+						ReturnToInitialPosition();
+					}
+					if (_isMoving)
+					{
+						MoveUp();
+					}
+
+					break;
+				case GameState.Reset:
+					break;
+				case GameState.End:
+					firstClick = true;
+					break;
+				default:
+					break;
 			}
 
-			if (_isMoving)
-			{
-				MoveUp();
-			}
+
+
+
+			//if (GameManager.Instance.GameState == GameState.Playing && Input.GetMouseButtonDown(0))
+			//{
+			//	_isMoving = true;
+			//	_rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+			//}
+			//else if (Input.GetMouseButtonUp(0))
+			//{
+			//	_isMoving = false;
+			//	ReturnToInitialPosition();
+			//}
+
+			//if (_isMoving)
+			//{
+			//	MoveUp();
+			//}
 		}
 
 		private void MoveUp()
@@ -87,7 +130,7 @@ namespace FlipperDunkClone.Controllers
 		private void OnGameStart()
 		{
 			transform.rotation = Quaternion.identity;
-			_rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+			_rigidbody2D.bodyType = RigidbodyType2D.Static;
 		}
 
 		private void OnGameEnd(bool isSuccessful)

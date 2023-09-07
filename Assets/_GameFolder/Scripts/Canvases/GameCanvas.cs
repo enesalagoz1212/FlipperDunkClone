@@ -4,6 +4,7 @@ using UnityEngine;
 using FlipperDunkClone.Managers;
 using TMPro;
 using FlipperDunkClone.ScriptableObjects;
+using UnityEngine.UI;
 
 namespace FlipperDunkClone.Canvases
 {
@@ -11,7 +12,9 @@ namespace FlipperDunkClone.Canvases
 	{
 		public TextMeshProUGUI scoreText;
 		public TextMeshProUGUI levelsText;
+		public TextMeshProUGUI startText;
 
+		public Image gameImageBackground;
 
 		LevelData levelData;
 
@@ -19,7 +22,7 @@ namespace FlipperDunkClone.Canvases
 		private LevelManager _levelManager;
 
 		private int levelIndex = 0;
-		
+
 		private void OnEnable()
 		{
 			GameManager.OnGameScoreChanged += OnGameScoreChanged;
@@ -27,7 +30,7 @@ namespace FlipperDunkClone.Canvases
 			GameManager.OnGameReset += OnGameReset;
 			GameManager.OnGameEnd += OnGameEnd;
 		}
-		
+
 		private void OnDisable()
 		{
 			GameManager.OnGameScoreChanged -= OnGameScoreChanged;
@@ -48,6 +51,27 @@ namespace FlipperDunkClone.Canvases
 
 		}
 
+		private void Update()
+		{
+			switch (GameManager.Instance.GameState)
+			{
+				case GameState.Start:
+					break;
+				case GameState.Playing:
+					if (Input.GetMouseButtonDown(0))
+					{
+						gameImageBackground.gameObject.SetActive(false);
+					}
+					break;
+				case GameState.Reset:
+					break;
+				case GameState.End:
+					break;
+				default:
+					break;
+			}
+		}
+
 		public void OnSettingButtonClick()
 		{
 			if (_settingCanvas != null)
@@ -58,6 +82,7 @@ namespace FlipperDunkClone.Canvases
 
 		private void OnGameStart()
 		{
+			gameImageBackground.gameObject.SetActive(true);
 			UpdateLevelsText();
 			UpdateLevelDataMaxScore();
 		}
@@ -75,7 +100,7 @@ namespace FlipperDunkClone.Canvases
 			}
 		}
 
-		
+
 		private void OnGameScoreChanged(int score)
 		{
 			UpdateScoreText(score);

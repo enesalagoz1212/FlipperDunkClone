@@ -5,6 +5,7 @@ using UnityEngine;
 using FlipperDunkClone.Managers;
 using FlipperDunkClone.Canvases;
 using FlipperDunkClone.Controllers;
+using DG.Tweening;
 
 namespace FlipperDunkClone.Controllers
 {
@@ -14,12 +15,13 @@ namespace FlipperDunkClone.Controllers
 		ResetCanvas _resetCanvas;
 
 		private Rigidbody2D _rigidbody2D;
-		
+
+		private bool firstClick = true;
 		public void Initialize()
 		{
-			
+
 		}
-		
+
 		private void OnEnable()
 		{
 			GameManager.OnGameStarted += OnGameStart;
@@ -37,24 +39,37 @@ namespace FlipperDunkClone.Controllers
 		{
 			_rigidbody2D = GetComponent<Rigidbody2D>();
 		}
-		
+
 		private void Update()
 		{
 			switch (GameManager.Instance.GameState)
 			{
 				case GameState.Start:
 					break;
-				
+
 				case GameState.Playing:
+					if (Input.GetMouseButtonDown(0))
+					{
+						if (firstClick)
+						{
+							firstClick = false;
+							_rigidbody2D.bodyType = RigidbodyType2D.Static;
+						}
+						else
+						{
+							_rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+						}
+					}
 					GravityScale();
 					break;
-				
+
 				case GameState.Reset:
 					break;
-				
+
 				case GameState.End:
+					firstClick = true;
 					break;
-				
+
 				default:
 					throw new ArgumentOutOfRangeException();
 			}
@@ -65,17 +80,17 @@ namespace FlipperDunkClone.Controllers
 			transform.position = GameSettingsManager.Instance.gameSettings.ballTransformPosition;
 			_rigidbody2D.velocity = Vector2.zero;
 			_rigidbody2D.angularVelocity = 0f;
-			_rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+			_rigidbody2D.bodyType = RigidbodyType2D.Static;
 		}
 
 		private void GravityScale()
 		{
 			if (_rigidbody2D.velocity.y < 0)
-			{				
+			{
 				_rigidbody2D.gravityScale = 5f;
 			}
 			else
-			{				
+			{
 				_rigidbody2D.gravityScale = 3f;
 			}
 		}
@@ -99,7 +114,7 @@ namespace FlipperDunkClone.Controllers
 		{
 			FreezeRigidbody();
 		}
-		
+
 		private void OnGameEnd(bool IsSuccessful)
 		{
 			FreezeRigidbody();
