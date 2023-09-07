@@ -5,6 +5,7 @@ using FlipperDunkClone.Managers;
 using TMPro;
 using FlipperDunkClone.ScriptableObjects;
 using UnityEngine.UI;
+using DG.Tweening;
 
 namespace FlipperDunkClone.Canvases
 {
@@ -12,7 +13,8 @@ namespace FlipperDunkClone.Canvases
 	{
 		public TextMeshProUGUI scoreText;
 		public TextMeshProUGUI levelsText;
-		public TextMeshProUGUI startText;
+		public TextMeshProUGUI tabToStartText;
+		public TextMeshProUGUI tabToShootText;
 
 		public Image gameImageBackground;
 
@@ -22,6 +24,8 @@ namespace FlipperDunkClone.Canvases
 		private LevelManager _levelManager;
 
 		private int levelIndex = 0;
+
+		private bool _isShootText = false;
 
 		private void OnEnable()
 		{
@@ -58,14 +62,26 @@ namespace FlipperDunkClone.Canvases
 				case GameState.Start:
 					break;
 				case GameState.Playing:
-					if (Input.GetMouseButtonDown(0))
+
+					if (!_isShootText && Input.GetMouseButtonDown(0))
 					{
+						//tabToStartText.gameObject.SetActive(false);
 						gameImageBackground.gameObject.SetActive(false);
+						tabToStartText.DOKill();
+						tabToShootText.gameObject.SetActive(true);
+						ShootTextTween();
+						_isShootText = true;
+					}
+					else if (_isShootText && Input.GetMouseButtonDown(0))
+					{
+						tabToShootText.DOKill();
+						tabToShootText.gameObject.SetActive(false);
 					}
 					break;
 				case GameState.Reset:
 					break;
 				case GameState.End:
+					_isShootText = false;
 					break;
 				default:
 					break;
@@ -83,6 +99,8 @@ namespace FlipperDunkClone.Canvases
 		private void OnGameStart()
 		{
 			gameImageBackground.gameObject.SetActive(true);
+			//tabToStartText.gameObject.SetActive(true);
+			StartTextTween();
 			UpdateLevelsText();
 			UpdateLevelDataMaxScore();
 		}
@@ -125,6 +143,16 @@ namespace FlipperDunkClone.Canvases
 				int maxScore = LevelManager.Instance.levelDataArray[levelIndex % totalLevels].maxScore;
 				scoreText.text = maxScore.ToString();
 			}
+		}
+
+		private void StartTextTween()
+		{
+			tabToStartText.transform.DOScale(1.4f, 0.7f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo);
+		}
+
+		private void ShootTextTween()
+		{
+			tabToShootText.transform.DOScale(1.4f, 0.7f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo);
 		}
 	}
 }
