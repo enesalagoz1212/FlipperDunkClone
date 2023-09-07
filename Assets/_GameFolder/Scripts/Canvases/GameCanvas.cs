@@ -11,21 +11,23 @@ namespace FlipperDunkClone.Canvases
 {
 	public class GameCanvas : MonoBehaviour
 	{
+		private LevelData _levelData;
+		private SettingsCanvas _settingCanvas;
+		private LevelManager _levelManager;
+
 		public TextMeshProUGUI scoreText;
 		public TextMeshProUGUI levelsText;
 		public TextMeshProUGUI tabToStartText;
 		public TextMeshProUGUI tabToShootText;
 
 		public Image gameImageBackground;
-
-		LevelData levelData;
-
-		private SettingsCanvas _settingCanvas;
-		private LevelManager _levelManager;
+		public Image storePanel;
 
 		private int levelIndex = 0;
 
 		private bool _isShootText = false;
+
+		public Button storeButton;
 
 		private void OnEnable()
 		{
@@ -50,11 +52,10 @@ namespace FlipperDunkClone.Canvases
 
 		}
 
-		void Start()
+		private void Start()
 		{
-
+			
 		}
-
 		private void Update()
 		{
 			switch (GameManager.Instance.GameState)
@@ -65,8 +66,8 @@ namespace FlipperDunkClone.Canvases
 
 					if (!_isShootText && Input.GetMouseButtonDown(0))
 					{
-						//tabToStartText.gameObject.SetActive(false);
 						gameImageBackground.gameObject.SetActive(false);
+						tabToStartText.transform.DOPause();
 						tabToStartText.DOKill();
 						tabToShootText.gameObject.SetActive(true);
 						ShootTextTween();
@@ -74,6 +75,7 @@ namespace FlipperDunkClone.Canvases
 					}
 					else if (_isShootText && Input.GetMouseButtonDown(0))
 					{
+						tabToShootText.transform.DOPause();
 						tabToShootText.DOKill();
 						tabToShootText.gameObject.SetActive(false);
 					}
@@ -82,6 +84,7 @@ namespace FlipperDunkClone.Canvases
 					break;
 				case GameState.End:
 					_isShootText = false;
+					
 					break;
 				default:
 					break;
@@ -99,7 +102,7 @@ namespace FlipperDunkClone.Canvases
 		private void OnGameStart()
 		{
 			gameImageBackground.gameObject.SetActive(true);
-			//tabToStartText.gameObject.SetActive(true);
+			storeButton.onClick.AddListener(StorePanel);
 			StartTextTween();
 			UpdateLevelsText();
 			UpdateLevelDataMaxScore();
@@ -116,6 +119,8 @@ namespace FlipperDunkClone.Canvases
 			{
 				levelIndex++;
 			}
+			tabToStartText.transform.localScale = Vector3.one;
+			tabToShootText.transform.localScale = Vector3.one;
 		}
 
 
@@ -153,6 +158,12 @@ namespace FlipperDunkClone.Canvases
 		private void ShootTextTween()
 		{
 			tabToShootText.transform.DOScale(1.4f, 0.7f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo);
+		}
+
+		public void StorePanel()
+		{
+			storePanel.gameObject.SetActive(true);
+			Debug.Log("Store Panel acildi");
 		}
 	}
 }
