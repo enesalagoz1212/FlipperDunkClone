@@ -66,19 +66,18 @@ namespace FlipperDunkClone.Canvases
 
 					if (!_isShootText && Input.GetMouseButtonDown(0))
 					{
-						DOVirtual.DelayedCall(0.5f, () =>
+						DOVirtual.DelayedCall(0.2f, () =>
 						{
 							gameImageBackground.gameObject.SetActive(false);
 						});
-						tabToStartText.transform.DOPause();
 						tabToStartText.DOKill();
+						tabToStartText.gameObject.SetActive(false);
 						tabToShootText.gameObject.SetActive(true);
 						ShootTextTween();
 						_isShootText = true;
 					}
 					else if (_isShootText && Input.GetMouseButtonDown(0))
 					{
-						tabToShootText.transform.DOPause();
 						tabToShootText.DOKill();
 						tabToShootText.gameObject.SetActive(false);
 					}
@@ -106,6 +105,7 @@ namespace FlipperDunkClone.Canvases
 		private void OnGameStart()
 		{
 			gameImageBackground.gameObject.SetActive(true);
+			tabToStartText.gameObject.SetActive(true);
 			storeButton.onClick.AddListener(OnStoreButtonClick);
 			StartTextTween();
 			UpdateLevelsText();
