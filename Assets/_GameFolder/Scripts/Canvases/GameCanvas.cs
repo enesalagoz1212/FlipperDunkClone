@@ -28,6 +28,7 @@ namespace FlipperDunkClone.Canvases
 		private bool _isShootText = false;
 
 		public Button storeButton;
+		public Button backButton;
 
 		private void OnEnable()
 		{
@@ -70,15 +71,16 @@ namespace FlipperDunkClone.Canvases
 						{
 							gameImageBackground.gameObject.SetActive(false);
 						});
-						tabToStartText.DOKill();
+						tabToStartText.transform.DOPause();
 						tabToStartText.gameObject.SetActive(false);
 						tabToShootText.gameObject.SetActive(true);
 						ShootTextTween();
 						_isShootText = true;
+						backButton.onClick.AddListener(BackButtonClick);
 					}
 					else if (_isShootText && Input.GetMouseButtonDown(0))
 					{
-						tabToShootText.DOKill();
+						tabToShootText.transform.DOPause();
 						tabToShootText.gameObject.SetActive(false);
 					}
 					break;
@@ -101,7 +103,16 @@ namespace FlipperDunkClone.Canvases
 			}
 		}
 
+		public void OnStoreButtonClick()
+		{
+			storePanel.gameObject.SetActive(true);
+			Debug.Log("Store Panel acildi");
+		}
 
+		public void BackButtonClick()
+		{
+			storePanel.gameObject.SetActive(false);
+		}
 		private void OnGameStart()
 		{
 			gameImageBackground.gameObject.SetActive(true);
@@ -164,11 +175,7 @@ namespace FlipperDunkClone.Canvases
 			tabToShootText.transform.DOScale(1.4f, 0.7f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo);
 		}
 
-		public void OnStoreButtonClick()
-		{
-			storePanel.gameObject.SetActive(true);
-			Debug.Log("Store Panel acildi");
-		}
+		
 	}
 }
 
