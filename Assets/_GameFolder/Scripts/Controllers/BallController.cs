@@ -15,6 +15,7 @@ namespace FlipperDunkClone.Controllers
 		ResetCanvas _resetCanvas;
 
 		private Rigidbody2D _rigidbody2D;
+		public SpriteRenderer ballSpriteRenderer;
 
 		private bool _firstClick = true;
 		public void Initialize()
@@ -44,7 +45,7 @@ namespace FlipperDunkClone.Controllers
 		{
 			switch (GameManager.Instance.GameState)
 			{
-				case GameState.Start:
+				case GameState.Start:				
 					break;
 
 				case GameState.Playing:
@@ -83,6 +84,23 @@ namespace FlipperDunkClone.Controllers
 			_rigidbody2D.velocity = Vector2.zero;
 			_rigidbody2D.angularVelocity = 0f;
 			_rigidbody2D.bodyType = RigidbodyType2D.Static;
+
+		}
+
+		private void OnGameReset()
+		{
+			FreezeRigidbody();
+		}
+
+		private void OnGameEnd(bool IsSuccessful)
+		{
+			FreezeRigidbody();
+			GameManager.OnDiamondScored?.Invoke(PlayerPrefsManager.DiamondScore);
+		}
+
+		public void ChangeBallImage(Sprite newSprite)
+		{
+			ballSpriteRenderer.sprite = newSprite;
 		}
 
 		private void GravityScale()
@@ -112,16 +130,7 @@ namespace FlipperDunkClone.Controllers
 			}
 		}
 
-		private void OnGameReset()
-		{
-			FreezeRigidbody();
-		}
-
-		private void OnGameEnd(bool IsSuccessful)
-		{
-			FreezeRigidbody();
-			GameManager.OnDiamondScored?.Invoke(PlayerPrefsManager.DiamondScore);
-		}
+		
 
 		private void FreezeRigidbody()
 		{

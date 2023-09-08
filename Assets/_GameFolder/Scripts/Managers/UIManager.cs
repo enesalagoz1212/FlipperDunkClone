@@ -29,7 +29,7 @@ namespace FlipperDunkClone.Managers
             }
         }
 
-        public void Initialize(LevelManager levelManager)
+        public void Initialize(LevelManager levelManager ,BallController ballController)
         {
             GameManager.OnGameEnd += OnGameEnd;
             
@@ -37,7 +37,7 @@ namespace FlipperDunkClone.Managers
             gameCanvas.Initialize(levelManager, settingsCanvas);
             resetCanvas.Initialize();
             settingsCanvas.Initialize(gameCanvas);
-            menuCanvas.Initialize();
+            menuCanvas.Initialize(ballController);
         }
 
         private void OnGameEnd(bool isSuccessful)

@@ -1348,6 +1348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4032668115bbc1a48a0f1d086079fc5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ballSpriteRenderer: {fileID: 171787523}
 --- !u!1 &172863080
 GameObject:
   m_ObjectHideFlags: 0
@@ -8863,10 +8864,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   storeButton: {fileID: 2116210344}
   backButton: {fileID: 1977549563}
+  ballButtons:
+  - {fileID: 2113201580}
+  - {fileID: 97435774}
+  - {fileID: 1906755258}
+  - {fileID: 1215919519}
+  - {fileID: 159266714}
+  - {fileID: 155169894}
+  - {fileID: 914488552}
+  - {fileID: 506199473}
+  - {fileID: 1213793050}
   tabToStartText: {fileID: 857031271}
   tabToShootText: {fileID: 1326780748}
   gameImageBackground: {fileID: 110030302}
   storePanel: {fileID: 998342300}
+  ballSprites:
+  - {fileID: 21300000, guid: 93ffbba163d65b34a8a7bb14aeda7708, type: 3}
+  - {fileID: 21300000, guid: 64fea4c161a50a44a9bb38cfbcd934a2, type: 3}
+  - {fileID: 21300000, guid: 0497ae5fb4c5d6344aafb8875ab26086, type: 3}
+  - {fileID: 21300000, guid: 40a6d39c2b8507b43a6fa40839958e67, type: 3}
+  - {fileID: 21300000, guid: 956fb741522b0a448bc6fb902fdb7381, type: 3}
+  - {fileID: 21300000, guid: ee39ccc8c4c733745beaf4e12cfdcdeb, type: 3}
+  - {fileID: 21300000, guid: d5010821fd9b0094699c2101cc9d8aea, type: 3}
+  - {fileID: 21300000, guid: b9dde7dcc0ef97249abe64b53c9d708c, type: 3}
+  - {fileID: 21300000, guid: a4c5e44f57b6d164fb6498c36e671530, type: 3}
 --- !u!114 &1547387198
 MonoBehaviour:
   m_ObjectHideFlags: 0

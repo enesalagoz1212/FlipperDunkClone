@@ -17,7 +17,7 @@ namespace FlipperDunkClone.Managers
 		{
 			get
 			{
-				return PlayerPrefs.GetInt(SelectedBallKey, 1);
+				return PlayerPrefs.GetInt(SelectedBallKey, 5);
 			}
 			set
 			{

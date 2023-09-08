@@ -5,13 +5,17 @@ using UnityEngine.UI;
 using FlipperDunkClone.Managers;
 using DG.Tweening;
 using TMPro;
+using FlipperDunkClone.Controllers;
 
 namespace FlipperDunkClone.Canvases
 {
 	public class MenuCanvas : MonoBehaviour
 	{
+		private BallController _ballController;
+
 		public Button storeButton;
 		public Button backButton;
+		public Button[] ballButtons;
 
 		public TextMeshProUGUI tabToStartText;
 		public TextMeshProUGUI tabToShootText;
@@ -19,10 +23,12 @@ namespace FlipperDunkClone.Canvases
 		public Image gameImageBackground;
 		public Image storePanel;
 
-		private bool _isShootText = false;
-		public void Initialize()
-		{
+		public Sprite[] ballSprites;
 
+		private bool _isShootText = false;
+		public void Initialize(BallController ballController)
+		{
+			_ballController = ballController;
 		}
 
 		private void OnEnable()
@@ -41,7 +47,14 @@ namespace FlipperDunkClone.Canvases
 		}
 		void Start()
 		{
-
+			for (int i = 0; i < ballButtons.Length; i++)
+			{
+				int ballIndex = i;
+				ballButtons[i].onClick.AddListener(() =>
+				{
+					OnBallButtonClick(ballIndex);	
+				});
+			}
 		}
 
 
@@ -50,8 +63,13 @@ namespace FlipperDunkClone.Canvases
 			switch (GameManager.Instance.GameState)
 			{
 				case GameState.Start:
+					
+
 					break;
 				case GameState.Playing:
+					int selectedBallIndex = PlayerPrefsManager.SelectedBall;
+					_ballController.ChangeBallImage(ballSprites[selectedBallIndex]);
+
 					if (!_isShootText && Input.GetMouseButtonDown(0))
 					{
 						tabToStartText.DOKill();
@@ -110,6 +128,14 @@ namespace FlipperDunkClone.Canvases
 			tabToShootText.transform.localScale = Vector3.one;
 		}
 
+		private void OnBallButtonClick(int ballIndex)
+		{
+			PlayerPrefsManager.SelectedBall = ballIndex ;
+			Debug.Log("Selected ball: " + (ballIndex));
+
+			_ballController.ChangeBallImage(ballSprites[ballIndex]);
+		}
+
 		public void OnStoreButtonClick()
 		{
 			GameManager.Instance.ChangeState(GameState.Menu, false);
@@ -128,6 +154,7 @@ namespace FlipperDunkClone.Canvases
 			StartTextTween();
 		}
 
+	
 		private void StartTextTween()
 		{
 			tabToStartText.transform.DOScale(1.4f, 0.7f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo);

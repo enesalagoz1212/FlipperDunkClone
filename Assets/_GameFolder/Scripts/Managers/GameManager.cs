@@ -73,7 +73,7 @@ namespace FlipperDunkClone.Managers
 		private void GameInitialize()
 		{
 			levelManager.Initialize();
-			uiManager.Initialize(levelManager);
+			uiManager.Initialize(levelManager,ballController);
 			ballController.Initialize();
 			hoopController.Initialize(levelManager);
 
