@@ -17,18 +17,11 @@ namespace FlipperDunkClone.Canvases
 
 		public TextMeshProUGUI scoreText;
 		public TextMeshProUGUI levelsText;
-		public TextMeshProUGUI tabToStartText;
-		public TextMeshProUGUI tabToShootText;
 
-		public Image gameImageBackground;
-		public Image storePanel;
+		//public Image gameImageBackground;
 
 		private int levelIndex = 0;
-
 		private bool _isShootText = false;
-
-		public Button storeButton;
-		public Button backButton;
 
 		private void OnEnable()
 		{
@@ -50,7 +43,6 @@ namespace FlipperDunkClone.Canvases
 		{
 			_settingCanvas = settingsCanvas;
 			_levelManager = levelManager;
-
 		}
 
 		private void Start()
@@ -64,35 +56,21 @@ namespace FlipperDunkClone.Canvases
 				case GameState.Start:
 					break;
 				case GameState.Playing:
-
-					if (!_isShootText && Input.GetMouseButtonDown(0))
-					{
-						DOVirtual.DelayedCall(0.2f, () =>
-						{
-							gameImageBackground.gameObject.SetActive(false);
-						});
-						tabToStartText.transform.DOPause();
-						tabToStartText.gameObject.SetActive(false);
-						tabToShootText.gameObject.SetActive(true);
-						ShootTextTween();
-						_isShootText = true;
-						backButton.onClick.AddListener(BackButtonClick);
-					}
-					else if (_isShootText && Input.GetMouseButtonDown(0))
-					{
-						tabToShootText.transform.DOPause();
-						tabToShootText.gameObject.SetActive(false);
-					}
+					scoreText.gameObject.SetActive(true);
+					levelsText.gameObject.SetActive(true);
 					break;
 				case GameState.Reset:
 					break;
 				case GameState.End:
-					_isShootText = false;
-
+					break;
+				case GameState.Menu:
+					scoreText.gameObject.SetActive(false);
+					levelsText.gameObject.SetActive(false);
 					break;
 				default:
 					break;
 			}
+
 		}
 
 		public void OnSettingButtonClick()
@@ -103,22 +81,8 @@ namespace FlipperDunkClone.Canvases
 			}
 		}
 
-		public void OnStoreButtonClick()
-		{
-			storePanel.gameObject.SetActive(true);
-			Debug.Log("Store Panel acildi");
-		}
-
-		public void BackButtonClick()
-		{
-			storePanel.gameObject.SetActive(false);
-		}
 		private void OnGameStart()
 		{
-			gameImageBackground.gameObject.SetActive(true);
-			tabToStartText.gameObject.SetActive(true);
-			storeButton.onClick.AddListener(OnStoreButtonClick);
-			StartTextTween();
 			UpdateLevelsText();
 			UpdateLevelDataMaxScore();
 		}
@@ -134,8 +98,6 @@ namespace FlipperDunkClone.Canvases
 			{
 				levelIndex++;
 			}
-			tabToStartText.transform.localScale = Vector3.one;
-			tabToShootText.transform.localScale = Vector3.one;
 		}
 
 
@@ -163,19 +125,7 @@ namespace FlipperDunkClone.Canvases
 				int maxScore = LevelManager.Instance.levelDataArray[levelIndex % totalLevels].maxScore;
 				scoreText.text = maxScore.ToString();
 			}
-		}
-
-		private void StartTextTween()
-		{
-			tabToStartText.transform.DOScale(1.4f, 0.7f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo);
-		}
-
-		private void ShootTextTween()
-		{
-			tabToShootText.transform.DOScale(1.4f, 0.7f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo);
-		}
-
-		
+		}		
 	}
 }
 

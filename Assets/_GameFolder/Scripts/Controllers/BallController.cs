@@ -16,7 +16,7 @@ namespace FlipperDunkClone.Controllers
 
 		private Rigidbody2D _rigidbody2D;
 
-		private bool firstClick = true;
+		private bool _firstClick = true;
 		public void Initialize()
 		{
 
@@ -50,9 +50,9 @@ namespace FlipperDunkClone.Controllers
 				case GameState.Playing:
 					if (Input.GetMouseButtonDown(0))
 					{
-						if (firstClick)
+						if (_firstClick)
 						{
-							firstClick = false;
+							_firstClick = false;
 							_rigidbody2D.bodyType = RigidbodyType2D.Static;
 						}
 						else
@@ -67,7 +67,9 @@ namespace FlipperDunkClone.Controllers
 					break;
 
 				case GameState.End:
-					firstClick = true;
+					_firstClick = true;
+					break;
+				case GameState.Menu:
 					break;
 
 				default:

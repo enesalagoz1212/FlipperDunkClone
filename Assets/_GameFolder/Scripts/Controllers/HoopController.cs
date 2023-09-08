@@ -15,7 +15,7 @@ namespace FlipperDunkClone.Controllers
 		private LevelData _currentLevelData;
 
 		private bool _allowHoopSpawn = true;
-		private bool firstClick = true;
+		private bool _firstClick = true;
 
 		private Tween moveUpDownTween;
 		private void Awake()
@@ -50,9 +50,9 @@ namespace FlipperDunkClone.Controllers
 				case GameState.Playing:
 					if (Input.GetMouseButtonDown(0))
 					{
-						if (firstClick)
+						if (_firstClick)
 						{
-							firstClick = false;
+							_firstClick = false;
 							hoop.SetActive(true);
 							SpawnRandomHoop();
 						}
@@ -66,8 +66,11 @@ namespace FlipperDunkClone.Controllers
 				case GameState.Reset:
 					break;
 				case GameState.End:
-					firstClick = true;
+					_firstClick = true;
 					break;
+				case GameState.Menu:
+					break;
+
 				default:
 					throw new ArgumentOutOfRangeException();
 
@@ -76,7 +79,7 @@ namespace FlipperDunkClone.Controllers
 		private void OnGameStarted()
 		{
 			hoop.SetActive(false);
-		
+
 			_allowHoopSpawn = true;
 		}
 

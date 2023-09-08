@@ -10,6 +10,20 @@ namespace FlipperDunkClone.Managers
 		private const string SoundKey = "IsSoundOn";
 		private const string DiamondScorePrefsString = "DiamondScore";
 		private const string CurrentLevelKey = "CurrentLevel";
+		private const string SelectedBallKey = "SelectedBall";
+
+
+		public static int SelectedBall
+		{
+			get
+			{
+				return PlayerPrefs.GetInt(SelectedBallKey, 1);
+			}
+			set
+			{
+				PlayerPrefs.SetInt(SelectedBallKey, value);
+			}
+		}
 
 		public static int CurrentLevel
 		{

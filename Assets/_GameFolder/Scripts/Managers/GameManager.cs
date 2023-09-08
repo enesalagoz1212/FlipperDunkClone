@@ -15,6 +15,7 @@ namespace FlipperDunkClone.Managers
 		Playing = 1,
 		Reset = 2,
 		End = 3,
+		Menu = 4,
 	}
 	public class GameManager : MonoBehaviour
 	{
@@ -94,6 +95,11 @@ namespace FlipperDunkClone.Managers
 			ChangeState(GameState.End, IsSuccesful);
 		}
 
+		public void MenuGame()
+		{
+			ChangeState(GameState.Menu);
+		}
+
 		public void ChangeState(GameState gameState, bool isSuccessful = false)
 		{
 			GameState = gameState;
@@ -106,6 +112,7 @@ namespace FlipperDunkClone.Managers
 					OnGameStarted?.Invoke();
 
 					ChangeState(GameState.Playing);
+
 
 					break;
 
@@ -130,6 +137,8 @@ namespace FlipperDunkClone.Managers
 					}
 
 					OnGameEnd?.Invoke(isSuccessful);
+					break;
+				case GameState.Menu:
 					break;
 
 				default:

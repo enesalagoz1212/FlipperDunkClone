@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using FlipperDunkClone.Managers;
 
 namespace FlipperDunkClone.Canvases
 {
@@ -28,7 +29,22 @@ namespace FlipperDunkClone.Canvases
 
 		void Update()
 		{
-
+			switch (GameManager.Instance.GameState)
+			{
+				case GameState.Start:
+					break;
+				case GameState.Playing:
+					settingButton.gameObject.SetActive(false);
+					break;
+				case GameState.Reset:
+					break;
+				case GameState.End:
+					break;
+				case GameState.Menu:
+					break;
+				default:
+					break;
+			}
 		}
 
 		public void OnSettingButton()

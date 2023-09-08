@@ -13,7 +13,7 @@ namespace FlipperDunkClone.Controllers
 		private HingeJoint2D _hingeJoint;
 
 		private bool _isMoving = false;
-		private bool firstClick = true;
+		private bool _firstClick = true;
 		public float moveSpeed;
 
 		private Vector3 _initialPosition;
@@ -54,9 +54,9 @@ namespace FlipperDunkClone.Controllers
 				case GameState.Playing:
 					if (Input.GetMouseButtonDown(0))
 					{
-						if (firstClick)
+						if (_firstClick)
 						{
-							firstClick = false;
+							_firstClick = false;
 							_rigidbody2D.bodyType = RigidbodyType2D.Static;
 						}
 						else
@@ -79,7 +79,10 @@ namespace FlipperDunkClone.Controllers
 				case GameState.Reset:
 					break;
 				case GameState.End:
-					firstClick = true;
+					_firstClick = true;
+					break;
+				case GameState.Menu:
+					
 					break;
 				default:
 					break;
