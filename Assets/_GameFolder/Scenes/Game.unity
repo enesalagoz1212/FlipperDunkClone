@@ -1836,7 +1836,7 @@ MonoBehaviour:
   ballController: {fileID: 171787526}
   hoopController: {fileID: 1140164134}
   playerController: {fileID: 1679816997}
-  "\u0131nputManager": {fileID: 1861050223}
+  inputManager: {fileID: 1861050223}
   currentScore: 0
 --- !u!4 &223941801
 Transform:
