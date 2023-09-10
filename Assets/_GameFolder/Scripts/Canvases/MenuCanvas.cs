@@ -6,6 +6,7 @@ using FlipperDunkClone.Managers;
 using DG.Tweening;
 using TMPro;
 using FlipperDunkClone.Controllers;
+using UnityEngine.EventSystems;
 
 namespace FlipperDunkClone.Canvases
 {
@@ -26,6 +27,8 @@ namespace FlipperDunkClone.Canvases
 		public Sprite[] ballSprites;
 
 		private bool _isShootText = false;
+
+
 		public void Initialize(BallController ballController)
 		{
 			_ballController = ballController;
@@ -52,9 +55,11 @@ namespace FlipperDunkClone.Canvases
 				int ballIndex = i;
 				ballButtons[i].onClick.AddListener(() =>
 				{
-					OnBallButtonClick(ballIndex);	
+					OnBallButtonClick(ballIndex);
 				});
 			}
+			int selectedBallIndex = PlayerPrefsManager.SelectedBall;
+			_ballController.ChangeBallImage(ballSprites[selectedBallIndex]);
 		}
 
 
@@ -63,18 +68,14 @@ namespace FlipperDunkClone.Canvases
 			switch (GameManager.Instance.GameState)
 			{
 				case GameState.Start:
-					
-
 					break;
 				case GameState.Playing:
-					int selectedBallIndex = PlayerPrefsManager.SelectedBall;
-					_ballController.ChangeBallImage(ballSprites[selectedBallIndex]);
 
 					if (!_isShootText && Input.GetMouseButtonDown(0))
 					{
-						tabToStartText.DOKill();
+						tabToStartText.transform.DOKill();
+						tabToStartText.transform.localScale = Vector3.one;
 						tabToStartText.gameObject.SetActive(false);
-
 						tabToShootText.gameObject.SetActive(true);
 						ShootTextTween();
 						DOVirtual.DelayedCall(0.25f, () =>
@@ -85,7 +86,8 @@ namespace FlipperDunkClone.Canvases
 					}
 					else if (_isShootText && Input.GetMouseButtonDown(0))
 					{
-						tabToShootText.DOKill();
+						tabToShootText.transform.DOKill();
+						tabToShootText.transform.localScale = Vector3.one;
 						tabToShootText.gameObject.SetActive(false);
 					}
 
@@ -109,6 +111,7 @@ namespace FlipperDunkClone.Canvases
 			}
 		}
 
+
 		private void OnGameStart()
 		{
 			gameImageBackground.gameObject.SetActive(true);
@@ -124,13 +127,13 @@ namespace FlipperDunkClone.Canvases
 
 		private void OnGameEnd(bool isSuccuessful)
 		{
-			tabToStartText.transform.localScale = Vector3.one;
-			tabToShootText.transform.localScale = Vector3.one;
+				
+		
 		}
 
 		private void OnBallButtonClick(int ballIndex)
 		{
-			PlayerPrefsManager.SelectedBall = ballIndex ;
+			PlayerPrefsManager.SelectedBall = ballIndex;
 			Debug.Log("Selected ball: " + (ballIndex));
 
 			_ballController.ChangeBallImage(ballSprites[ballIndex]);
@@ -139,22 +142,22 @@ namespace FlipperDunkClone.Canvases
 		public void OnStoreButtonClick()
 		{
 			GameManager.Instance.ChangeState(GameState.Menu, false);
-
+			tabToStartText.transform.DOKill();
+			tabToStartText.transform.localScale = Vector3.one;
 			Debug.Log("Store Panel acildi");
 		}
 
 		public void BackButtonClick()
 		{
-			tabToStartText.transform.localScale = Vector3.one;
-			tabToShootText.transform.localScale = Vector3.one;
 			storePanel.gameObject.SetActive(false);
 			GameManager.Instance.ChangeState(GameState.Playing, false);
 			gameImageBackground.gameObject.SetActive(true);
 			tabToStartText.gameObject.SetActive(true);
+			//tabToStartText.transform.localScale = Vector3.one;
 			StartTextTween();
 		}
 
-	
+
 		private void StartTextTween()
 		{
 			tabToStartText.transform.DOScale(1.4f, 0.7f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo);
@@ -165,6 +168,7 @@ namespace FlipperDunkClone.Canvases
 			tabToShootText.transform.DOScale(1.4f, 0.7f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo);
 		}
 
+		
 	}
 }
 

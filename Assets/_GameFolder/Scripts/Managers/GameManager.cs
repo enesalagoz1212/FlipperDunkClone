@@ -34,6 +34,7 @@ namespace FlipperDunkClone.Managers
 		[SerializeField] private BallController ballController;
 		[SerializeField] private HoopController hoopController;
 		[SerializeField] private PlayerController playerController;
+		[SerializeField] private InputManager ýnputManager;
 
 		public int currentScore;
 
@@ -73,10 +74,10 @@ namespace FlipperDunkClone.Managers
 		private void GameInitialize()
 		{
 			levelManager.Initialize();
-			uiManager.Initialize(levelManager,ballController);
+			uiManager.Initialize(levelManager,ballController,ýnputManager);
 			ballController.Initialize();
 			hoopController.Initialize(levelManager);
-
+			ýnputManager.Initialize();
 			OnGameStart();
 		}
 
