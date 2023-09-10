@@ -11,19 +11,19 @@ namespace FlipperDunkClone.Managers
 {
 	public enum GameState
 	{
-		Start = 0,
-		Playing = 1,
-		Reset = 2,
-		End = 3,
-		Menu = 4,
+		Menu = 0,
+		Start = 1,
+		Playing = 2,
+		Reset = 3,
+		End = 4,
 	}
 	public class GameManager : MonoBehaviour
 	{
 		public static GameManager Instance { get; private set; }
 		public GameState GameState { get; set; }
 
+		public static Action OnMenuOpen;
 		public static Action OnGameStarted;
-		public static Action OnGamePlaying;
 		public static Action OnGameReset;
 		public static Action<bool> OnGameEnd;
 		public static Action<int> OnGameScoreChanged;
@@ -50,7 +50,7 @@ namespace FlipperDunkClone.Managers
 			}
 		}
 
-		void Start()
+		private void Start()
 		{
 			Application.targetFrameRate = 60;
 			GameInitialize();
@@ -74,14 +74,15 @@ namespace FlipperDunkClone.Managers
 		private void GameInitialize()
 		{
 			levelManager.Initialize();
-			uiManager.Initialize(levelManager,ballController,inputManager);
+			uiManager.Initialize(this, levelManager,ballController,inputManager);
 			ballController.Initialize();
 			hoopController.Initialize(levelManager);
 			inputManager.Initialize();
-			OnGameStart();
+			
+			ChangeState(GameState.Menu);
 		}
 
-		private void OnGameStart()
+		public void OnGameStart()
 		{
 			ChangeState(GameState.Start);
 		}
@@ -91,14 +92,9 @@ namespace FlipperDunkClone.Managers
 			ChangeState(GameState.Reset);
 		}
 
-		public void EndGame(bool IsSuccesful)
+		public void EndGame(bool isSuccessful)
 		{
-			ChangeState(GameState.End, IsSuccesful);
-		}
-
-		public void MenuGame()
-		{
-			ChangeState(GameState.Menu);
+			ChangeState(GameState.End, isSuccessful);
 		}
 
 		public void ChangeState(GameState gameState, bool isSuccessful = false)
@@ -109,24 +105,23 @@ namespace FlipperDunkClone.Managers
 
 			switch (GameState)
 			{
+				case GameState.Menu:
+					OnMenuOpen?.Invoke();
+					break;
+				
 				case GameState.Start:
 					OnGameStarted?.Invoke();
-
 					ChangeState(GameState.Playing);
-
-
 					break;
 
 				case GameState.Playing:
-					//playerController.SetIsRotating(true);
 					break;
 
 				case GameState.Reset:
 					OnGameReset?.Invoke();
-
 					DOVirtual.DelayedCall(0.25f, () =>
 					{
-						ChangeState(GameState.Start);
+						ChangeState(GameState.Menu);
 					});
 					break;
 
@@ -139,9 +134,7 @@ namespace FlipperDunkClone.Managers
 
 					OnGameEnd?.Invoke(isSuccessful);
 					break;
-				case GameState.Menu:
-					break;
-
+				
 				default:
 					throw new ArgumentOutOfRangeException();
 			}

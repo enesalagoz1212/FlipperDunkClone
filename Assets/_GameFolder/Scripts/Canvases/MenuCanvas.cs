@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,8 +13,10 @@ namespace FlipperDunkClone.Canvases
 {
 	public class MenuCanvas : MonoBehaviour
 	{
+		private GameManager _gameManager;
 		private BallController _ballController;
 
+		public Button playButton;
 		public Button storeButton;
 		public Button backButton;
 		public Button[] ballButtons;
@@ -25,30 +28,18 @@ namespace FlipperDunkClone.Canvases
 		public Image storePanel;
 
 		public Sprite[] ballSprites;
-
-		private bool _isShootText = false;
-
-
-		public void Initialize(BallController ballController)
-		{
-			_ballController = ballController;
-		}
-
+		
 		private void OnEnable()
 		{
-			GameManager.OnGameStarted += OnGameStart;
-			GameManager.OnGameReset += OnGameReset;
-			GameManager.OnGameEnd += OnGameEnd;
+			GameManager.OnMenuOpen += OnMenuOpen;
 		}
 
 		private void OnDisable()
 		{
-
-			GameManager.OnGameStarted -= OnGameStart;
-			GameManager.OnGameReset -= OnGameReset;
-			GameManager.OnGameEnd -= OnGameEnd;
+			GameManager.OnMenuOpen -= OnMenuOpen;
 		}
-		void Start()
+
+		private void Start()
 		{
 			for (int i = 0; i < ballButtons.Length; i++)
 			{
@@ -61,102 +52,61 @@ namespace FlipperDunkClone.Canvases
 			int selectedBallIndex = PlayerPrefsManager.SelectedBall;
 			_ballController.ChangeBallImage(ballSprites[selectedBallIndex]);
 		}
-
-
-		void Update()
+		
+		public void Initialize(GameManager gameManager, BallController ballController)
 		{
-			switch (GameManager.Instance.GameState)
-			{
-				case GameState.Start:
-					break;
-				case GameState.Playing:
-
-					if (!_isShootText && Input.GetMouseButtonDown(0))
-					{
-						tabToStartText.transform.DOKill();
-						tabToStartText.transform.localScale = Vector3.one;
-						tabToStartText.gameObject.SetActive(false);
-						tabToShootText.gameObject.SetActive(true);
-						ShootTextTween();
-						DOVirtual.DelayedCall(0.25f, () =>
-						 {
-							 gameImageBackground.gameObject.SetActive(false);
-						 });
-						_isShootText = true;
-					}
-					else if (_isShootText && Input.GetMouseButtonDown(0))
-					{
-						tabToShootText.transform.DOKill();
-						tabToShootText.transform.localScale = Vector3.one;
-						tabToShootText.gameObject.SetActive(false);
-					}
-
-					break;
-				case GameState.Reset:
-					break;
-				case GameState.End:
-					_isShootText = false;
-					break;
-				case GameState.Menu:
-					Debug.Log("GameState menu oldu");
-					_isShootText = false;
-					tabToStartText.gameObject.SetActive(false);
-					tabToShootText.gameObject.SetActive(false);
-					storePanel.gameObject.SetActive(true);
-
-					backButton.onClick.AddListener(BackButtonClick);
-					break;
-				default:
-					break;
-			}
+			_gameManager = gameManager;
+			_ballController = ballController;
+			
+			storeButton.onClick.AddListener(OnStoreButtonClick);
+			playButton.onClick.AddListener(OnPlayButtonClicked);
+			backButton.onClick.AddListener(BackButtonClick);
 		}
 
-
-		private void OnGameStart()
+		private void OnMenuOpen()
 		{
 			gameImageBackground.gameObject.SetActive(true);
-			storeButton.onClick.AddListener(OnStoreButtonClick);
 			tabToStartText.gameObject.SetActive(true);
 			StartTextTween();
 		}
-
-		private void OnGameReset()
-		{
-
-		}
-
-		private void OnGameEnd(bool isSuccuessful)
-		{
-				
 		
+		private void OnPlayButtonClicked()
+		{
+			_gameManager.OnGameStart();
+			
+			OnGameStart();
 		}
 
-		private void OnBallButtonClick(int ballIndex)
+		private void OnGameStart()
 		{
-			PlayerPrefsManager.SelectedBall = ballIndex;
-			Debug.Log("Selected ball: " + (ballIndex));
-
-			_ballController.ChangeBallImage(ballSprites[ballIndex]);
+			tabToStartText.transform.DOKill();
+			tabToStartText.transform.localScale = Vector3.one;
+			tabToStartText.gameObject.SetActive(false);
+			tabToShootText.gameObject.SetActive(true);
+			ShootTextTween();
+			DOVirtual.DelayedCall(0.25f, () =>
+			{
+				gameImageBackground.gameObject.SetActive(false);
+			});
 		}
 
 		public void OnStoreButtonClick()
 		{
-			GameManager.Instance.ChangeState(GameState.Menu, false);
 			tabToStartText.transform.DOKill();
 			tabToStartText.transform.localScale = Vector3.one;
-			Debug.Log("Store Panel acildi");
+			
+			tabToStartText.gameObject.SetActive(false);
+			tabToShootText.gameObject.SetActive(false);
+			storePanel.gameObject.SetActive(true);
 		}
 
 		public void BackButtonClick()
 		{
 			storePanel.gameObject.SetActive(false);
-			GameManager.Instance.ChangeState(GameState.Playing, false);
 			gameImageBackground.gameObject.SetActive(true);
 			tabToStartText.gameObject.SetActive(true);
-			//tabToStartText.transform.localScale = Vector3.one;
 			StartTextTween();
 		}
-
 
 		private void StartTextTween()
 		{
@@ -168,7 +118,16 @@ namespace FlipperDunkClone.Canvases
 			tabToShootText.transform.DOScale(1.4f, 0.7f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo);
 		}
 
-		
+		#region SHOP CANVAS
+
+		private void OnBallButtonClick(int ballIndex)
+		{
+			PlayerPrefsManager.SelectedBall = ballIndex;
+			Debug.Log("Selected ball: " + (ballIndex));
+
+			_ballController.ChangeBallImage(ballSprites[ballIndex]);
+		}
+
+		#endregion
 	}
 }
-

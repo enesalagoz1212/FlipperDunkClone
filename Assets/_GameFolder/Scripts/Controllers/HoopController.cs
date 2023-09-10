@@ -15,13 +15,12 @@ namespace FlipperDunkClone.Controllers
 		private LevelData _currentLevelData;
 
 		private bool _allowHoopSpawn = true;
-		private bool _firstClick = true;
 
 		private Tween moveUpDownTween;
+		
 		private void Awake()
 		{
 			hoop.SetActive(false);
-
 		}
 
 		private void OnEnable()
@@ -39,38 +38,29 @@ namespace FlipperDunkClone.Controllers
 		public void Initialize(LevelManager levelManager)
 		{
 			_levelManager = levelManager;
+			
+			hoop.SetActive(false);
 		}
 
 		private void Update()
 		{
 			switch (GameManager.Instance.GameState)
 			{
-				case GameState.Start:
-					break;
-				case GameState.Playing:
-					if (Input.GetMouseButtonDown(0))
-					{
-						if (_firstClick)
-						{
-							_firstClick = false;
-							hoop.SetActive(true);
-							SpawnRandomHoop();
-						}
-						else
-						{
-							hoop.SetActive(true);
-						}
-					}
-
-					break;
-				case GameState.Reset:
-					break;
-				case GameState.End:
-					_firstClick = true;
-					break;
 				case GameState.Menu:
 					break;
-
+				
+				case GameState.Start:
+					break;
+				
+				case GameState.Playing:
+					break;
+				
+				case GameState.Reset:
+					break;
+				
+				case GameState.End:
+					break;
+				
 				default:
 					throw new ArgumentOutOfRangeException();
 
@@ -78,16 +68,15 @@ namespace FlipperDunkClone.Controllers
 		}
 		private void OnGameStarted()
 		{
-			hoop.SetActive(false);
-
+			hoop.SetActive(true);
 			_allowHoopSpawn = true;
+			SpawnRandomHoop();
 		}
 
-		private void OnGameEnd(bool IsSuccessful)
+		private void OnGameEnd(bool isSuccessful)
 		{
 			hoop.SetActive(false);
 			_allowHoopSpawn = false;
-
 		}
 
 		public void SpawnRandomHoop()
@@ -130,9 +119,6 @@ namespace FlipperDunkClone.Controllers
 					}
 				}
 			});
-
-
 		}
 	}
 }
-

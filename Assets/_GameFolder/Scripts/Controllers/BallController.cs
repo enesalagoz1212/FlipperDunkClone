@@ -17,7 +17,6 @@ namespace FlipperDunkClone.Controllers
 		private Rigidbody2D _rigidbody2D;
 		public SpriteRenderer ballSpriteRenderer;
 
-		private bool _firstClick = true;
 		public void Initialize()
 		{
 
@@ -39,28 +38,20 @@ namespace FlipperDunkClone.Controllers
 		private void Start()
 		{
 			_rigidbody2D = GetComponent<Rigidbody2D>();
+			OnGameStart();
 		}
 
 		private void Update()
 		{
 			switch (GameManager.Instance.GameState)
 			{
+				case GameState.Menu:
+					break;
+				
 				case GameState.Start:				
 					break;
 
 				case GameState.Playing:
-					if (Input.GetMouseButtonDown(0))
-					{
-						if (_firstClick)
-						{
-							_firstClick = false;
-							_rigidbody2D.bodyType = RigidbodyType2D.Static;
-						}
-						else
-						{
-							_rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
-						}
-					}
 					GravityScale();
 					break;
 
@@ -68,9 +59,6 @@ namespace FlipperDunkClone.Controllers
 					break;
 
 				case GameState.End:
-					_firstClick = true;
-					break;
-				case GameState.Menu:
 					break;
 
 				default:
@@ -84,7 +72,6 @@ namespace FlipperDunkClone.Controllers
 			_rigidbody2D.velocity = Vector2.zero;
 			_rigidbody2D.angularVelocity = 0f;
 			_rigidbody2D.bodyType = RigidbodyType2D.Static;
-
 		}
 
 		private void OnGameReset()
@@ -92,7 +79,7 @@ namespace FlipperDunkClone.Controllers
 			FreezeRigidbody();
 		}
 
-		private void OnGameEnd(bool IsSuccessful)
+		private void OnGameEnd(bool isSuccessful)
 		{
 			FreezeRigidbody();
 			GameManager.OnDiamondScored?.Invoke(PlayerPrefsManager.DiamondScore);
@@ -129,9 +116,7 @@ namespace FlipperDunkClone.Controllers
 				GameManager.Instance.EndGame(false);
 			}
 		}
-
 		
-
 		private void FreezeRigidbody()
 		{
 			_rigidbody2D.bodyType = RigidbodyType2D.Static;
