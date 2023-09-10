@@ -30,7 +30,7 @@ namespace FlipperDunkClone.Managers
             }
         }
 
-        public void Initialize(GameManager gameManager, LevelManager levelManager ,BallController ballController,InputManager inputManager)
+        public void Initialize(GameManager gameManager, LevelManager levelManager ,BallController ballController)
         {
             GameManager.OnGameEnd += OnGameEnd;
             
