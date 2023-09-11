@@ -8,7 +8,7 @@ namespace FlipperDunkClone.Managers
 {
 	public class ShopManager : MonoBehaviour
 	{
-
+		private LevelManager _levelManager;
 		private BallController _ballController;
 		private PlayerController _playerController;
 
@@ -17,12 +17,20 @@ namespace FlipperDunkClone.Managers
 		public Sprite[] backgroundSprites;
 
 
-		public void Initialize(BallController ballController,PlayerController playerController)
+		public void Initialize( LevelManager levelManager,BallController ballController,PlayerController playerController)
 		{
 			_playerController = playerController;
 			_ballController = ballController;
+			_levelManager = levelManager;
+
 			int selectedBallIndex = PlayerPrefsManager.SelectedBall;
 			_ballController.ChangeBallImage(ballSprites[selectedBallIndex]);
+
+			int selectedFlipperIndex = PlayerPrefsManager.SelectedFlipper;
+			_playerController.ChangeFlipperImage(flipperSprites[selectedFlipperIndex]);
+
+			int selectedBackgroundIndex = PlayerPrefsManager.SelectedBackground;
+			_levelManager.ChangeBackgroundImage(backgroundSprites[selectedBackgroundIndex]);
 		}
 
 		private void OnEnable()
@@ -61,7 +69,14 @@ namespace FlipperDunkClone.Managers
 			Debug.Log("Selected Flipper: " + (flipperIndex));
 
 			_playerController.ChangeFlipperImage(flipperSprites[flipperIndex]);
+		}
 
+		public void OnBackgroundButtonClick(int backgroundIndex)
+		{
+			PlayerPrefsManager.SelectedBackground = backgroundIndex;
+			Debug.Log("Selected Flipper: " + (backgroundIndex));
+
+			_levelManager.ChangeBackgroundImage(backgroundSprites[backgroundIndex]);
 		}
 	}
 }

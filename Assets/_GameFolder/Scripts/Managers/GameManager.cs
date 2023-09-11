@@ -77,7 +77,7 @@ namespace FlipperDunkClone.Managers
 			uiManager.Initialize(this, levelManager,ballController,shopManager);
 			ballController.Initialize();
 			hoopController.Initialize(levelManager);
-			shopManager.Initialize(ballController,playerController);
+			shopManager.Initialize(levelManager,ballController,playerController);
 			ChangeState(GameState.Menu);
 		}
 

@@ -18,6 +18,7 @@ namespace FlipperDunkClone.Managers
 		public Transform[] hoopSpawnPoints;
 		private int _lastHoopSpawnIndex;
 
+		public SpriteRenderer backgroundSpriteRenderer;
 		private void Awake()
 		{
 			if (Instance != null && Instance != this)
@@ -106,6 +107,11 @@ namespace FlipperDunkClone.Managers
 				hoopSpawnTransform.localScale = new Vector3(1, 1, 1);
 			}
 			return hoopSpawnTransform;
+		}
+
+		public void ChangeBackgroundImage(Sprite newSprite)
+		{
+			backgroundSpriteRenderer.sprite = newSprite;
 		}
 	}
 }
