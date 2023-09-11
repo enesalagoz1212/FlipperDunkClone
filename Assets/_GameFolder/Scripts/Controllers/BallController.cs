@@ -47,11 +47,15 @@ namespace FlipperDunkClone.Controllers
 			{
 				case GameState.Menu:
 					break;
-				
-				case GameState.Start:				
+
+				case GameState.Start:
 					break;
 
 				case GameState.Playing:
+					if (Input.GetMouseButtonDown(0))
+					{
+						_rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+					}
 					GravityScale();
 					break;
 
@@ -68,15 +72,12 @@ namespace FlipperDunkClone.Controllers
 
 		private void OnGameStart()
 		{
-			transform.position = GameSettingsManager.Instance.gameSettings.ballTransformPosition;
-			_rigidbody2D.velocity = Vector2.zero;
-			_rigidbody2D.angularVelocity = 0f;
 			_rigidbody2D.bodyType = RigidbodyType2D.Static;
 		}
 
 		private void OnGameReset()
 		{
-			FreezeRigidbody();
+			transform.position = GameSettingsManager.Instance.gameSettings.ballTransformPosition;
 		}
 
 		private void OnGameEnd(bool isSuccessful)
@@ -116,11 +117,13 @@ namespace FlipperDunkClone.Controllers
 				GameManager.Instance.EndGame(false);
 			}
 		}
-		
+
 		private void FreezeRigidbody()
 		{
+
 			_rigidbody2D.bodyType = RigidbodyType2D.Static;
 			_rigidbody2D.velocity = Vector2.zero;
+			_rigidbody2D.angularVelocity = 0f;
 		}
 	}
 }

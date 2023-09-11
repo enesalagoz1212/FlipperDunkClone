@@ -17,8 +17,11 @@ namespace FlipperDunkClone.Canvases
 
 		public TextMeshProUGUI scoreText;
 		public TextMeshProUGUI levelsText;
+		public TextMeshProUGUI tabToShootText;
 
-		//public Image gameImageBackground;
+		public Button gameButton;
+		public Image gamePanel;
+
 
 		private int levelIndex = 0;
 		private bool _isShootText = false;
@@ -43,6 +46,7 @@ namespace FlipperDunkClone.Canvases
 		{
 			_settingCanvas = settingsCanvas;
 			_levelManager = levelManager;
+			gameButton.onClick.AddListener(OnGameButton);
 		}
 
 		private void Start()
@@ -73,6 +77,12 @@ namespace FlipperDunkClone.Canvases
 
 		}
 
+		private void OnGameButton()
+		{
+			tabToShootText.transform.DOKill();
+			tabToShootText.gameObject.SetActive(false);
+		}
+
 		public void OnSettingButtonClick()
 		{
 			if (_settingCanvas != null)
@@ -83,6 +93,9 @@ namespace FlipperDunkClone.Canvases
 
 		private void OnGameStart()
 		{
+			tabToShootText.gameObject.SetActive(true);
+			gamePanel.gameObject.SetActive(true);
+			ShootTextTween();
 			UpdateLevelsText();
 			UpdateLevelDataMaxScore();
 		}
@@ -90,6 +103,7 @@ namespace FlipperDunkClone.Canvases
 		private void OnGameReset()
 		{
 			UpdateLevelDataMaxScore();
+			tabToShootText.transform.localScale = Vector3.one;
 		}
 
 		private void OnGameEnd(bool IsSuccessful)
@@ -98,6 +112,7 @@ namespace FlipperDunkClone.Canvases
 			{
 				levelIndex++;
 			}
+			gamePanel.gameObject.SetActive(false);
 		}
 
 
@@ -125,7 +140,12 @@ namespace FlipperDunkClone.Canvases
 				int maxScore = LevelManager.Instance.levelDataArray[levelIndex % totalLevels].maxScore;
 				scoreText.text = maxScore.ToString();
 			}
-		}		
+		}
+
+		private void ShootTextTween()
+		{
+			tabToShootText.transform.DOScale(1.4f, 0.7f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo);
+		}
 	}
 }
 

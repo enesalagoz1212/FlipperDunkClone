@@ -19,7 +19,7 @@ namespace FlipperDunkClone.Controllers
 		private Vector3 _initialPosition;
 		private Quaternion _initialRotation;
 
-
+		public SpriteRenderer flipperSprite;
 
 		private void OnEnable()
 		{
@@ -49,23 +49,17 @@ namespace FlipperDunkClone.Controllers
 		{
 			switch (GameManager.Instance.GameState)
 			{
+				case GameState.Menu:
+					break;
 				case GameState.Start:
 					break;
 				case GameState.Playing:
+					_rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
 					if (Input.GetMouseButtonDown(0))
 					{
-						if (_firstClick)
-						{
-							_firstClick = false;
-							_rigidbody2D.bodyType = RigidbodyType2D.Static;
-						}
-						else
-						{
-							_isMoving = true;
-							_rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
-						}
+						_isMoving = true;
 					}
-					else if (Input.GetMouseButtonUp(0))
+					if (Input.GetMouseButtonUp(0))
 					{
 						_isMoving = false;
 						ReturnToInitialPosition();
@@ -79,33 +73,15 @@ namespace FlipperDunkClone.Controllers
 				case GameState.Reset:
 					break;
 				case GameState.End:
-					_firstClick = true;
-					break;
-				case GameState.Menu:
-					
 					break;
 				default:
 					break;
 			}
+		}
 
-
-
-
-			//if (GameManager.Instance.GameState == GameState.Playing && Input.GetMouseButtonDown(0))
-			//{
-			//	_isMoving = true;
-			//	_rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
-			//}
-			//else if (Input.GetMouseButtonUp(0))
-			//{
-			//	_isMoving = false;
-			//	ReturnToInitialPosition();
-			//}
-
-			//if (_isMoving)
-			//{
-			//	MoveUp();
-			//}
+		public void ChangeFlipperImage(Sprite newSprite)
+		{
+			flipperSprite.sprite = newSprite;
 		}
 
 		private void MoveUp()

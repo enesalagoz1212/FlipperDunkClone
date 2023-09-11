@@ -79,6 +79,7 @@ namespace FlipperDunkClone.Controllers
 			_allowHoopSpawn = false;
 		}
 
+		
 		public void SpawnRandomHoop()
 		{
 			if (!_allowHoopSpawn)

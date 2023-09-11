@@ -11,13 +11,39 @@ namespace FlipperDunkClone.Managers
 		private const string DiamondScorePrefsString = "DiamondScore";
 		private const string CurrentLevelKey = "CurrentLevel";
 		private const string SelectedBallKey = "SelectedBall";
+		private const string SelectedFlipperKey = "SelectedFlipper";
+		private const string SelectedBackgroundKey = "SelectedBackground";
 
+
+		public static int SelectedBackground
+		{
+			get
+			{
+				return PlayerPrefs.GetInt(SelectedBackgroundKey, 3);
+			}
+			set
+			{
+				PlayerPrefs.SetInt(SelectedBackgroundKey, value);
+			}
+		}
+
+		public static int SelectedFlipper
+		{
+			get
+			{
+				return PlayerPrefs.GetInt(SelectedFlipperKey, 3);
+			}
+			set
+			{
+				PlayerPrefs.SetInt(SelectedFlipperKey, value);
+			}
+		}
 
 		public static int SelectedBall
 		{
 			get
 			{
-				return PlayerPrefs.GetInt(SelectedBallKey, 5);
+				return PlayerPrefs.GetInt(SelectedBallKey, 3);
 			}
 			set
 			{
