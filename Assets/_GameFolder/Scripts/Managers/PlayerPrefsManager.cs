@@ -19,7 +19,7 @@ namespace FlipperDunkClone.Managers
 		{
 			get
 			{
-				return PlayerPrefs.GetInt(SelectedBackgroundKey, 3);
+				return PlayerPrefs.GetInt(SelectedBackgroundKey, 2);
 			}
 			set
 			{
@@ -31,7 +31,7 @@ namespace FlipperDunkClone.Managers
 		{
 			get
 			{
-				return PlayerPrefs.GetInt(SelectedFlipperKey, 3);
+				return PlayerPrefs.GetInt(SelectedFlipperKey, 6);
 			}
 			set
 			{

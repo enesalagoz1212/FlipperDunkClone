@@ -44,6 +44,7 @@ namespace FlipperDunkClone.Managers
 			GameManager.OnGameStarted += OnGameStarted;
 			GameManager.OnGameEnd += OnGameEnd;
 			GameManager.OnGameReset += OnGameReset;
+			GameManager.OnBackgroundSelected += OnBackgroundSelected;
 		}
 
 		private void OnDisable()
@@ -51,6 +52,7 @@ namespace FlipperDunkClone.Managers
 			GameManager.OnGameStarted -= OnGameStarted;
 			GameManager.OnGameEnd -= OnGameEnd;
 			GameManager.OnGameReset -= OnGameReset;
+			GameManager.OnBackgroundSelected -= OnBackgroundSelected;
 		}
 
 		private void OnGameStarted()
@@ -66,6 +68,16 @@ namespace FlipperDunkClone.Managers
 		private void OnGameEnd(bool isSuccessful)
 		{
 			_lastHoopSpawnIndex = -1;
+		}
+
+		private void OnBackgroundSelected(Sprite backgroundSprite)
+		{
+			ChangeBackgroundImage(backgroundSprite);
+		}
+
+		public void ChangeBackgroundImage(Sprite newSprite)
+		{
+			backgroundSpriteRenderer.sprite = newSprite;
 		}
 
 		private void LoadCurrentLevel()
@@ -109,9 +121,7 @@ namespace FlipperDunkClone.Managers
 			return hoopSpawnTransform;
 		}
 
-		public void ChangeBackgroundImage(Sprite newSprite)
-		{
-			backgroundSpriteRenderer.sprite = newSprite;
-		}
+		
+		
 	}
 }

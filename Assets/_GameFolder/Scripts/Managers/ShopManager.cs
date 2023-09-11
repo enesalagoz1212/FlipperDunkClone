@@ -33,42 +33,22 @@ namespace FlipperDunkClone.Managers
 			_levelManager.ChangeBackgroundImage(backgroundSprites[selectedBackgroundIndex]);
 		}
 
-		private void OnEnable()
-		{
-			GameManager.OnGameEnd += OnGameEnd;
-
-		}
-
-		private void OnDisable()
-		{
-			GameManager.OnGameEnd -= OnGameEnd;
-
-		}
-		private void Start()
-		{
-
-		}
-
-		private void OnGameEnd(bool isSuccesful)
-		{
-
-
-		}
 
 		public void OnBallButtonClick(int ballIndex)
 		{
 			PlayerPrefsManager.SelectedBall = ballIndex;
 			Debug.Log("Selected ball: " + (ballIndex));
 
-			_ballController.ChangeBallImage(ballSprites[ballIndex]);
+			GameManager.OnBallSelected?.Invoke(ballSprites[ballIndex]);
 		}
+	
 
 		public void OnFlipperButtonClick(int flipperIndex)
 		{
 			PlayerPrefsManager.SelectedFlipper = flipperIndex;
 			Debug.Log("Selected Flipper: " + (flipperIndex));
 
-			_playerController.ChangeFlipperImage(flipperSprites[flipperIndex]);
+			GameManager.OnFlipperSelected?.Invoke(flipperSprites[flipperIndex]);
 		}
 
 		public void OnBackgroundButtonClick(int backgroundIndex)
@@ -76,7 +56,7 @@ namespace FlipperDunkClone.Managers
 			PlayerPrefsManager.SelectedBackground = backgroundIndex;
 			Debug.Log("Selected Flipper: " + (backgroundIndex));
 
-			_levelManager.ChangeBackgroundImage(backgroundSprites[backgroundIndex]);
+			GameManager.OnBackgroundSelected?.Invoke(backgroundSprites[backgroundIndex]);
 		}
 	}
 }

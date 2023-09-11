@@ -27,12 +27,14 @@ namespace FlipperDunkClone.Controllers
 			GameManager.OnGameStarted += OnGameStart;
 			GameManager.OnGameReset += OnGameReset;
 			GameManager.OnGameEnd += OnGameEnd;
+			GameManager.OnBallSelected += OnBallSelected;
 		}
 		private void OnDisable()
 		{
 			GameManager.OnGameStarted -= OnGameStart;
 			GameManager.OnGameReset -= OnGameReset;
 			GameManager.OnGameEnd -= OnGameEnd;
+			GameManager.OnBallSelected -= OnBallSelected;
 		}
 
 		private void Start()
@@ -84,6 +86,11 @@ namespace FlipperDunkClone.Controllers
 		{
 			FreezeRigidbody();
 			GameManager.OnDiamondScored?.Invoke(PlayerPrefsManager.DiamondScore);
+		}
+
+		private void OnBallSelected(Sprite ballSprite)
+		{
+			ChangeBallImage(ballSprite);
 		}
 
 		public void ChangeBallImage(Sprite newSprite)

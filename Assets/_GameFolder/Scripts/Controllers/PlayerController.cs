@@ -25,11 +25,13 @@ namespace FlipperDunkClone.Controllers
 		{
 			GameManager.OnGameStarted += OnGameStart;
 			GameManager.OnGameEnd += OnGameEnd;
+			GameManager.OnFlipperSelected += OnFlipperSelected;
 		}
 		private void OnDisable()
 		{
 			GameManager.OnGameStarted -= OnGameStart;
 			GameManager.OnGameEnd = OnGameEnd;
+			GameManager.OnFlipperSelected -= OnFlipperSelected;
 		}
 
 		private void Awake()
@@ -82,6 +84,11 @@ namespace FlipperDunkClone.Controllers
 		public void ChangeFlipperImage(Sprite newSprite)
 		{
 			flipperSprite.sprite = newSprite;
+		}
+
+		private void OnFlipperSelected(Sprite flipperSprite)
+		{
+			ChangeFlipperImage(flipperSprite);
 		}
 
 		private void MoveUp()
