@@ -13,13 +13,14 @@ namespace FlipperDunkClone.Controllers
 	{
 		GameSettingsManager _gameSettingsManager;
 		ResetCanvas _resetCanvas;
+		SoundManager _soundManager;
 
 		private Rigidbody2D _rigidbody2D;
 		public SpriteRenderer ballSpriteRenderer;
 
-		public void Initialize()
+		public void Initialize(SoundManager soundManager)
 		{
-
+			_soundManager = soundManager;
 		}
 
 		private void OnEnable()
@@ -112,19 +113,33 @@ namespace FlipperDunkClone.Controllers
 
 		private void OnTriggerEnter2D(Collider2D other)
 		{
+			
+
 			if (other.gameObject.CompareTag("Hoop"))
 			{
+				
 				if (transform.position.y > other.transform.position.y)
 				{
 					GameManager.Instance.OnBasketThrown();
+					_soundManager.PlayBasketScoreSound();
+					_soundManager.PlayApplauseSound();
 				}
 			}
 			else if (other.gameObject.CompareTag("Fail"))
 			{
 				GameManager.Instance.EndGame(false);
+				_soundManager.PlayGameOverSound();
 			}
+			
 		}
 
+		private void OnCollisionEnter2D(Collision2D collision)
+		{
+			if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Hoop"))
+			{
+				_soundManager.PlayBallSound();
+			}
+		}
 		private void FreezeRigidbody()
 		{
 

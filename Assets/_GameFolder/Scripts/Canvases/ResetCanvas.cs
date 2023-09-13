@@ -37,8 +37,7 @@ namespace FlipperDunkClone.Canvases
 
 		private void OnRestartButtonClicked()
 		{
-			GameManager.Instance.ResetGame();
-			
+			GameManager.Instance.ResetGame();			
 			resetPanel.SetActive(false);
 		}
 

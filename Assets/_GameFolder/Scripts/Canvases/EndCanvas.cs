@@ -11,6 +11,7 @@ namespace FlipperDunkClone.Canvases
 {
 	public class EndCanvas : MonoBehaviour
 	{
+		private SoundManager _soundManager;
 		public GameObject endPanel;
 		public Button nextButton;
 
@@ -26,8 +27,9 @@ namespace FlipperDunkClone.Canvases
 			GameManager.OnDiamondScored -= OnDiamondScore;
 		}
 
-		public void Initialize()
+		public void Initialize(SoundManager soundManager)
 		{
+			_soundManager = soundManager;
 			nextButton.onClick.AddListener(NextButtonClicked);
 		}
 		
@@ -40,8 +42,8 @@ namespace FlipperDunkClone.Canvases
 		{
 			GameManager.Instance.ResetGame();
 			LevelManager.Instance.NextLevel();
-
 			endPanel.SetActive(false);
+			_soundManager.PlayLevelCompletedSound();
 		}
 		
 		public void OnGameSuccess()

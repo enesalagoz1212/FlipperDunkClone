@@ -8,6 +8,7 @@ TagManager:
   - End
   - Reset
   - Fail
+  - Wall
   layers:
   - Default
   - TransparentFX

@@ -31,11 +31,11 @@ namespace FlipperDunkClone.Managers
             }
         }
 
-        public void Initialize(GameManager gameManager, LevelManager levelManager ,BallController ballController ,ShopManager shopManager)
+        public void Initialize(GameManager gameManager, LevelManager levelManager ,BallController ballController ,ShopManager shopManager,SoundManager soundManager)
         {
             GameManager.OnGameEnd += OnGameEnd;
             
-            endCanvas.Initialize();
+            endCanvas.Initialize(soundManager);
             gameCanvas.Initialize(levelManager, settingsCanvas);
             resetCanvas.Initialize();
             settingsCanvas.Initialize(gameCanvas);
