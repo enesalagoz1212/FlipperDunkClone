@@ -87,6 +87,8 @@ namespace FlipperDunkClone.Canvases
 				backgroundButtons[i].onClick.AddListener(() =>
 				{
 					_shopManager.OnBackgroundButtonClick(backgroundIndex);
+					ChangeButtonColor(backgroundButtons[backgroundIndex], Color.green);
+					ResetButtonColors(backgroundButtons,backgroundIndex);
 				});
 			}
 		}
@@ -172,6 +174,8 @@ namespace FlipperDunkClone.Canvases
 				}
 			}
 		}
+
+
 	}
 
 }
