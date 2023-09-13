@@ -1,6 +1,0 @@
-framework module RichTapSDK {
-  umbrella header "RichTapSDK.h"
-
-  export *
-  module * { export * }
-}

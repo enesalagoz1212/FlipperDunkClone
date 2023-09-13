@@ -6,7 +6,7 @@ namespace FlipperDunkClone.Managers
 {
 	public class VibrationManager : MonoBehaviour
 	{
-		[SerializeField] private RichtapEffectSource _vibration;
+		//[SerializeField] private RichtapEffectSource _vibration;
 
 		private void OnEnable()
 		{
@@ -19,12 +19,12 @@ namespace FlipperDunkClone.Managers
 		}
 		public void VibrationOnBasketScore()
 		{
-			_vibration.Play();
+		//	_vibration.Play();
 		}
 
 		public void VibrationOnGameEnd()
 		{
-			_vibration.Play();
+		//	_vibration.Play();
 		}
 
 		private void OnGameEnd(bool isSuccesful)

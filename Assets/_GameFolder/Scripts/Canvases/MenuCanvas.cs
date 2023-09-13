@@ -25,6 +25,7 @@ namespace FlipperDunkClone.Canvases
 		public TextMeshProUGUI tabToStartText;
 
 
+
 		private void OnEnable()
 		{
 			GameManager.OnMenuOpen += OnMenuOpen;
