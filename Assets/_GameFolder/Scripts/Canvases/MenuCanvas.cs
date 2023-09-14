@@ -13,12 +13,14 @@ namespace FlipperDunkClone.Canvases
 {
 	public class MenuCanvas : MonoBehaviour
 	{
+		private SettingsCanvas _settingCanvas;
 		private StoreCanvas _storeCanvas;
 		private GameManager _gameManager;
 		private BallController _ballController;
 
 		public Button playButton;
 		public Button storeButton;
+		public Button settingButton;
 
 		public Image menuBackgroundImage;
 
@@ -41,15 +43,16 @@ namespace FlipperDunkClone.Canvases
 
 		}
 
-		public void Initialize(GameManager gameManager, BallController ballController, StoreCanvas storeCanvas)
+		public void Initialize(GameManager gameManager, BallController ballController, StoreCanvas storeCanvas, SettingsCanvas settingsCanvas)
 		{
 			_gameManager = gameManager;
 			_ballController = ballController;
 			_storeCanvas = storeCanvas;
+			_settingCanvas = settingsCanvas;
 
 			playButton.onClick.AddListener(OnPlayButtonClicked);
 			storeButton.onClick.AddListener(OnStoreButtonClick);
-
+			settingButton.onClick.AddListener(OnSettingButtonClick);
 		}
 
 		private void OnMenuOpen()
@@ -75,6 +78,13 @@ namespace FlipperDunkClone.Canvases
 			_storeCanvas.OnStorePanel();
 		}
 
+
+		public void OnSettingButtonClick()
+		{
+			_settingCanvas.SettingPanel();
+			menuBackgroundImage.gameObject.SetActive(false);
+		}
+
 		private void OnGameStart()
 		{
 			tabToStartText.transform.DOKill();
@@ -95,6 +105,6 @@ namespace FlipperDunkClone.Canvases
 		}
 
 
-		
+
 	}
 }

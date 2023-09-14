@@ -25,13 +25,13 @@ namespace FlipperDunkClone.Controllers
 		{
 			GameManager.OnGameStarted += OnGameStart;
 			GameManager.OnGameEnd += OnGameEnd;
-			GameManager.OnFlipperSelected += OnFlipperSelected;
+			ShopManager.OnFlipperSelected += OnFlipperSelected;
 		}
 		private void OnDisable()
 		{
 			GameManager.OnGameStarted -= OnGameStart;
 			GameManager.OnGameEnd = OnGameEnd;
-			GameManager.OnFlipperSelected -= OnFlipperSelected;
+			ShopManager.OnFlipperSelected -= OnFlipperSelected;
 		}
 
 		private void Awake()

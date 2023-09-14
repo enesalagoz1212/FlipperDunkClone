@@ -28,9 +28,7 @@ namespace FlipperDunkClone.Managers
 		public static Action<bool> OnGameEnd;
 		public static Action<int> OnGameScoreChanged;
 		public static Action<int> OnDiamondScored;
-		public static Action<Sprite> OnBallSelected;
-		public static Action<Sprite> OnFlipperSelected;
-		public static Action<Sprite> OnBackgroundSelected;
+
 
 		[SerializeField] private LevelManager levelManager;
 		[SerializeField] private UIManager uiManager;

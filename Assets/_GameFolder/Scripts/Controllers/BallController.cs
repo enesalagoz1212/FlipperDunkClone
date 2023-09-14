@@ -28,14 +28,14 @@ namespace FlipperDunkClone.Controllers
 			GameManager.OnGameStarted += OnGameStart;
 			GameManager.OnGameReset += OnGameReset;
 			GameManager.OnGameEnd += OnGameEnd;
-			GameManager.OnBallSelected += OnBallSelected;
+			ShopManager.OnBallSelected += OnBallSelected;
 		}
 		private void OnDisable()
 		{
 			GameManager.OnGameStarted -= OnGameStart;
 			GameManager.OnGameReset -= OnGameReset;
 			GameManager.OnGameEnd -= OnGameEnd;
-			GameManager.OnBallSelected -= OnBallSelected;
+			ShopManager.OnBallSelected -= OnBallSelected;
 		}
 
 		private void Start()
@@ -113,11 +113,11 @@ namespace FlipperDunkClone.Controllers
 
 		private void OnTriggerEnter2D(Collider2D other)
 		{
-			
+
 
 			if (other.gameObject.CompareTag("Hoop"))
 			{
-				
+
 				if (transform.position.y > other.transform.position.y)
 				{
 					GameManager.Instance.OnBasketThrown();
@@ -130,16 +130,29 @@ namespace FlipperDunkClone.Controllers
 				GameManager.Instance.EndGame(false);
 				_soundManager.PlayGameOverSound();
 			}
-			
+
 		}
 
 		private void OnCollisionEnter2D(Collision2D collision)
 		{
 			if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Hoop"))
 			{
-				_soundManager.PlayBallSound();
+				if (GameManager.Instance.GameState == GameState.Playing)
+				{
+					float collisionSpeed = collision.relativeVelocity.magnitude;
+					float volume = CalculateSpeed(collisionSpeed);
+					SoundManager.Instance.BallSound.volume = volume;
+					SoundManager.Instance.BallSound.Play();
+				}
 			}
 		}
+
+		private float CalculateSpeed(float collisionSpeed)
+		{
+			float maxCollisionSpeed = 200f;
+			return Mathf.Clamp01(collisionSpeed / maxCollisionSpeed); 
+		}
+
 		private void FreezeRigidbody()
 		{
 

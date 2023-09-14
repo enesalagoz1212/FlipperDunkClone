@@ -44,7 +44,7 @@ namespace FlipperDunkClone.Managers
 			GameManager.OnGameStarted += OnGameStarted;
 			GameManager.OnGameEnd += OnGameEnd;
 			GameManager.OnGameReset += OnGameReset;
-			GameManager.OnBackgroundSelected += OnBackgroundSelected;
+			ShopManager.OnBackgroundSelected += OnBackgroundSelected;
 		}
 
 		private void OnDisable()
@@ -52,7 +52,7 @@ namespace FlipperDunkClone.Managers
 			GameManager.OnGameStarted -= OnGameStarted;
 			GameManager.OnGameEnd -= OnGameEnd;
 			GameManager.OnGameReset -= OnGameReset;
-			GameManager.OnBackgroundSelected -= OnBackgroundSelected;
+			ShopManager.OnBackgroundSelected -= OnBackgroundSelected;
 		}
 
 		private void OnGameStarted()

@@ -39,7 +39,7 @@ namespace FlipperDunkClone.Managers
             gameCanvas.Initialize(levelManager, settingsCanvas);
             resetCanvas.Initialize();
             settingsCanvas.Initialize(gameCanvas);
-            menuCanvas.Initialize(gameManager, ballController,storeCanvas);
+            menuCanvas.Initialize(gameManager, ballController,storeCanvas,settingsCanvas);
             storeCanvas.Initialize(shopManager, menuCanvas);
         }
 

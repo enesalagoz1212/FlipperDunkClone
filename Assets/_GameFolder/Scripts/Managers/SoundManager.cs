@@ -20,6 +20,11 @@ namespace FlipperDunkClone.Managers
 		[SerializeField] private AudioClip basketScoreSoundClip;
 		[SerializeField] private AudioClip applauseSoundClip;
 
+		public AudioSource BallSound
+		{
+			get { return _ballSound; }
+		}
+
 		public void Initialize()
 		{
 

@@ -8,8 +8,10 @@ using FlipperDunkClone.Managers;
 
 namespace FlipperDunkClone.Canvases
 {
+
 	public class StoreCanvas : MonoBehaviour
 	{
+
 		private LevelManager _levelManager;
 		private ShopManager _shopManager;
 		private MenuCanvas _menuCanvas;
@@ -97,7 +99,6 @@ namespace FlipperDunkClone.Canvases
 		{
 			OnBallButton();
 		}
-
 
 		public void OnStorePanel()
 		{
