@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using FlipperDunkClone.Canvases;
 using FlipperDunkClone.Controllers;
+using FlipperDunkClone.Pooling;
 
 namespace FlipperDunkClone.Managers
 {
@@ -31,11 +32,11 @@ namespace FlipperDunkClone.Managers
             }
         }
 
-        public void Initialize(GameManager gameManager, LevelManager levelManager ,BallController ballController ,ShopManager shopManager,SoundManager soundManager)
+        public void Initialize(GameManager gameManager, LevelManager levelManager ,BallController ballController ,ShopManager shopManager,SoundManager soundManager,ParticlePool particlePool)
         {
             GameManager.OnGameEnd += OnGameEnd;
             
-            endCanvas.Initialize(soundManager);
+            endCanvas.Initialize(soundManager,particlePool);
             gameCanvas.Initialize(levelManager, settingsCanvas);
             resetCanvas.Initialize();
             settingsCanvas.Initialize(gameCanvas);

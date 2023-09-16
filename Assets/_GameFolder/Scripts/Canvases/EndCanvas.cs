@@ -6,12 +6,16 @@ using FlipperDunkClone.Managers;
 using FlipperDunkClone.Controllers;
 using TMPro;
 using UnityEngine.PlayerLoop;
+using FlipperDunkClone.Pooling;
+using DG.Tweening;
 
 namespace FlipperDunkClone.Canvases
 {
 	public class EndCanvas : MonoBehaviour
 	{
 		private SoundManager _soundManager;
+		private ParticlePool _particlePool;
+
 		public GameObject endPanel;
 		public Button nextButton;
 
@@ -27,9 +31,10 @@ namespace FlipperDunkClone.Canvases
 			GameManager.OnDiamondScored -= OnDiamondScore;
 		}
 
-		public void Initialize(SoundManager soundManager)
+		public void Initialize(SoundManager soundManager,ParticlePool particlePool)
 		{
 			_soundManager = soundManager;
+			_particlePool = particlePool;
 			nextButton.onClick.AddListener(NextButtonClicked);
 		}
 		
@@ -50,6 +55,7 @@ namespace FlipperDunkClone.Canvases
 		{
 			endPanel.SetActive(true);
 			UpdateEndLevelText();
+
 		}
 
 		private void UpdateEndLevelText()

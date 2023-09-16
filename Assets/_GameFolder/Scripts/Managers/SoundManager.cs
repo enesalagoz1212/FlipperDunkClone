@@ -27,7 +27,7 @@ namespace FlipperDunkClone.Managers
 
 		public void Initialize()
 		{
-
+			SetMuteState(PlayerPrefsManager.IsSoundOn);
 		}
 
 		private void Awake()
@@ -41,9 +41,7 @@ namespace FlipperDunkClone.Managers
 				Destroy(gameObject);
 			}
 
-		}
-		void Start()
-		{
+
 			_ballSound = gameObject.AddComponent<AudioSource>();
 			_levelCompletedSound = gameObject.AddComponent<AudioSource>();
 			_gameOverSound = gameObject.AddComponent<AudioSource>();
@@ -55,6 +53,15 @@ namespace FlipperDunkClone.Managers
 			_gameOverSound.clip = gameOverSoundClip;
 			_basketScoreSound.clip = basketScoreSoundClip;
 			_applauseSound.clip = applauseSoundClip;
+
+			_ballSound.playOnAwake = false;
+			_levelCompletedSound.playOnAwake = false;
+			_gameOverSound.playOnAwake = false;
+			_basketScoreSound.playOnAwake = false;
+			_applauseSound.playOnAwake = false;
+		}
+		void Start()
+		{
 		}
 
 		public void PlayBallSound()
@@ -79,6 +86,15 @@ namespace FlipperDunkClone.Managers
 		public void PlayApplauseSound()
 		{
 			_applauseSound.Play();
+		}
+
+		public void SetMuteState(bool isMuted)
+		{
+			_ballSound.mute = isMuted;
+			_levelCompletedSound.mute = isMuted;
+			_gameOverSound.mute = isMuted;
+			_basketScoreSound.mute = isMuted;
+			_applauseSound.mute = isMuted;
 		}
 	}
 }

@@ -6,6 +6,7 @@ using FlipperDunkClone.ScriptableObjects;
 using DG.Tweening;
 using FlipperDunkClone.Controllers;
 using FlipperDunkClone.Canvases;
+using FlipperDunkClone.Pooling;
 
 namespace FlipperDunkClone.Managers
 {
@@ -37,6 +38,7 @@ namespace FlipperDunkClone.Managers
 		[SerializeField] private PlayerController playerController;
 		[SerializeField] private ShopManager shopManager;
 		[SerializeField] private SoundManager soundManager;
+		[SerializeField] private ParticlePool particlePool;
 
 		public int currentScore;
 
@@ -76,10 +78,11 @@ namespace FlipperDunkClone.Managers
 		private void GameInitialize()
 		{
 			levelManager.Initialize();
-			uiManager.Initialize(this, levelManager,ballController,shopManager,soundManager);
-			ballController.Initialize(soundManager);
+			uiManager.Initialize(this, levelManager,ballController,shopManager,soundManager,particlePool);
+			ballController.Initialize(soundManager,particlePool);
 			hoopController.Initialize(levelManager);
 			shopManager.Initialize(levelManager,ballController,playerController);
+			particlePool.Initialize();
 			ChangeState(GameState.Menu);
 		}
 

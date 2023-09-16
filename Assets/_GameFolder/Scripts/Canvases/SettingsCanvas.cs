@@ -13,6 +13,8 @@ namespace FlipperDunkClone.Canvases
 		public GameObject settingPanel;
 		public Button settingButton;
 		public Button closeButton;
+		public Button vibration;
+		public Button sound;
 
 		public Image onImageVibration;
 		public Image offImageVibration;
@@ -21,8 +23,8 @@ namespace FlipperDunkClone.Canvases
 		public Image offImageSound;
 		public Image backgroundImageSound;
 
-		private bool _isVibration;
-		private bool _isSound;
+		//private bool _isVibration = true;
+		//private bool _isSound = true;
 		public void Initialize(GameCanvas gameCanvas)
 		{
 			_gameCanvas = gameCanvas;
@@ -34,32 +36,14 @@ namespace FlipperDunkClone.Canvases
 
 		void Start()
 		{
-			
-			Button onButtonVibration = onImageVibration.GetComponent<Button>();
-			if (onButtonVibration != null)
-			{
-				onButtonVibration.onClick.AddListener(VibrationButton);
-			}
+			UpdateVisualsVibration();
+			UpdateVisualsSound();
 
-			Button offButtonVibration = offImageVibration.GetComponent<Button>();
-			if (offButtonVibration != null)
-			{
-				offButtonVibration.onClick.AddListener(VibrationButton);
-			}
-
-			Button onButtonSound = onImageSound.GetComponent<Button>();
-			if (onButtonSound != null)
-			{
-				onButtonSound.onClick.AddListener(SoundButton);
-			}
-
-			Button offButtonSound = offImageSound.GetComponent<Button>();
-			if (offButtonSound != null)
-			{
-				offButtonSound.onClick.AddListener(SoundButton);
-			}
-
+			vibration.onClick.AddListener(VibrationButton);
+			sound.onClick.AddListener(SoundButton);
 			closeButton.onClick.AddListener(OnCloseButton);
+			vibration.onClick.AddListener(() => Debug.Log("Vibration calisti"));
+			sound.onClick.AddListener(() => Debug.Log("Sound calisti "));
 		}
 
 
@@ -76,9 +60,23 @@ namespace FlipperDunkClone.Canvases
 
 		public void VibrationButton()
 		{
-			_isVibration = !_isVibration;
+			PlayerPrefsManager.IsVibrationOn = !PlayerPrefsManager.IsVibrationOn;
+			UpdateVisualsVibration();
 
-			if (_isVibration)
+		}
+
+		public void SoundButton()
+		{
+
+			PlayerPrefsManager.IsSoundOn = !PlayerPrefsManager.IsSoundOn;
+			UpdateVisualsSound();
+			
+		}
+
+		public void UpdateVisualsVibration()
+		{
+
+			if (PlayerPrefsManager.IsVibrationOn)
 			{
 				onImageVibration.gameObject.SetActive(true);
 				offImageVibration.gameObject.SetActive(false);
@@ -92,23 +90,26 @@ namespace FlipperDunkClone.Canvases
 			}
 		}
 
-		public void SoundButton()
+		public void UpdateVisualsSound()
 		{
-			_isSound = !_isSound;
-
-			if (_isSound)
+			if (PlayerPrefsManager.IsSoundOn)
 			{
 				onImageSound.gameObject.SetActive(true);
 				offImageSound.gameObject.SetActive(false);
 				backgroundImageSound.color = Color.green;
+		
+				SoundManager.Instance.SetMuteState(false);
 			}
 			else
 			{
 				onImageSound.gameObject.SetActive(false);
 				offImageSound.gameObject.SetActive(true);
 				backgroundImageSound.color = Color.red;
+			
+				SoundManager.Instance.SetMuteState(true);
 			}
 		}
+
 	}
 }
 

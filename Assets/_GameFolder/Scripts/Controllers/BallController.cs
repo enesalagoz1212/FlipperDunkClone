@@ -5,6 +5,7 @@ using UnityEngine;
 using FlipperDunkClone.Managers;
 using FlipperDunkClone.Canvases;
 using FlipperDunkClone.Controllers;
+using FlipperDunkClone.Pooling;
 using DG.Tweening;
 
 namespace FlipperDunkClone.Controllers
@@ -14,13 +15,17 @@ namespace FlipperDunkClone.Controllers
 		GameSettingsManager _gameSettingsManager;
 		ResetCanvas _resetCanvas;
 		SoundManager _soundManager;
+		ParticlePool _particlePool;
+
+		//public GameObject basketParticle;
 
 		private Rigidbody2D _rigidbody2D;
 		public SpriteRenderer ballSpriteRenderer;
 
-		public void Initialize(SoundManager soundManager)
+		public void Initialize(SoundManager soundManager, ParticlePool particlePool)
 		{
 			_soundManager = soundManager;
+			_particlePool = particlePool;
 		}
 
 		private void OnEnable()
@@ -117,12 +122,20 @@ namespace FlipperDunkClone.Controllers
 
 			if (other.gameObject.CompareTag("Hoop"))
 			{
-
 				if (transform.position.y > other.transform.position.y)
 				{
-					GameManager.Instance.OnBasketThrown();
+					GameObject basketParticleEffect = _particlePool.GetParticleBasket(other.transform.position);
+
 					_soundManager.PlayBasketScoreSound();
 					_soundManager.PlayApplauseSound();
+
+					DOVirtual.DelayedCall(0.3f, () =>
+					{
+						ReturnParticleBasket(basketParticleEffect);
+						GameManager.Instance.OnBasketThrown();
+					});
+
+
 				}
 			}
 			else if (other.gameObject.CompareTag("Fail"))
@@ -130,6 +143,13 @@ namespace FlipperDunkClone.Controllers
 				GameManager.Instance.EndGame(false);
 				_soundManager.PlayGameOverSound();
 			}
+
+		}
+
+		private void ReturnParticleBasket(GameObject particle)
+		{
+			_particlePool.ReturnParticleBasket(particle);
+			Debug.Log("Return particle 2");
 
 		}
 
@@ -149,8 +169,8 @@ namespace FlipperDunkClone.Controllers
 
 		private float CalculateSpeed(float collisionSpeed)
 		{
-			float maxCollisionSpeed = 200f;
-			return Mathf.Clamp01(collisionSpeed / maxCollisionSpeed); 
+			float maxCollisionSpeed = 150f;
+			return Mathf.Clamp01(collisionSpeed / maxCollisionSpeed);
 		}
 
 		private void FreezeRigidbody()

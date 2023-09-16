@@ -27,6 +27,7 @@ namespace FlipperDunkClone.Canvases
 
 		private void OnEnable()
 		{
+			GameManager.OnMenuOpen += OnMenuOpen;
 			GameManager.OnGameScoreChanged += OnGameScoreChanged;
 			GameManager.OnGameStarted += OnGameStart;
 			GameManager.OnGameReset += OnGameReset;
@@ -35,6 +36,7 @@ namespace FlipperDunkClone.Canvases
 
 		private void OnDisable()
 		{
+			GameManager.OnMenuOpen -= OnMenuOpen;
 			GameManager.OnGameScoreChanged -= OnGameScoreChanged;
 			GameManager.OnGameStarted -= OnGameStart;
 			GameManager.OnGameReset -= OnGameReset;
@@ -51,36 +53,38 @@ namespace FlipperDunkClone.Canvases
 		{
 
 		}
-		private void Update()
-		{
-			switch (GameManager.Instance.GameState)
-			{
-				case GameState.Start:
-					break;
-				case GameState.Playing:
-					scoreText.gameObject.SetActive(true);
-					levelsText.gameObject.SetActive(true);
-					break;
-				case GameState.Reset:
-					break;
-				case GameState.End:
-					break;
-				case GameState.Menu:
-					scoreText.gameObject.SetActive(false);
-					levelsText.gameObject.SetActive(false);
-					break;
-				default:
-					break;
-			}
+		//private void Update()
+		//{
+		//	switch (GameManager.Instance.GameState)
+		//	{
+		//		case GameState.Start:
+		//			break;
+		//		case GameState.Playing:
+		//			scoreText.gameObject.SetActive(true);
+		//			levelsText.gameObject.SetActive(true);
+		//			break;
+		//		case GameState.Reset:
+		//			break;
+		//		case GameState.End:
+		//			break;
+		//		case GameState.Menu:
+		//			break;
+		//		default:
+		//			break;
+		//	}
 
-		}
+		//}
 
-
-		private void OnGameStart()
+		private void OnMenuOpen()
 		{
 			gamePanel.gameObject.SetActive(true);
 			UpdateLevelsText();
 			UpdateLevelDataMaxScore();
+		}
+
+		private void OnGameStart()
+		{
+			
 		}
 
 		private void OnGameReset()
