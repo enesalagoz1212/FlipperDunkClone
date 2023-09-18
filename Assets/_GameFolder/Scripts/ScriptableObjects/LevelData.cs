@@ -7,6 +7,8 @@ namespace FlipperDunkClone.ScriptableObjects
     {
         public int maxScore;
         public int diamondScore;
+        public Sprite[] scoreSprites;
+        public Sprite successSprite;
     }
 }
 

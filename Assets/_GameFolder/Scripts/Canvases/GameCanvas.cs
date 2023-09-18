@@ -20,7 +20,8 @@ namespace FlipperDunkClone.Canvases
 
 		public Button gameButton;
 		public Image gamePanel;
-
+		public Image[] basketImages;
+		public Image[] basketImageTrue;
 
 		private int levelIndex = 0;
 		private bool _isShootText = false;
@@ -49,32 +50,7 @@ namespace FlipperDunkClone.Canvases
 			_levelManager = levelManager;
 		}
 
-		private void Start()
-		{
-
-		}
-		//private void Update()
-		//{
-		//	switch (GameManager.Instance.GameState)
-		//	{
-		//		case GameState.Start:
-		//			break;
-		//		case GameState.Playing:
-		//			scoreText.gameObject.SetActive(true);
-		//			levelsText.gameObject.SetActive(true);
-		//			break;
-		//		case GameState.Reset:
-		//			break;
-		//		case GameState.End:
-		//			break;
-		//		case GameState.Menu:
-		//			break;
-		//		default:
-		//			break;
-		//	}
-
-		//}
-
+	
 		private void OnMenuOpen()
 		{
 			gamePanel.gameObject.SetActive(true);
@@ -113,8 +89,7 @@ namespace FlipperDunkClone.Canvases
 		}
 
 		public void UpdateScoreText(int score)
-		{
-			//int maxScore = LevelManager.Instance.levelDataArray[levelIndex].maxScore;
+		{			
 			scoreText.text = score.ToString();
 		}
 
@@ -124,8 +99,25 @@ namespace FlipperDunkClone.Canvases
 			{
 				int totalLevels = LevelManager.Instance.levelDataArray.Length;
 				int maxScore = LevelManager.Instance.levelDataArray[levelIndex % totalLevels].maxScore;
-				scoreText.text = maxScore.ToString();
+
+				for (int i = 0; i < basketImages.Length; i++)
+				{
+					if (i < maxScore)
+					{						
+						basketImages[i].gameObject.SetActive(true);
+					}
+					else
+					{
+						basketImages[i].gameObject.SetActive(false);
+					}
+				}		
 			}
+		}
+
+
+		private void CenterImage()
+		{
+		
 		}
 	}
 }

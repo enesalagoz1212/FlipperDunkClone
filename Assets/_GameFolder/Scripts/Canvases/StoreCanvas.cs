@@ -50,6 +50,10 @@ namespace FlipperDunkClone.Canvases
 		private void OnEnable()
 		{
 			GameManager.OnMenuOpen += OnMenuOpen;
+
+			SelectedObject(PlayerPrefsManager.SelectedBall, ballButtons);
+			SelectedObject(PlayerPrefsManager.SelectedFlipper, flipperButtons);
+			SelectedObject(PlayerPrefsManager.SelectedBackground, backgroundButtons);
 		}
 		private void OnDisable()
 		{
@@ -116,7 +120,7 @@ namespace FlipperDunkClone.Canvases
 			ballPanel.gameObject.SetActive(true);
 			flipperPanel.gameObject.SetActive(false);
 			backgroundPamel.gameObject.SetActive(false);
-
+			
 			ChangeColorImage(ballButtonColor);
 
 			ballButton.transform.DOScale(new Vector3(1f, 1.12f, 1f), 0.1f);
@@ -176,7 +180,13 @@ namespace FlipperDunkClone.Canvases
 			}
 		}
 
-
+		private void SelectedObject(int selectedIndex, Button[] button)
+		{
+			if (selectedIndex >= 0 && selectedIndex < button.Length)
+			{
+				ChangeButtonColor(button[selectedIndex], Color.green);
+			}
+		}
 	}
 
 }

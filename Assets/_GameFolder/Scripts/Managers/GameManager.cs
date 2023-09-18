@@ -154,10 +154,9 @@ namespace FlipperDunkClone.Managers
 				DOVirtual.DelayedCall(0.1f, () =>
 				{
 					EndGame(true);
-
+					
 				});
 			}
-
 			hoopController.SpawnRandomHoop();
 		}
 

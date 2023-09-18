@@ -12,7 +12,8 @@ namespace FlipperDunkClone.Pooling
 		public GameObject basketParticleEffect;
 		public int basketInitializePoolSize;
 		public int levelCompeletedInitializePoolSize;
-		public GameObject particleEffects;
+		public GameObject basketParticle;
+		public GameObject levelParticle;
 
 		private Stack<GameObject> basketPooledParticle = new Stack<GameObject>();
 		private Stack<GameObject> levelCompletedPooledParticle = new Stack<GameObject>();
@@ -25,26 +26,31 @@ namespace FlipperDunkClone.Pooling
 		private void OnDisable()
 		{
 			GameManager.OnGameEnd -= OnGameEnd;
-
+			
 		}
 
 		public void Initialize()
 		{
+
+		}
+
+		private void Start()
+		{
+
 			for (int i = 0; i < basketInitializePoolSize; i++)
 			{
-				GameObject basketParticle = Instantiate(basketParticleEffect, particleEffects.transform);
-				basketParticle.SetActive(false);
-				basketPooledParticle.Push(basketParticle);
+				GameObject basket = Instantiate(basketParticleEffect, basketParticle.transform);
+				basket.SetActive(false);
+				basketPooledParticle.Push(basket);
 			}
 
 			for (int i = 0; i < levelCompeletedInitializePoolSize; i++)
 			{
-				GameObject levelCompeleted = Instantiate(levelCompletedEffect, particleEffects.transform);
-				levelCompeleted.SetActive(false);
-				levelCompletedPooledParticle.Push(levelCompeleted);
+				GameObject levelCompleted = Instantiate(levelCompletedEffect, levelParticle.transform);
+				levelCompleted.SetActive(false);
+				levelCompletedPooledParticle.Push(levelCompleted);
 			}
 		}
-
 		public GameObject GetParticleBasket(Vector3 position)
 		{
 			if (basketPooledParticle.Count > 0)
@@ -56,7 +62,7 @@ namespace FlipperDunkClone.Pooling
 			}
 			else
 			{
-				GameObject newBasketParticle = Instantiate(basketParticleEffect, position, Quaternion.identity);
+				GameObject newBasketParticle = Instantiate(basketParticle, position, Quaternion.identity);
 				return newBasketParticle;
 			}
 		}
@@ -79,7 +85,7 @@ namespace FlipperDunkClone.Pooling
 			}
 			else
 			{
-				GameObject newLevelCompletedParticle = Instantiate(basketParticleEffect, position, Quaternion.identity);
+				GameObject newLevelCompletedParticle = Instantiate(levelParticle, position, Quaternion.identity);
 				return newLevelCompletedParticle;
 			}
 		}
@@ -97,7 +103,6 @@ namespace FlipperDunkClone.Pooling
 			{
 				Vector3 pos = new Vector3(0f, 10.5f, 0f);
 				GameObject levelCompletedEffect = GetParticleLevelCompleted(pos);
-
 
 				DOVirtual.DelayedCall(6f, () =>
 				{

@@ -17,7 +17,6 @@ namespace FlipperDunkClone.Controllers
 		SoundManager _soundManager;
 		ParticlePool _particlePool;
 
-		//public GameObject basketParticle;
 
 		private Rigidbody2D _rigidbody2D;
 		public SpriteRenderer ballSpriteRenderer;
@@ -124,17 +123,21 @@ namespace FlipperDunkClone.Controllers
 			{
 				if (transform.position.y > other.transform.position.y)
 				{
+					other.gameObject.tag = "Untagged";				
 					GameObject basketParticleEffect = _particlePool.GetParticleBasket(other.transform.position);
 
 					_soundManager.PlayBasketScoreSound();
 					_soundManager.PlayApplauseSound();
 
-					DOVirtual.DelayedCall(0.3f, () =>
+					DOVirtual.DelayedCall(0.4f, () =>
 					{
 						ReturnParticleBasket(basketParticleEffect);
 						GameManager.Instance.OnBasketThrown();
 					});
-
+					DOVirtual.DelayedCall(1f, () =>
+					{
+						other.gameObject.tag = "Hoop";
+					});
 
 				}
 			}
@@ -150,7 +153,6 @@ namespace FlipperDunkClone.Controllers
 		{
 			_particlePool.ReturnParticleBasket(particle);
 			Debug.Log("Return particle 2");
-
 		}
 
 		private void OnCollisionEnter2D(Collision2D collision)
