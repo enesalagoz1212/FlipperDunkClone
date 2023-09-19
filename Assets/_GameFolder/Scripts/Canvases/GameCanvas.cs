@@ -6,6 +6,7 @@ using TMPro;
 using FlipperDunkClone.ScriptableObjects;
 using UnityEngine.UI;
 using DG.Tweening;
+using FlipperDunkClone.Controllers;
 
 namespace FlipperDunkClone.Canvases
 {
@@ -22,6 +23,8 @@ namespace FlipperDunkClone.Canvases
 		public Image gamePanel;
 		public Image[] basketImages;
 		public Image[] basketImageTrue;
+
+		public List<UiBasketController> uiBasketControllers = new List<UiBasketController>();
 
 		private int levelIndex = 0;
 		private bool _isShootText = false;

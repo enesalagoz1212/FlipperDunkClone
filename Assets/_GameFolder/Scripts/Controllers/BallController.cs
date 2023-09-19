@@ -118,8 +118,6 @@ namespace FlipperDunkClone.Controllers
 
 		private void OnTriggerEnter2D(Collider2D other)
 		{
-
-
 			if (other.gameObject.CompareTag("Hoop"))
 			{
 				if (transform.position.y > other.transform.position.y)
