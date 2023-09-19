@@ -25,6 +25,7 @@ namespace FlipperDunkClone.Controllers
 		{
 			_soundManager = soundManager;
 			_particlePool = particlePool;
+			
 		}
 
 		private void OnEnable()
@@ -129,16 +130,18 @@ namespace FlipperDunkClone.Controllers
 					_soundManager.PlayBasketScoreSound();
 					_soundManager.PlayApplauseSound();
 
+					UIManager.Instance.GameCanvas.ActivateBasketImage();
+
 					DOVirtual.DelayedCall(0.4f, () =>
 					{
 						ReturnParticleBasket(basketParticleEffect);
 						GameManager.Instance.OnBasketThrown();
 					});
+
 					DOVirtual.DelayedCall(1f, () =>
 					{
 						other.gameObject.tag = "Hoop";
 					});
-
 				}
 			}
 			else if (other.gameObject.CompareTag("Fail"))

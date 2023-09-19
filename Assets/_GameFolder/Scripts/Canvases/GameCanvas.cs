@@ -25,7 +25,7 @@ namespace FlipperDunkClone.Canvases
 
 		private int levelIndex = 0;
 		private bool _isShootText = false;
-
+		private int _currentBasketIndex = 0;
 		private void OnEnable()
 		{
 			GameManager.OnMenuOpen += OnMenuOpen;
@@ -50,7 +50,7 @@ namespace FlipperDunkClone.Canvases
 			_levelManager = levelManager;
 		}
 
-	
+
 		private void OnMenuOpen()
 		{
 			gamePanel.gameObject.SetActive(true);
@@ -60,12 +60,13 @@ namespace FlipperDunkClone.Canvases
 
 		private void OnGameStart()
 		{
-			
+			UpdateLevelDataMaxScore();
 		}
 
 		private void OnGameReset()
 		{
-			UpdateLevelDataMaxScore();
+			_currentBasketIndex = 0;
+			ResetBasketImages();
 		}
 
 		private void OnGameEnd(bool IsSuccessful)
@@ -89,35 +90,51 @@ namespace FlipperDunkClone.Canvases
 		}
 
 		public void UpdateScoreText(int score)
-		{			
+		{
 			scoreText.text = score.ToString();
 		}
 
 		public void UpdateLevelDataMaxScore()
 		{
-			if (levelIndex >= 0 && levelIndex <= LevelManager.Instance.levelDataArray.Length)
-			{
+			
 				int totalLevels = LevelManager.Instance.levelDataArray.Length;
 				int maxScore = LevelManager.Instance.levelDataArray[levelIndex % totalLevels].maxScore;
 
 				for (int i = 0; i < basketImages.Length; i++)
 				{
 					if (i < maxScore)
-					{						
+					{
 						basketImages[i].gameObject.SetActive(true);
 					}
 					else
 					{
 						basketImages[i].gameObject.SetActive(false);
 					}
-				}		
+				}
+			
+		}
+
+		public void ActivateBasketImage()
+		{
+
+			if (_currentBasketIndex < basketImageTrue.Length)
+			{
+				basketImageTrue[_currentBasketIndex].gameObject.SetActive(true);
+				_currentBasketIndex++;
 			}
 		}
 
+		public void ResetBasketImages()
+		{
+			foreach (Image image in basketImageTrue)
+			{
+				image.gameObject.SetActive(false);
+			}
+		}
 
 		private void CenterImage()
 		{
-		
+
 		}
 	}
 }

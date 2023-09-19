@@ -42,6 +42,7 @@ namespace FlipperDunkClone.Managers
             settingsCanvas.Initialize(gameCanvas);
             menuCanvas.Initialize(gameManager, ballController,storeCanvas,settingsCanvas);
             storeCanvas.Initialize(shopManager, menuCanvas);
+         
         }
 
         private void OnGameEnd(bool isSuccessful)
