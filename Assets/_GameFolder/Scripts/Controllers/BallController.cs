@@ -121,31 +121,18 @@ namespace FlipperDunkClone.Controllers
 			if (other.gameObject.CompareTag("Hoop"))
 			{
 				if (transform.position.y > other.transform.position.y)
-				{
-					other.gameObject.tag = "Untagged";				
+				{	
 					GameObject basketParticleEffect = _particlePool.GetParticleBasket(other.transform.position);
-
-					_soundManager.PlayBasketScoreSound();
-					_soundManager.PlayApplauseSound();
-
-					UIManager.Instance.GameCanvas.ActivateBasketImage();
-
 					DOVirtual.DelayedCall(0.4f, () =>
 					{
 						ReturnParticleBasket(basketParticleEffect);
 						GameManager.Instance.OnBasketThrown();
-					});
-
-					DOVirtual.DelayedCall(1f, () =>
-					{
-						other.gameObject.tag = "Hoop";
-					});
+					});				
 				}
 			}
 			else if (other.gameObject.CompareTag("Fail"))
 			{
-				GameManager.Instance.EndGame(false);
-				_soundManager.PlayGameOverSound();
+				GameManager.Instance.EndGame(false);			
 			}
 
 		}
@@ -153,7 +140,6 @@ namespace FlipperDunkClone.Controllers
 		private void ReturnParticleBasket(GameObject particle)
 		{
 			_particlePool.ReturnParticleBasket(particle);
-			Debug.Log("Return particle 2");
 		}
 
 		private void OnCollisionEnter2D(Collision2D collision)
@@ -178,7 +164,6 @@ namespace FlipperDunkClone.Controllers
 
 		private void FreezeRigidbody()
 		{
-
 			_rigidbody2D.bodyType = RigidbodyType2D.Static;
 			_rigidbody2D.velocity = Vector2.zero;
 			_rigidbody2D.angularVelocity = 0f;

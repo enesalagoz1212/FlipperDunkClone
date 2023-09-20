@@ -78,10 +78,10 @@ namespace FlipperDunkClone.Managers
 		private void GameInitialize()
 		{
 			levelManager.Initialize();
-			uiManager.Initialize(this, levelManager,ballController,shopManager,soundManager,particlePool);
-			ballController.Initialize(soundManager,particlePool);
+			uiManager.Initialize(this, levelManager, ballController, shopManager, soundManager, particlePool);
+			ballController.Initialize(soundManager, particlePool);
 			hoopController.Initialize(levelManager);
-			shopManager.Initialize(levelManager,ballController,playerController);
+			shopManager.Initialize(levelManager, ballController, playerController);
 			particlePool.Initialize();
 			ChangeState(GameState.Menu);
 		}
@@ -112,7 +112,7 @@ namespace FlipperDunkClone.Managers
 				case GameState.Menu:
 					OnMenuOpen?.Invoke();
 					break;
-				
+
 				case GameState.Start:
 					OnGameStarted?.Invoke();
 					ChangeState(GameState.Playing);
@@ -138,7 +138,7 @@ namespace FlipperDunkClone.Managers
 
 					OnGameEnd?.Invoke(isSuccessful);
 					break;
-				
+
 				default:
 					throw new ArgumentOutOfRangeException();
 			}
@@ -154,10 +154,13 @@ namespace FlipperDunkClone.Managers
 				DOVirtual.DelayedCall(0.1f, () =>
 				{
 					EndGame(true);
-					
+
 				});
 			}
-			hoopController.SpawnRandomHoop();
+			DOVirtual.DelayedCall(0.5f, () =>
+			{
+				hoopController.SpawnRandomHoop();
+			});
 		}
 
 		public void IncreaseDiamondScore(int score)

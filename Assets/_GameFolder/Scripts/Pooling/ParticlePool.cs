@@ -20,12 +20,16 @@ namespace FlipperDunkClone.Pooling
 
 		private void OnEnable()
 		{
+			GameManager.OnGameStarted += OnGameStart;
 			GameManager.OnGameEnd += OnGameEnd;
+			GameManager.OnGameReset += OnGameReset;
 		}
 
 		private void OnDisable()
 		{
+			GameManager.OnGameStarted -= OnGameStart;
 			GameManager.OnGameEnd -= OnGameEnd;
+			GameManager.OnGameReset -= OnGameReset;
 			
 		}
 
@@ -97,6 +101,12 @@ namespace FlipperDunkClone.Pooling
 
 		}
 
+		private void OnGameStart()
+		{
+			levelParticle.gameObject.SetActive(true);
+		}
+
+
 		private void OnGameEnd(bool isSuccessful)
 		{
 			if (isSuccessful)
@@ -110,6 +120,11 @@ namespace FlipperDunkClone.Pooling
 				});
 
 			}
+		}
+
+		private void OnGameReset()
+		{
+			levelParticle.gameObject.SetActive(false);
 		}
 	}
 }

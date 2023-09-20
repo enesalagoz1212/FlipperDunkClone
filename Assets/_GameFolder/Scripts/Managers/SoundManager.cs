@@ -30,6 +30,19 @@ namespace FlipperDunkClone.Managers
 			SetMuteState(PlayerPrefsManager.IsSoundOn);
 		}
 
+		private void OnEnable()
+		{
+			GameManager.OnGameScoreChanged += OnGameScoreChanged;
+			GameManager.OnGameEnd += OnGameEnd;
+		}
+
+		private void OnDisable()
+		{
+			GameManager.OnGameScoreChanged -= OnGameScoreChanged;
+			GameManager.OnGameEnd -= OnGameEnd;
+
+		}
+
 		private void Awake()
 		{
 			if (Instance == null)
@@ -60,8 +73,19 @@ namespace FlipperDunkClone.Managers
 			_basketScoreSound.playOnAwake = false;
 			_applauseSound.playOnAwake = false;
 		}
-		void Start()
+
+		private void OnGameScoreChanged(int score)
 		{
+			PlayBasketScoreSound();
+			PlayApplauseSound();
+		}
+
+		private void OnGameEnd(bool isSuccesful)
+		{
+			if (!isSuccesful)
+			{
+				PlayGameOverSound();
+			}
 		}
 
 		public void PlayBallSound()

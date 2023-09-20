@@ -21,14 +21,14 @@ namespace FlipperDunkClone.Canvases
 
 		public Button gameButton;
 		public Image gamePanel;
-		public Image[] basketImages;
-		public Image[] basketImageTrue;
+
+		public GameObject basketPrefab;
+		public Transform basketSpawnPoint;
 
 		public List<UiBasketController> uiBasketControllers = new List<UiBasketController>();
 
 		private int levelIndex = 0;
-		private bool _isShootText = false;
-		private int _currentBasketIndex = 0;
+
 		private void OnEnable()
 		{
 			GameManager.OnMenuOpen += OnMenuOpen;
@@ -56,20 +56,28 @@ namespace FlipperDunkClone.Canvases
 
 		private void OnMenuOpen()
 		{
+			if (true)
+			{
+
+			}
+			int totalLevels = LevelManager.Instance.levelDataArray.Length;
+			int maxScore = LevelManager.Instance.levelDataArray[levelIndex % totalLevels].maxScore;
+
+			CreateBasket(maxScore);
+
 			gamePanel.gameObject.SetActive(true);
 			UpdateLevelsText();
-			UpdateLevelDataMaxScore();
-		}
 
+		}
 		private void OnGameStart()
 		{
-			UpdateLevelDataMaxScore();
+
+
 		}
 
 		private void OnGameReset()
 		{
-			_currentBasketIndex = 0;
-			ResetBasketImages();
+			ClearBaskets();
 		}
 
 		private void OnGameEnd(bool IsSuccessful)
@@ -99,45 +107,33 @@ namespace FlipperDunkClone.Canvases
 
 		public void UpdateLevelDataMaxScore()
 		{
-			
-				int totalLevels = LevelManager.Instance.levelDataArray.Length;
-				int maxScore = LevelManager.Instance.levelDataArray[levelIndex % totalLevels].maxScore;
-
-				for (int i = 0; i < basketImages.Length; i++)
-				{
-					if (i < maxScore)
-					{
-						basketImages[i].gameObject.SetActive(true);
-					}
-					else
-					{
-						basketImages[i].gameObject.SetActive(false);
-					}
-				}
-			
+			int totalLevels = LevelManager.Instance.levelDataArray.Length;
+			int maxScore = LevelManager.Instance.levelDataArray[levelIndex % totalLevels].maxScore;
 		}
 
-		public void ActivateBasketImage()
+		public void CreateBasket(int maxScore)
 		{
+			float spacing = 0.8f;
+			float centerOffset = (maxScore - 1) * spacing / 2;
 
-			if (_currentBasketIndex < basketImageTrue.Length)
+			for (int i = 0; i < maxScore; i++)
 			{
-				basketImageTrue[_currentBasketIndex].gameObject.SetActive(true);
-				_currentBasketIndex++;
+				float xPosition = i * spacing - centerOffset;
+				Vector3 spawnPosition = basketSpawnPoint.position + new Vector3(xPosition, 0f, 0f);
+				GameObject newBasket = Instantiate(basketPrefab, spawnPosition, Quaternion.identity, basketSpawnPoint);
+
+				UiBasketController basketController = newBasket.GetComponent<UiBasketController>();
+				uiBasketControllers.Add(basketController);
 			}
 		}
 
-		public void ResetBasketImages()
+		public void ClearBaskets()
 		{
-			foreach (Image image in basketImageTrue)
+			foreach (var basketController in uiBasketControllers)
 			{
-				image.gameObject.SetActive(false);
+				Destroy(basketController.gameObject);
 			}
-		}
-
-		private void CenterImage()
-		{
-
+			uiBasketControllers.Clear();
 		}
 	}
 }

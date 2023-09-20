@@ -11,13 +11,14 @@ namespace FlipperDunkClone.Controllers
 	public class HoopController : MonoBehaviour
 	{
 		public GameObject hoop;
+		public GameObject hoopTagCollider;
 		private LevelManager _levelManager;
 		private LevelData _currentLevelData;
 
 		private bool _allowHoopSpawn = true;
 
 		private Tween moveUpDownTween;
-		
+
 		private void Awake()
 		{
 			hoop.SetActive(false);
@@ -27,45 +28,23 @@ namespace FlipperDunkClone.Controllers
 		{
 			GameManager.OnGameStarted += OnGameStarted;
 			GameManager.OnGameEnd += OnGameEnd;
+			GameManager.OnGameScoreChanged += OnGameScoreChanged;
 		}
 
 		private void OnDisable()
 		{
 			GameManager.OnGameStarted -= OnGameStarted;
 			GameManager.OnGameEnd -= OnGameEnd;
+			GameManager.OnGameScoreChanged -= OnGameScoreChanged;
 		}
 
 		public void Initialize(LevelManager levelManager)
 		{
 			_levelManager = levelManager;
-			
+
 			hoop.SetActive(false);
 		}
 
-		private void Update()
-		{
-			switch (GameManager.Instance.GameState)
-			{
-				case GameState.Menu:
-					break;
-				
-				case GameState.Start:
-					break;
-				
-				case GameState.Playing:
-					break;
-				
-				case GameState.Reset:
-					break;
-				
-				case GameState.End:
-					break;
-				
-				default:
-					throw new ArgumentOutOfRangeException();
-
-			}
-		}
 		private void OnGameStarted()
 		{
 			hoop.SetActive(true);
@@ -79,9 +58,15 @@ namespace FlipperDunkClone.Controllers
 			_allowHoopSpawn = false;
 		}
 
-		
+		private void OnGameScoreChanged(int score)
+		{
+			hoopTagCollider.gameObject.tag = "Untagged";
+		}
+
+
 		public void SpawnRandomHoop()
 		{
+			hoopTagCollider.gameObject.tag = "Hoop";
 			if (!_allowHoopSpawn)
 			{
 				return;
@@ -94,23 +79,19 @@ namespace FlipperDunkClone.Controllers
 
 			if (randomTransform.localScale.x > 0)
 			{
-				Debug.Log("a");
 				targetPosition += new Vector3(2.25f, 0f, 0f);
 			}
 			else
 			{
-				Debug.Log("b");
 				targetPosition -= new Vector3(2.2f, 0f, 0f);
-			}
-
+			}		
+			
 			var moveRightLeftTween = transform.DOMove(targetPosition, 1.0f).SetEase(Ease.Linear);
 			moveRightLeftTween.OnComplete(() =>
 			{
 				if (randomTransform.position.y == 6)
 				{
-					Debug.Log("1111");
 					moveUpDownTween = transform.DOMoveY(transform.position.y - 6.0f, 2.0f).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
-
 				}
 				else
 				{

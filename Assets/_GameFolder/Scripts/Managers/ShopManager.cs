@@ -59,7 +59,6 @@ namespace FlipperDunkClone.Managers
 			OnBallSelected?.Invoke(ballSprites[ballIndex]);
 		}
 
-
 		public void OnFlipperButtonClick(int flipperIndex)
 		{
 			PlayerPrefsManager.SelectedFlipper = flipperIndex;
