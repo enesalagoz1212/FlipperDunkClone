@@ -28,6 +28,7 @@ namespace FlipperDunkClone.Canvases
 		public List<UiBasketController> uiBasketControllers = new List<UiBasketController>();
 
 		private int levelIndex = 0;
+		private int currentBasketIndex = 0;
 
 		private void OnEnable()
 		{
@@ -56,15 +57,11 @@ namespace FlipperDunkClone.Canvases
 
 		private void OnMenuOpen()
 		{
-			if (true)
-			{
-
-			}
 			int totalLevels = LevelManager.Instance.levelDataArray.Length;
 			int maxScore = LevelManager.Instance.levelDataArray[levelIndex % totalLevels].maxScore;
 
 			CreateBasket(maxScore);
-
+			SortBaskets();
 			gamePanel.gameObject.SetActive(true);
 			UpdateLevelsText();
 
@@ -92,17 +89,12 @@ namespace FlipperDunkClone.Canvases
 
 		private void OnGameScoreChanged(int score)
 		{
-			UpdateScoreText(score);
+			ThrowBasket();
 		}
 
 		public void UpdateLevelsText()
 		{
 			levelsText.text = "LEVEL " + PlayerPrefsManager.CurrentLevel;
-		}
-
-		public void UpdateScoreText(int score)
-		{
-			scoreText.text = score.ToString();
 		}
 
 		public void UpdateLevelDataMaxScore()
@@ -113,17 +105,33 @@ namespace FlipperDunkClone.Canvases
 
 		public void CreateBasket(int maxScore)
 		{
-			float spacing = 0.8f;
-			float centerOffset = (maxScore - 1) * spacing / 2;
-
 			for (int i = 0; i < maxScore; i++)
 			{
-				float xPosition = i * spacing - centerOffset;
-				Vector3 spawnPosition = basketSpawnPoint.position + new Vector3(xPosition, 0f, 0f);
+				Vector3 spawnPosition = basketSpawnPoint.position;
 				GameObject newBasket = Instantiate(basketPrefab, spawnPosition, Quaternion.identity, basketSpawnPoint);
 
 				UiBasketController basketController = newBasket.GetComponent<UiBasketController>();
 				uiBasketControllers.Add(basketController);
+			}
+		}
+
+		public void SortBaskets()
+		{
+			int basketCount = uiBasketControllers.Count;
+
+			float spacing = 100.0f;
+			int centerIndex = basketCount / 2;
+			float xOffset = 0f;
+
+			if (basketCount % 2 != 1)
+			{
+				xOffset = spacing / 2f;
+			}
+
+			for (int i = 0; i < basketCount; i++)
+			{
+				float xPosition = (i - centerIndex) * spacing + xOffset;
+				uiBasketControllers[i].GetComponent<RectTransform>().anchoredPosition = new Vector3(xPosition, 0f, 0f);
 			}
 		}
 
@@ -134,6 +142,17 @@ namespace FlipperDunkClone.Canvases
 				Destroy(basketController.gameObject);
 			}
 			uiBasketControllers.Clear();
+			currentBasketIndex = 0;
+		}
+
+		public void ThrowBasket()
+		{
+			if (currentBasketIndex < uiBasketControllers.Count)
+			{
+				UiBasketController currentBasket = uiBasketControllers[currentBasketIndex];
+				currentBasket.OnBasket();
+				currentBasketIndex++;
+			}
 		}
 	}
 }

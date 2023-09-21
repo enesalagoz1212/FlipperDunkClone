@@ -90,7 +90,6 @@ namespace FlipperDunkClone.Managers
 			_currentLevelData = levelDataArray[currentLevelIndex - 1];
 
 			GameManager.Instance.currentScore = _currentLevelData.maxScore;
-			UIManager.Instance.GameCanvas.UpdateScoreText(GameManager.Instance.currentScore);
 		}
 
 		public void NextLevel()

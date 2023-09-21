@@ -9,6 +9,7 @@ TagManager:
   - Reset
   - Fail
   - Wall
+  - HoopTwo
   layers:
   - Default
   - TransparentFX

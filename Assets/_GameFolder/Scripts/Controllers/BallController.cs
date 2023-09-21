@@ -21,11 +21,9 @@ namespace FlipperDunkClone.Controllers
 		private Rigidbody2D _rigidbody2D;
 		public SpriteRenderer ballSpriteRenderer;
 
-		public void Initialize(SoundManager soundManager, ParticlePool particlePool)
+		public void Initialize(ParticlePool particlePool)
 		{
-			_soundManager = soundManager;
 			_particlePool = particlePool;
-			
 		}
 
 		private void OnEnable()
@@ -121,18 +119,18 @@ namespace FlipperDunkClone.Controllers
 			if (other.gameObject.CompareTag("Hoop"))
 			{
 				if (transform.position.y > other.transform.position.y)
-				{	
+				{
 					GameObject basketParticleEffect = _particlePool.GetParticleBasket(other.transform.position);
+					GameManager.Instance.OnBasketThrown();
 					DOVirtual.DelayedCall(0.4f, () =>
 					{
 						ReturnParticleBasket(basketParticleEffect);
-						GameManager.Instance.OnBasketThrown();
-					});				
+					});
 				}
 			}
 			else if (other.gameObject.CompareTag("Fail"))
 			{
-				GameManager.Instance.EndGame(false);			
+				GameManager.Instance.EndGame(false);
 			}
 
 		}
@@ -144,7 +142,7 @@ namespace FlipperDunkClone.Controllers
 
 		private void OnCollisionEnter2D(Collision2D collision)
 		{
-			if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Hoop"))
+			if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Untagged"))
 			{
 				if (GameManager.Instance.GameState == GameState.Playing)
 				{
@@ -158,7 +156,7 @@ namespace FlipperDunkClone.Controllers
 
 		private float CalculateSpeed(float collisionSpeed)
 		{
-			float maxCollisionSpeed = 150f;
+			float maxCollisionSpeed = 130f;
 			return Mathf.Clamp01(collisionSpeed / maxCollisionSpeed);
 		}
 

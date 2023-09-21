@@ -79,7 +79,7 @@ namespace FlipperDunkClone.Managers
 		{
 			levelManager.Initialize();
 			uiManager.Initialize(this, levelManager, ballController, shopManager, soundManager, particlePool);
-			ballController.Initialize(soundManager, particlePool);
+			ballController.Initialize( particlePool);
 			hoopController.Initialize(levelManager);
 			shopManager.Initialize(levelManager, ballController, playerController);
 			particlePool.Initialize();
@@ -151,13 +151,13 @@ namespace FlipperDunkClone.Managers
 
 			if (currentScore == 0)
 			{
-				DOVirtual.DelayedCall(0.1f, () =>
+				DOVirtual.DelayedCall(0.3f, () =>
 				{
 					EndGame(true);
 
 				});
 			}
-			DOVirtual.DelayedCall(0.5f, () =>
+			DOVirtual.DelayedCall(0.7f, () =>
 			{
 				hoopController.SpawnRandomHoop();
 			});
