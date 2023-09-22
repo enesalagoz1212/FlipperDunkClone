@@ -16,9 +16,7 @@ namespace FlipperDunkClone.Controllers
 		private LevelData _currentLevelData;
 
 		private bool _allowHoopSpawn = true;
-
 		private Tween moveUpDownTween;
-
 		private void Awake()
 		{
 			hoop.SetActive(false);
@@ -41,7 +39,6 @@ namespace FlipperDunkClone.Controllers
 		public void Initialize(LevelManager levelManager)
 		{
 			_levelManager = levelManager;
-
 			hoop.SetActive(false);
 		}
 
@@ -84,8 +81,8 @@ namespace FlipperDunkClone.Controllers
 			else
 			{
 				targetPosition -= new Vector3(2.2f, 0f, 0f);
-			}		
-			
+			}
+
 			var moveRightLeftTween = transform.DOMove(targetPosition, 1.0f).SetEase(Ease.Linear);
 			moveRightLeftTween.OnComplete(() =>
 			{

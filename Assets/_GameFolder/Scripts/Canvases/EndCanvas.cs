@@ -14,7 +14,6 @@ namespace FlipperDunkClone.Canvases
 	public class EndCanvas : MonoBehaviour
 	{
 		private SoundManager _soundManager;
-		private ParticlePool _particlePool;
 
 		public GameObject endPanel;
 		public Button nextButton;
@@ -34,7 +33,6 @@ namespace FlipperDunkClone.Canvases
 		public void Initialize(SoundManager soundManager,ParticlePool particlePool)
 		{
 			_soundManager = soundManager;
-			_particlePool = particlePool;
 			nextButton.onClick.AddListener(NextButtonClicked);
 		}
 		
@@ -46,7 +44,6 @@ namespace FlipperDunkClone.Canvases
 		private void NextButtonClicked()
 		{
 			GameManager.Instance.ResetGame();
-			LevelManager.Instance.NextLevel();
 			endPanel.SetActive(false);
 			_soundManager.PlayLevelCompletedSound();
 		}

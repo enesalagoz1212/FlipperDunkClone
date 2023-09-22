@@ -4,6 +4,7 @@ using UnityEngine;
 using FlipperDunkClone.Canvases;
 using FlipperDunkClone.Controllers;
 using FlipperDunkClone.Pooling;
+using FlipperDunkClone.ScriptableObjects;
 
 namespace FlipperDunkClone.Managers
 {

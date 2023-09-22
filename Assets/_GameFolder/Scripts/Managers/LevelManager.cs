@@ -34,35 +34,35 @@ namespace FlipperDunkClone.Managers
 
 		}
 
+		public LevelData LoadCurrentLevel()
+		{
+			var currentLevelIndex = PlayerPrefsManager.CurrentLevel % levelDataArray.Length;
+			if (currentLevelIndex == 0)
+			{
+				currentLevelIndex = levelDataArray.Length;
+			}
+			_currentLevelData = levelDataArray[currentLevelIndex - 1];
+
+			GameManager.Instance.currentScore = _currentLevelData.maxScore;
+
+			Debug.Log("currentLevelData kac defa calisti");
+			return _currentLevelData;
+		}
 		public void Initialize()
 		{
-
+			LoadCurrentLevel();
 		}
 
 		private void OnEnable()
 		{
-			GameManager.OnGameStarted += OnGameStarted;
 			GameManager.OnGameEnd += OnGameEnd;
-			GameManager.OnGameReset += OnGameReset;
 			ShopManager.OnBackgroundSelected += OnBackgroundSelected;
 		}
 
 		private void OnDisable()
 		{
-			GameManager.OnGameStarted -= OnGameStarted;
 			GameManager.OnGameEnd -= OnGameEnd;
-			GameManager.OnGameReset -= OnGameReset;
 			ShopManager.OnBackgroundSelected -= OnBackgroundSelected;
-		}
-
-		private void OnGameStarted()
-		{
-			LoadCurrentLevel();
-		}
-
-		private void OnGameReset()
-		{
-			LoadCurrentLevel();
 		}
 
 		private void OnGameEnd(bool isSuccessful)
@@ -78,23 +78,6 @@ namespace FlipperDunkClone.Managers
 		public void ChangeBackgroundImage(Sprite newSprite)
 		{
 			backgroundSpriteRenderer.sprite = newSprite;
-		}
-
-		private void LoadCurrentLevel()
-		{
-			var currentLevelIndex = PlayerPrefsManager.CurrentLevel % levelDataArray.Length;
-			if (currentLevelIndex == 0)
-			{
-				currentLevelIndex = levelDataArray.Length;
-			}
-			_currentLevelData = levelDataArray[currentLevelIndex - 1];
-
-			GameManager.Instance.currentScore = _currentLevelData.maxScore;
-		}
-
-		public void NextLevel()
-		{
-			LoadCurrentLevel();
 		}
 
 		public Transform ReturnRandomHoopSpawnPosition()
@@ -119,8 +102,5 @@ namespace FlipperDunkClone.Managers
 			}
 			return hoopSpawnTransform;
 		}
-
-		
-		
 	}
 }

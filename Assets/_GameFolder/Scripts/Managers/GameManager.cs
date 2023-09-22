@@ -41,7 +41,6 @@ namespace FlipperDunkClone.Managers
 		[SerializeField] private ParticlePool particlePool;
 
 		public int currentScore;
-
 		private void Awake()
 		{
 			if (Instance != null && Instance != this)
@@ -79,7 +78,7 @@ namespace FlipperDunkClone.Managers
 		{
 			levelManager.Initialize();
 			uiManager.Initialize(this, levelManager, ballController, shopManager, soundManager, particlePool);
-			ballController.Initialize( particlePool);
+			ballController.Initialize(particlePool);
 			hoopController.Initialize(levelManager);
 			shopManager.Initialize(levelManager, ballController, playerController);
 			particlePool.Initialize();
@@ -154,10 +153,9 @@ namespace FlipperDunkClone.Managers
 				DOVirtual.DelayedCall(0.3f, () =>
 				{
 					EndGame(true);
-
 				});
 			}
-			DOVirtual.DelayedCall(0.7f, () =>
+			DOVirtual.DelayedCall(0.2f, () =>
 			{
 				hoopController.SpawnRandomHoop();
 			});

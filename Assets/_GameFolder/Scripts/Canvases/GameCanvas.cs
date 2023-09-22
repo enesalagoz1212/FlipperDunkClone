@@ -16,7 +16,6 @@ namespace FlipperDunkClone.Canvases
 		private SettingsCanvas _settingCanvas;
 		private LevelManager _levelManager;
 
-		public TextMeshProUGUI scoreText;
 		public TextMeshProUGUI levelsText;
 
 		public Button gameButton;
@@ -54,17 +53,15 @@ namespace FlipperDunkClone.Canvases
 			_levelManager = levelManager;
 		}
 
-
 		private void OnMenuOpen()
 		{
-			int totalLevels = LevelManager.Instance.levelDataArray.Length;
-			int maxScore = LevelManager.Instance.levelDataArray[levelIndex % totalLevels].maxScore;
-
+			_levelData = _levelManager.LoadCurrentLevel();
+			int maxScore = _levelData.maxScore;
 			CreateBasket(maxScore);
+
 			SortBaskets();
 			gamePanel.gameObject.SetActive(true);
 			UpdateLevelsText();
-
 		}
 		private void OnGameStart()
 		{

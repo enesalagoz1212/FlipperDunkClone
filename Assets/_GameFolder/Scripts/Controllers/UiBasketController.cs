@@ -19,8 +19,6 @@ namespace FlipperDunkClone.Controllers
 		public void OnBasket()
 		{
 			tickImage.SetActive(true);
-		}
-
-	
+		}	
 	}
 }

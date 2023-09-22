@@ -54,24 +54,18 @@ namespace FlipperDunkClone.Managers
 		public void OnBallButtonClick(int ballIndex)
 		{
 			PlayerPrefsManager.SelectedBall = ballIndex;
-			Debug.Log("Selected ball: " + (ballIndex));
-
 			OnBallSelected?.Invoke(ballSprites[ballIndex]);
 		}
 
 		public void OnFlipperButtonClick(int flipperIndex)
 		{
 			PlayerPrefsManager.SelectedFlipper = flipperIndex;
-			Debug.Log("Selected Flipper: " + (flipperIndex));
-
 			OnFlipperSelected?.Invoke(flipperSprites[flipperIndex]);
 		}
 
 		public void OnBackgroundButtonClick(int backgroundIndex)
 		{
 			PlayerPrefsManager.SelectedBackground = backgroundIndex;
-			Debug.Log("Selected Flipper: " + (backgroundIndex));
-
 			OnBackgroundSelected?.Invoke(backgroundSprites[backgroundIndex]);
 		}
 	}
