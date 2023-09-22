@@ -44,6 +44,7 @@ namespace FlipperDunkClone.Canvases
 		private void NextButtonClicked()
 		{
 			GameManager.Instance.ResetGame();
+			LevelManager.Instance.NextLevel();
 			endPanel.SetActive(false);
 			_soundManager.PlayLevelCompletedSound();
 		}

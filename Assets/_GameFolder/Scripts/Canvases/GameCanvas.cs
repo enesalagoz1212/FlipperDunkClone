@@ -53,13 +53,17 @@ namespace FlipperDunkClone.Canvases
 			_levelManager = levelManager;
 		}
 
-		private void OnMenuOpen()
+		private void CurrentLevelData()
 		{
-			_levelData = _levelManager.LoadCurrentLevel();
+			_levelData=_levelManager.GetLevelData();
 			int maxScore = _levelData.maxScore;
 			CreateBasket(maxScore);
-
 			SortBaskets();
+		}
+
+		private void OnMenuOpen()
+		{
+			CurrentLevelData();		
 			gamePanel.gameObject.SetActive(true);
 			UpdateLevelsText();
 		}
@@ -83,7 +87,7 @@ namespace FlipperDunkClone.Canvases
 			gamePanel.gameObject.SetActive(false);
 		}
 
-
+	
 		private void OnGameScoreChanged(int score)
 		{
 			ThrowBasket();

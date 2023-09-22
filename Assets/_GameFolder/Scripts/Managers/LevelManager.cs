@@ -19,6 +19,8 @@ namespace FlipperDunkClone.Managers
 		private int _lastHoopSpawnIndex;
 
 		public SpriteRenderer backgroundSpriteRenderer;
+
+		private bool _levelDataLoad = false;
 		private void Awake()
 		{
 			if (Instance != null && Instance != this)
@@ -34,7 +36,7 @@ namespace FlipperDunkClone.Managers
 
 		}
 
-		public LevelData LoadCurrentLevel()
+		public void LoadCurrentLevel()
 		{
 			var currentLevelIndex = PlayerPrefsManager.CurrentLevel % levelDataArray.Length;
 			if (currentLevelIndex == 0)
@@ -45,8 +47,7 @@ namespace FlipperDunkClone.Managers
 
 			GameManager.Instance.currentScore = _currentLevelData.maxScore;
 
-			Debug.Log("currentLevelData kac defa calisti");
-			return _currentLevelData;
+			Debug.Log("currentLevelData kaç defa çalýþtý");
 		}
 		public void Initialize()
 		{
@@ -65,9 +66,20 @@ namespace FlipperDunkClone.Managers
 			ShopManager.OnBackgroundSelected -= OnBackgroundSelected;
 		}
 
+
+		public LevelData GetLevelData()
+		{
+			return _currentLevelData;
+		}
+
 		private void OnGameEnd(bool isSuccessful)
 		{
 			_lastHoopSpawnIndex = -1;
+		}
+
+		public void NextLevel()
+		{
+			LoadCurrentLevel();
 		}
 
 		private void OnBackgroundSelected(Sprite backgroundSprite)
