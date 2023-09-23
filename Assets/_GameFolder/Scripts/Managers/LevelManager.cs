@@ -77,6 +77,7 @@ namespace FlipperDunkClone.Managers
 			_lastHoopSpawnIndex = -1;
 		}
 
+		
 		public void NextLevel()
 		{
 			LoadCurrentLevel();

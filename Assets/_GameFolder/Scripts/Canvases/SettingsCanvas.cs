@@ -23,8 +23,6 @@ namespace FlipperDunkClone.Canvases
 		public Image offImageSound;
 		public Image backgroundImageSound;
 
-		//private bool _isVibration = true;
-		//private bool _isSound = true;
 		public void Initialize(GameCanvas gameCanvas)
 		{
 			_gameCanvas = gameCanvas;

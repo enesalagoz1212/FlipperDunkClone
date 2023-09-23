@@ -65,16 +65,12 @@ namespace FlipperDunkClone.Canvases
 		private void OnPlayButtonClicked()
 		{
 			_gameManager.OnGameStart();
-
 			OnGameStart();
 		}
 
 		public void OnStoreButtonClick()
 		{
-			tabToStartText.transform.DOKill();
 			tabToStartText.transform.localScale = Vector3.one;
-			tabToStartText.gameObject.SetActive(false);
-			menuBackgroundImage.gameObject.SetActive(false);
 			_storeCanvas.OnStorePanel();
 		}
 

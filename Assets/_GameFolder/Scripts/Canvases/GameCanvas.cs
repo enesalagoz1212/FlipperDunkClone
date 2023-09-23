@@ -51,6 +51,7 @@ namespace FlipperDunkClone.Canvases
 		{
 			_settingCanvas = settingsCanvas;
 			_levelManager = levelManager;
+		
 		}
 
 		private void CurrentLevelData()
@@ -63,7 +64,7 @@ namespace FlipperDunkClone.Canvases
 
 		private void OnMenuOpen()
 		{
-			CurrentLevelData();		
+			CurrentLevelData();
 			gamePanel.gameObject.SetActive(true);
 			UpdateLevelsText();
 		}

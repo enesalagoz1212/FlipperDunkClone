@@ -94,7 +94,7 @@ namespace FlipperDunkClone.Canvases
 				{
 					_shopManager.OnBackgroundButtonClick(backgroundIndex);
 					ChangeButtonColor(backgroundButtons[backgroundIndex], Color.green);
-					ResetButtonColors(backgroundButtons,backgroundIndex);
+					ResetButtonColors(backgroundButtons, backgroundIndex);
 				});
 			}
 		}
@@ -112,7 +112,6 @@ namespace FlipperDunkClone.Canvases
 		public void BackButtonClick()
 		{
 			storePanel.gameObject.SetActive(false);
-			GameManager.Instance.ChangeState(GameState.Menu);
 		}
 
 		public void OnBallButton()
@@ -120,7 +119,7 @@ namespace FlipperDunkClone.Canvases
 			ballPanel.gameObject.SetActive(true);
 			flipperPanel.gameObject.SetActive(false);
 			backgroundPamel.gameObject.SetActive(false);
-			
+
 			ChangeColorImage(ballButtonColor);
 
 			ballButton.transform.DOScale(new Vector3(1f, 1.12f, 1f), 0.1f);
@@ -160,16 +159,16 @@ namespace FlipperDunkClone.Canvases
 			colorButtonsImage.color = newColor;
 		}
 
-		private void ChangeButtonColor(Button button,Color newColor)
+		private void ChangeButtonColor(Button button, Color newColor)
 		{
 			Image buttonImage = button.GetComponent<Image>();
-			if (buttonImage!=null)
+			if (buttonImage != null)
 			{
 				buttonImage.color = newColor;
 			}
 		}
 
-		private void ResetButtonColors(Button[] buttons,int selectedIndex)
+		private void ResetButtonColors(Button[] buttons, int selectedIndex)
 		{
 			for (int i = 0; i < buttons.Length; i++)
 			{
