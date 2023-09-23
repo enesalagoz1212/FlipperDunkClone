@@ -40,8 +40,6 @@ namespace FlipperDunkClone.Canvases
 			vibration.onClick.AddListener(VibrationButton);
 			sound.onClick.AddListener(SoundButton);
 			closeButton.onClick.AddListener(OnCloseButton);
-			vibration.onClick.AddListener(() => Debug.Log("Vibration calisti"));
-			sound.onClick.AddListener(() => Debug.Log("Sound calisti "));
 		}
 
 
@@ -53,7 +51,6 @@ namespace FlipperDunkClone.Canvases
 		private void OnCloseButton()
 		{
 			settingPanel.SetActive(false);
-			GameManager.OnMenuOpen?.Invoke();
 		}
 
 		public void VibrationButton()

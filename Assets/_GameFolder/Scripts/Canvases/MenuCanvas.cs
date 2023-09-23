@@ -78,7 +78,7 @@ namespace FlipperDunkClone.Canvases
 		public void OnSettingButtonClick()
 		{
 			_settingCanvas.SettingPanel();
-			menuBackgroundImage.gameObject.SetActive(false);
+			//menuBackgroundImage.gameObject.SetActive(false);
 		}
 
 		private void OnGameStart()

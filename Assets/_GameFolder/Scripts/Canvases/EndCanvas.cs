@@ -23,10 +23,12 @@ namespace FlipperDunkClone.Canvases
 		
 		private void OnEnable()
 		{
+			GameManager.OnGameEnd += OnGameEnd;
 			GameManager.OnDiamondScored += OnDiamondScore;
 		}
 		private void OnDisable()
 		{
+			GameManager.OnGameEnd -= OnGameEnd;
 			GameManager.OnDiamondScored -= OnDiamondScore;
 		}
 
@@ -43,6 +45,7 @@ namespace FlipperDunkClone.Canvases
 
 		private void NextButtonClicked()
 		{
+			nextButton.interactable = false;
 			GameManager.Instance.ResetGame();
 			LevelManager.Instance.NextLevel();
 			endPanel.SetActive(false);
@@ -60,6 +63,11 @@ namespace FlipperDunkClone.Canvases
 		{
 			var finishedLevel = PlayerPrefsManager.CurrentLevel - 1;
 			endLevelText.text = "LEVEL " + finishedLevel.ToString();
+		}
+
+		private void OnGameEnd(bool isSuccesful)
+		{
+			nextButton.interactable = true;
 		}
 
 		private void OnDiamondScore(int score)

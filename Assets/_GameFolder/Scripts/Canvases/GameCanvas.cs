@@ -50,8 +50,7 @@ namespace FlipperDunkClone.Canvases
 		public void Initialize(LevelManager levelManager, SettingsCanvas settingsCanvas)
 		{
 			_settingCanvas = settingsCanvas;
-			_levelManager = levelManager;
-		
+			_levelManager = levelManager;		
 		}
 
 		private void CurrentLevelData()

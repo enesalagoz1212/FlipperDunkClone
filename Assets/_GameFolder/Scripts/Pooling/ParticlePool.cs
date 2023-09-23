@@ -30,7 +30,6 @@ namespace FlipperDunkClone.Pooling
 			GameManager.OnGameStarted -= OnGameStart;
 			GameManager.OnGameEnd -= OnGameEnd;
 			GameManager.OnGameReset -= OnGameReset;
-			
 		}
 
 		public void Initialize()
@@ -55,6 +54,8 @@ namespace FlipperDunkClone.Pooling
 				levelCompletedPooledParticle.Push(levelCompleted);
 			}
 		}
+
+
 		public GameObject GetParticleBasket(Vector3 position)
 		{
 			if (basketPooledParticle.Count > 0)
@@ -75,7 +76,6 @@ namespace FlipperDunkClone.Pooling
 		{
 			particleBasket.SetActive(false);
 			basketPooledParticle.Push(particleBasket);
-
 		}
 
 		public GameObject GetParticleLevelCompleted(Vector3 position)
@@ -98,14 +98,16 @@ namespace FlipperDunkClone.Pooling
 		{
 			particleLevelCompleted.SetActive(false);
 			levelCompletedPooledParticle.Push(particleLevelCompleted); ;
-
 		}
 
 		private void OnGameStart()
 		{
-			levelParticle.gameObject.SetActive(true);
-		}
+			DOVirtual.DelayedCall(4f, () =>
+			{
+				levelParticle.gameObject.SetActive(true);
 
+			});
+		}
 
 		private void OnGameEnd(bool isSuccessful)
 		{
@@ -114,11 +116,10 @@ namespace FlipperDunkClone.Pooling
 				Vector3 pos = new Vector3(0f, 10.5f, 0f);
 				GameObject levelCompletedEffect = GetParticleLevelCompleted(pos);
 
-				DOVirtual.DelayedCall(6f, () =>
+				DOVirtual.DelayedCall(4f, () =>
 				{
 					ReturnParticleLevelCompleted(levelCompletedEffect);
 				});
-
 			}
 		}
 
